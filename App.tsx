@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,34 +7,38 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-// @ts-ignore
-import {vm} from 'unraid';
+import { Unraid } from '@ridenui/unraid/dist/instance/unraid';
+import { ReactNativeExecutor } from '@ridenui/unraid/dist/executors/ReactNativeSSH';
 import {
   Colors,
   Header,
 } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [list, setList] = useState<any>([]);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  useEffect(() => {
+    const unraid = new Unraid({
+      executor: ReactNativeExecutor,
+      executorConfig: {
+        username: 'root',
+        password: 'yourpasswordhere',
+        host: 'eden.w16.io',
+        port: 22
+      }
+    });
+    unraid.system.diskfree().then((value) => {
+      setList(value);
+    })
+  }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text>{vm.list()}</Text>
-        </View>
-      </ScrollView>
+    <SafeAreaView>
+      {list.map(disk => {
+        return <>
+          <Text>FS: {disk.fs} - {disk.used}/{disk.available} @ {disk.mounted}</Text>
+        </>
+      })}
     </SafeAreaView>
   );
 };
