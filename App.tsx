@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
-import { dark, light } from './src/styles/Themes';
+import { dark, light } from '@styles/Themes';
 import { NavigationContainer } from '@react-navigation/native';
 import { MainStack } from './src/navigation/MainStack';
 import { LoginScreen } from './src/screens/login/Login.screen';
