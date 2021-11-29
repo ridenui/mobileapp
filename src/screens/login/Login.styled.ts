@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Input } from '@atoms/Input/Input';
+import { Typography } from '@atoms/Typography/Typography';
 
 export const Container = styled.View`
   background: ${({ theme }) => theme['600']};
@@ -40,4 +41,19 @@ export const Footer = styled.TouchableOpacity`
 
 export const SafeAreaContainer = styled.SafeAreaView`
   flex: 1;
+  justify-content: center;
+`;
+
+export const AutoDiscoverResults = styled.FlatList`
+  margin-top: 16px;
+  width: 100%;
+  max-height: 104px;
+`;
+
+export const MoreDevicesHint = styled.View`
+  align-self: flex-end;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 16px;
+  margin-top: 8px;
 `;

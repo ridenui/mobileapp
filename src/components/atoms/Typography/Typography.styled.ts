@@ -11,6 +11,12 @@ export const H1 = styled.Text`
   ${getColor};
 `;
 
+export const H3 = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  ${getColor};
+`;
+
 export const Paragraph = styled.Text`
   ${getColor};
 `;

@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const GradientHeader = styled(LinearGradient)`
+  position: absolute;
   height: 250px;
   width: 130%;
   left: -15%;

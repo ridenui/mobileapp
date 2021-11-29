@@ -51,5 +51,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>We need local network access to connect to your server.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_smb._tcp.</string>
+        <string>_ssh._tcp.</string>
+        <string>_device-info._tcp.</string>
+        <string>_sftp-ssh._tcp.</string>
+    </array>
 </dict>
 </plist>
