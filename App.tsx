@@ -1,46 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { Unraid } from '@ridenui/unraid/dist/instance/unraid';
-import { ReactNativeExecutor } from '@ridenui/unraid/dist/executors/ReactNativeSSH';
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
+import { dark, light } from './src/styles/Themes';
+import { NavigationContainer } from '@react-navigation/native';
+import { MainStack } from './src/navigation/MainStack';
+import { LoginScreen } from './src/screens/login/Login.screen';
+import { ThemeProvider } from 'styled-components/native';
 
-const App = () => {
-  const [list, setList] = useState<any>([]);
+export function App() {
+  const colorScheme = useColorScheme();
+  const [theme, setTheme] = useState(light);
 
   useEffect(() => {
-    const unraid = new Unraid({
-      executor: ReactNativeExecutor,
-      executorConfig: {
-        username: 'root',
-        password: 'yourpasswordhere',
-        host: 'eden.w16.io',
-        port: 22
-      }
-    });
-    unraid.system.diskfree().then((value) => {
-      setList(value);
-    })
-  }, []);
+    if (colorScheme === 'dark') {
+      setTheme(dark);
+    } else {
+      setTheme(light);
+    }
+  }, [colorScheme]);
 
   return (
-    <SafeAreaView>
-      {list.map(disk => {
-        return <>
-          <Text>FS: {disk.fs} - {disk.used}/{disk.available} @ {disk.mounted}</Text>
-        </>
-      })}
-    </SafeAreaView>
+    <ThemeProvider theme={theme}>
+      <StatusBar barStyle={'dark-content'} />
+      <NavigationContainer>
+        <MainStack.Navigator>
+          <MainStack.Screen
+            name={'Login'}
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
-};
-
+}
 export default App;
