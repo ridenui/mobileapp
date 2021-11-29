@@ -1,3 +1,5 @@
 rootProject.name = 'RIDEN'
+include ':react-native-ssh-sftp'
+project(':react-native-ssh-sftp').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ssh-sftp/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
