@@ -81,6 +81,24 @@ module.exports = {
      */
     ...ReactNative.getResolveOptions(platform),
 
+    fallback: {
+      net: require.resolve('react-native-tcp-socket'),
+      stream: require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      assert: require.resolve('assert'),
+      path: require.resolve('path-browserify'),
+      dns: require.resolve('dns.js'),
+      buffer: require.resolve('buffer'),
+      util: require.resolve('util'),
+      dgram: require.resolve('react-native-udp'),
+      fs: require.resolve('identity-obj-proxy'),
+      child_process: require.resolve('identity-obj-proxy'),
+      http: require.resolve('identity-obj-proxy'),
+      https: require.resolve('identity-obj-proxy'),
+      tls: require.resolve('identity-obj-proxy'),
+      'cpu-features': require.resolve('identity-obj-proxy'),
+    },
+
     /**
      * Uncomment this to ensure all `react-native*` imports will resolve to the same React Native
      * dependency. You might need it when using workspaces/monorepos or unconventional project
@@ -294,5 +312,18 @@ module.exports = {
         // file: path.join(__dirname, `${mode}.${platform}.log`),
       },
     }),
+
+    new webpack.NormalModuleReplacementPlugin(
+      /http-agents.js/,
+      'identity-obj-proxy',
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /agent.js/,
+      require.resolve('./BaseAgent.js'),
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /^zlib$/,
+      require.resolve('./zlib-patch.js'),
+    ),
   ],
 };
