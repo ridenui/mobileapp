@@ -7,16 +7,18 @@ import { useWindowDimensions, View } from 'react-native';
 export interface AutoDiscoverCardProps {
   /** Description of children. */
   device: ValidValidatedInstance;
+  /** onPress Handler */
+  onPress: (device: ValidValidatedInstance) => void;
 }
 
 /**
  * Description of AutoDiscoverCard.
  */
-export function AutoDiscoverCard({ device }: AutoDiscoverCardProps): JSX.Element {
+export function AutoDiscoverCard({ device, onPress }: AutoDiscoverCardProps): JSX.Element {
   const { width } = useWindowDimensions();
 
   return (
-    <S.AutoDiscoverCard width={width}>
+    <S.AutoDiscoverCard onPress={() => onPress(device)} width={width}>
       <View>
         <Typography variant={TypographyVariants.H3}>{device.name}</Typography>
         {device.description && <Typography variant={TypographyVariants.Paragraph}>{device.description}</Typography>}

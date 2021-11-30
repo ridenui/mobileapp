@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { Input } from '@atoms/Input/Input';
 import { Typography } from '@atoms/Typography/Typography';
+import { Formik } from 'formik';
 
 export const Container = styled.View`
   background: ${({ theme }) => theme['600']};
@@ -28,7 +29,12 @@ export const HostnamePortContainer = styled.View`
 
 export const HostnameInput = styled(Input)`
   flex-grow: 1;
+  flex-shrink: 1;
   margin-right: 16px;
+`;
+
+export const PortInput = styled(Input)`
+  width: 70px;
 `;
 
 export const Footer = styled.TouchableOpacity`
