@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { readFromStorage, writeToStorage } from '@helpers/Storage';
 import { Unraid } from '@ridenui/unraid/dist/instance/unraid';
 import { Credentials } from '../types/Generic';
-import { ReactNativeExecutor, SSHConfig } from '@ridenui/unraid/dist/executors/ReactNativeSSH';
+import { ReactNativeExecutor } from '../unraid/unraid-ssh-executor';
+import { SSHConfig } from '@ridenui/react-native-riden-ssh';
 
 type UnraidProviderProps = {
   children: ReactNode;
@@ -15,7 +16,7 @@ export type UnraidProviderValue = {
   /** An instance of UNRAID API Client */
   instance: UnraidInstanceType | undefined;
   /** A function to set credentials */
-  setCredentials: (credentials: Credentials) => void;
+  setCredentials: (credentials: Credentials) => Promise<void>;
   /** True if there are crendentials present */
   hasCredentials: boolean;
 };
@@ -35,16 +36,18 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
 
   const setCredentials = async (creds: Credentials) => {
     await writeToStorage('credentials', JSON.stringify(creds));
-    setCredentialsState(credentials);
+    console.log('Setting credentials...');
+    setCredentialsState(creds);
   };
 
   useEffect(() => {
+    console.log('Running useEffect!');
     /** Load credentials on App Start */
     readFromStorage('credentials').then(creds => {
       if (creds) {
         const unraid = new Unraid({
           executor: ReactNativeExecutor,
-          executorConfig: credentials,
+          executorConfig: JSON.parse(creds),
         });
         setInstance(unraid);
         setHasCredentials(true);

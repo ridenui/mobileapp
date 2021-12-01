@@ -36,9 +36,10 @@ export function LoginScreen() {
   }, []);
 
   const initialFormContents: CredentialsWithPortString = { host: '', port: '', password: '', username: '' };
-  const onSubmit = (values: CredentialsWithPortString) => {
+  const onSubmit = async (values: CredentialsWithPortString) => {
     Keyboard.dismiss();
-    setCredentials({
+    console.log('Submitted!');
+    await setCredentials({
       ...values,
       port: parseInt(values.port, 10),
     });
@@ -48,7 +49,7 @@ export function LoginScreen() {
     <S.Container>
       <GradientHeader />
       <Formik initialValues={initialFormContents} onSubmit={onSubmit}>
-        {({ handleChange, values, setFieldValue }) => (
+        {({ handleChange, values, setFieldValue, handleSubmit }) => (
           <S.SafeAreaContainer>
             <S.Box>
               <Typography variant={TypographyVariants.H1}>Hey!</Typography>
@@ -77,7 +78,7 @@ export function LoginScreen() {
                   onChangeText={handleChange('password')}>
                   Password
                 </Input>
-                <Button>Connect</Button>
+                <Button onPress={handleSubmit}>Connect</Button>
               </S.Form>
             </S.Box>
             {devices.length !== 0 && (
