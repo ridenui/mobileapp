@@ -4,8 +4,6 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '11.0'
 
 target 'RIDEN' do
-  pod 'NMSSH', '2.3.1'
-
   config = use_native_modules!
 
   use_react_native!(
@@ -15,6 +13,7 @@ target 'RIDEN' do
   )
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  pod 'react-native-riden-ssh', :path => '../node_modules/@ridenui/react-native-riden-ssh'
 
   target 'RIDENTests' do
     inherit! :complete
