@@ -1,5 +1,4 @@
-import { Executor } from '@ridenui/unraid/dist/instance/executor';
-import * as IExecutor from '@ridenui/unraid/dist/instance/executor';
+import { Executor, IExecutor } from '@ridenui/unraid';
 import { SSHConfig, SSHClient } from '@ridenui/react-native-riden-ssh';
 
 export class ReactNativeExecutor extends Executor<SSHConfig> {
@@ -13,6 +12,11 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
 
   async disconnect() {
     await this.client.disconnect();
+  }
+
+  async connect() {
+    await this.client.connect();
+    return this.client.isConnected();
   }
 
   async execute(command: IExecutor.IExecuteSimple | IExecutor.IExecute): Promise<IExecutor.IExecuteResult> {

@@ -11,21 +11,37 @@ import { MoreDevicesHint } from './Login.styled';
 import { ChevronsRight } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
 import { useUnraid } from '../../contexts/Unraid.context';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { Keyboard } from 'react-native';
-import { Credentials } from '../../types/Generic';
-
-type CredentialsWithPortString = {
-  host: string;
-  port: string;
-  username: string;
-  password: string;
-};
+import { CredentialsSchema } from '../../validators/Credentials.validation';
 
 export function LoginScreen() {
   const [devices, setDiscoveredDevices] = useState<ValidValidatedInstance[]>([]);
+  const [isInvalidForm, setIsInvalidForm] = useState(true);
   const theme = useTheme();
   const { setCredentials } = useUnraid();
+  const { handleSubmit, handleChange, errors, setFieldValue, values } = useFormik({
+    initialValues: {
+      host: '',
+      port: '',
+      password: '',
+      username: '',
+    },
+    validateOnBlur: true,
+    validateOnMount: true,
+    validationSchema: CredentialsSchema,
+    onSubmit: async v => {
+      Keyboard.dismiss();
+      await setCredentials({
+        ...v,
+        port: parseInt(v.port, 10),
+      });
+    },
+  });
+
+  useEffect(() => {
+    setIsInvalidForm(!!errors.port || !!errors.password || !!errors.host || !!errors.username);
+  }, [errors]);
 
   useEffect(() => {
     beginAutoDiscover(service => {
@@ -35,83 +51,86 @@ export function LoginScreen() {
     return () => stopDiscovering();
   }, []);
 
-  const initialFormContents: CredentialsWithPortString = { host: '', port: '', password: '', username: '' };
-  const onSubmit = async (values: CredentialsWithPortString) => {
-    Keyboard.dismiss();
-    console.log('Submitted!');
-    await setCredentials({
-      ...values,
-      port: parseInt(values.port, 10),
-    });
-  };
-
   return (
     <S.Container>
       <GradientHeader />
-      <Formik initialValues={initialFormContents} onSubmit={onSubmit}>
-        {({ handleChange, values, setFieldValue, handleSubmit }) => (
-          <S.SafeAreaContainer>
-            <S.Box>
-              <Typography variant={TypographyVariants.H1}>Hey!</Typography>
-              <Typography variant={TypographyVariants.Paragraph}>Please set up your server below</Typography>
-              <S.Form>
-                <S.HostnamePortContainer>
-                  <S.HostnameInput autoCapitalize={'none'} value={values.host} onChangeText={handleChange('host')}>
-                    Hostname
-                  </S.HostnameInput>
-                  <S.PortInput
-                    value={values.port.toString()}
-                    autoCapitalize={'none'}
-                    onChangeText={handleChange('port')}
-                    maxLength={5}
-                    keyboardType={'numeric'}>
-                    Port
-                  </S.PortInput>
-                </S.HostnamePortContainer>
-                <Input value={values.username} autoCapitalize={'none'} onChangeText={handleChange('username')}>
-                  Username
-                </Input>
-                <Input
-                  value={values.password}
-                  autoCapitalize={'none'}
-                  isSecure={true}
-                  onChangeText={handleChange('password')}>
-                  Password
-                </Input>
-                <Button onPress={handleSubmit}>Connect</Button>
-              </S.Form>
-            </S.Box>
-            {devices.length !== 0 && (
-              <>
-                <S.AutoDiscoverResults
-                  horizontal={true}
-                  overScrollMode={'always'}
-                  data={devices}
-                  pagingEnabled={true}
-                  renderItem={({ item }) => (
-                    <AutoDiscoverCard
-                      device={item as ValidValidatedInstance}
-                      onPress={device => {
-                        setFieldValue('host', device.ssh.hostname);
-                        setFieldValue('port', device.ssh.port.toString());
-                      }}
-                    />
-                  )}
+
+      <S.SafeAreaContainer>
+        <S.Box>
+          <Typography variant={TypographyVariants.H1}>Hey!</Typography>
+          <Typography variant={TypographyVariants.Paragraph}>Please set up your server below</Typography>
+          <S.Form>
+            <S.HostnamePortContainer>
+              <S.HostnameInput
+                autoCorrect={false}
+                isInvalid={!!errors.host}
+                autoCapitalize={'none'}
+                value={values.host}
+                onChangeText={handleChange('host')}>
+                Hostname
+              </S.HostnameInput>
+              <S.PortInput
+                autoCorrect={false}
+                isInvalid={!!errors.port}
+                value={values.port.toString()}
+                autoCapitalize={'none'}
+                onChangeText={handleChange('port')}
+                maxLength={5}
+                keyboardType={'numeric'}>
+                Port
+              </S.PortInput>
+            </S.HostnamePortContainer>
+            <Input
+              autoCorrect={false}
+              isInvalid={!!errors.username}
+              value={values.username}
+              autoCapitalize={'none'}
+              onChangeText={handleChange('username')}>
+              Username
+            </Input>
+            <Input
+              autoCorrect={false}
+              isInvalid={!!errors.password}
+              value={values.password}
+              autoCapitalize={'none'}
+              isSecure={true}
+              onChangeText={handleChange('password')}>
+              Password
+            </Input>
+            <Button disabled={isInvalidForm} onPress={handleSubmit}>
+              {isInvalidForm ? 'Please fill out the red fields' : 'Connect'}
+            </Button>
+          </S.Form>
+        </S.Box>
+        {devices.length !== 0 && (
+          <>
+            <S.AutoDiscoverResults
+              horizontal={true}
+              overScrollMode={'always'}
+              data={devices}
+              pagingEnabled={true}
+              renderItem={({ item }) => (
+                <AutoDiscoverCard
+                  device={item as ValidValidatedInstance}
+                  onPress={device => {
+                    setFieldValue('host', device.ssh.hostname);
+                    setFieldValue('port', device.ssh.port.toString());
+                  }}
                 />
-                {devices.length > 1 && (
-                  <MoreDevicesHint>
-                    <Typography variant={TypographyVariants.Paragraph}>Scroll to see more</Typography>
-                    <ChevronsRight width={20} stroke={theme.text} />
-                  </MoreDevicesHint>
-                )}
-              </>
+              )}
+            />
+            {devices.length > 1 && (
+              <MoreDevicesHint>
+                <Typography variant={TypographyVariants.Paragraph}>Scroll to see more</Typography>
+                <ChevronsRight width={20} stroke={theme.text} />
+              </MoreDevicesHint>
             )}
-            <S.Footer onPress={() => openLink('https://github.com/ridenui')}>
-              <Typography variant={TypographyVariants.Overline}>RIDEN UI</Typography>
-            </S.Footer>
-          </S.SafeAreaContainer>
+          </>
         )}
-      </Formik>
+        <S.Footer onPress={() => openLink('https://github.com/ridenui')}>
+          <Typography variant={TypographyVariants.Overline}>RIDEN UI</Typography>
+        </S.Footer>
+      </S.SafeAreaContainer>
     </S.Container>
   );
 }

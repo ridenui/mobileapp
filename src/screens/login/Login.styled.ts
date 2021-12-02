@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 import { Input } from '@atoms/Input/Input';
-import { Typography } from '@atoms/Typography/Typography';
-import { Formik } from 'formik';
 
 export const Container = styled.View`
   background: ${({ theme }) => theme['600']};

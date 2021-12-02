@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
-import { readFromStorage, writeToStorage } from '@helpers/Storage';
-import { Unraid } from '@ridenui/unraid/dist/instance/unraid';
+import { clear, readFromStorage, writeToStorage } from '@helpers/Storage';
+import { Unraid } from '@ridenui/unraid';
 import { Credentials } from '../types/Generic';
 import { ReactNativeExecutor } from '../unraid/unraid-ssh-executor';
 import { SSHConfig } from '@ridenui/react-native-riden-ssh';
@@ -19,12 +19,24 @@ export type UnraidProviderValue = {
   setCredentials: (credentials: Credentials) => Promise<void>;
   /** True if there are crendentials present */
   hasCredentials: boolean;
+  /** True if the SSH Connection is established */
+  isConnected: boolean;
+  /** Device's Hostname */
+  deviceName: string | null;
+  /** Clear all credentials and all data stored by the app */
+  clearCredentials: () => Promise<void>;
+  /** Server Credentials */
+  credentials: Credentials | null;
 };
 
 const initialUnraidState: UnraidProviderValue = {
   instance: undefined,
   setCredentials: async () => {},
   hasCredentials: false,
+  isConnected: false,
+  deviceName: null,
+  clearCredentials: async () => {},
+  credentials: null,
 };
 
 const UnraidContext = React.createContext<UnraidProviderValue>(initialUnraidState as UnraidProviderValue);
@@ -33,6 +45,8 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
   const [instance, setInstance] = useState<UnraidInstanceType>();
   const [credentials, setCredentialsState] = useState<Credentials | null>(null);
   const [hasCredentials, setHasCredentials] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [deviceName, setDeviceName] = useState<string | null>(null);
 
   const setCredentials = async (creds: Credentials) => {
     await writeToStorage('credentials', JSON.stringify(creds));
@@ -40,9 +54,15 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
     setCredentialsState(creds);
   };
 
+  const clearCredentials = async () => {
+    await clear();
+    console.log('Clearing credentials...');
+    setCredentialsState(null);
+    setHasCredentials(false);
+  };
+
   useEffect(() => {
     console.log('Running useEffect!');
-    /** Load credentials on App Start */
     readFromStorage('credentials').then(creds => {
       if (creds) {
         const unraid = new Unraid({
@@ -51,9 +71,19 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         });
         setInstance(unraid);
         setHasCredentials(true);
+        setCredentialsState(JSON.parse(creds));
+        console.log('Connecting...');
+        unraid.executor.connect().then(connected => {
+          console.log('Connected...');
+          setIsConnected(connected);
+          unraid.system.getHostname().then(hostname => {
+            console.log('got hostname!');
+            setDeviceName(hostname);
+          });
+        });
       }
     });
-  }, [credentials]);
+  }, []);
 
   return (
     <UnraidContext.Provider
@@ -61,6 +91,10 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         instance,
         setCredentials,
         hasCredentials,
+        isConnected,
+        deviceName,
+        clearCredentials,
+        credentials,
       }}>
       {children}
     </UnraidContext.Provider>
