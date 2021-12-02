@@ -16,3 +16,7 @@ export async function writeMultipleToStorage(keys: string[][]): Promise<void> {
   });
   return AsyncStorage.multiSet(keysWithPrefix);
 }
+
+export async function clear(): Promise<void> {
+  return AsyncStorage.clear();
+}
