@@ -176,9 +176,7 @@ module.exports = {
        * ```
        */
       {
-        test: ReactNative.getAssetExtensionsRegExp(
-          ReactNative.ASSET_EXTENSIONS,
-        ),
+        test: ReactNative.getAssetExtensionsRegExp(ReactNative.ASSET_EXTENSIONS),
         use: {
           loader: '@callstack/repack/assets-loader',
           options: {
@@ -276,6 +274,11 @@ module.exports = {
        */
       // columns: false,
     }),
+
+    /**
+     * Nullifies SSH2 which is not supported by React Native
+     */
+    new webpack.NormalModuleReplacementPlugin(/^ssh2$/, 'identity-obj-proxy'),
 
     /**
      * Logs messages and progress.

@@ -1,4 +1,5 @@
-import { Executor, IExecutor } from '@ridenui/unraid';
+import { Executor } from '@ridenui/unraid/dist/instance/executor';
+import * as IExecutor from '@ridenui/unraid/dist/instance/executor';
 import { SSHConfig, SSHClient } from '@ridenui/react-native-riden-ssh';
 
 export class ReactNativeExecutor extends Executor<SSHConfig> {

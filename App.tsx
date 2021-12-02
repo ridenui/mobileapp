@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { dark, light } from '@styles/Themes';
-import { NavigationContainer } from '@react-navigation/native';
-import { MainStack } from './src/navigation/MainStack';
-import { LoginScreen } from './src/screens/login/Login.screen';
 import { ThemeProvider } from 'styled-components/native';
+import { UnraidProvider } from './src/contexts/Unraid.context';
+import { SplashScreen } from './src/screens/splash/Splash.screen';
 
 export function App() {
   const colorScheme = useColorScheme();
@@ -20,16 +19,10 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle={'dark-content'} />
-      <NavigationContainer>
-        <MainStack.Navigator>
-          <MainStack.Screen
-            name={'Login'}
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-        </MainStack.Navigator>
-      </NavigationContainer>
+      <UnraidProvider>
+        <StatusBar barStyle={'dark-content'} />
+        <SplashScreen />
+      </UnraidProvider>
     </ThemeProvider>
   );
 }
