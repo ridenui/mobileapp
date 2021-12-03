@@ -16,10 +16,14 @@ export interface InputProps {
   style?: StyleProp<TextStyle>;
   /** Sets Capitalization Method */
   autoCapitalize?: TextInputProps['autoCapitalize'];
+  /** Enable AutoCorrect */
+  autoCorrect?: TextInputProps['autoCorrect'];
   /** Input Value */
   value: TextInputProps['value'];
   /** maxLength of Text */
   maxLength?: TextInputProps['maxLength'];
+  /** Toggle red border (invalid state) */
+  isInvalid?: boolean;
 }
 
 /**
@@ -34,6 +38,7 @@ export function Input({
   autoCapitalize,
   value,
   maxLength,
+  isInvalid,
 }: InputProps): JSX.Element {
   const theme = useTheme();
   return (
@@ -47,6 +52,7 @@ export function Input({
       autoCapitalize={autoCapitalize}
       value={value}
       maxLength={maxLength}
+      isInvalid={isInvalid}
     />
   );
 }

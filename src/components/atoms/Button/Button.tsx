@@ -8,14 +8,16 @@ export interface ButtonProps {
   children: string;
   /** onPress Handler */
   onPress?: TouchableOpacityProps['onPress'];
+  /** Set button disabled state */
+  disabled?: TouchableOpacityProps['disabled'];
 }
 
 /**
- * Description of Button.
+ * It's a Button.
  */
-export function Button({ children, onPress }: ButtonProps): JSX.Element {
+export function Button({ children, onPress, disabled }: ButtonProps): JSX.Element {
   return (
-    <S.Button onPress={onPress}>
+    <S.Button onPress={onPress} disabled={disabled}>
       <Typography variant={TypographyVariants.Paragraph}>{children}</Typography>
     </S.Button>
   );
