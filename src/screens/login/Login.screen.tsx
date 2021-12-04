@@ -32,6 +32,7 @@ export function LoginScreen() {
     validationSchema: CredentialsSchema,
     onSubmit: async v => {
       Keyboard.dismiss();
+      console.log('Submitting Login Form.');
       await setCredentials({
         ...v,
         port: parseInt(v.port, 10),
