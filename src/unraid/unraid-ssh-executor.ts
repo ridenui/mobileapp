@@ -1,5 +1,6 @@
 import { Executor, IExecutor } from '@ridenui/unraid';
 import { SSHConfig, SSHClient } from '@ridenui/react-native-riden-ssh';
+import type { EventEmitter } from 'events';
 
 export class ReactNativeExecutor extends Executor<SSHConfig> {
   private client: SSHClient;
@@ -23,6 +24,15 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
     if (typeof command === 'object') {
       command = command.command;
     }
-    return this.client.execute(command);
+    return this.client.execute(command, false);
+  }
+
+  executeStream(
+    command: IExecutor.IExecuteSimple | IExecutor.IExecute,
+  ): Promise<[EventEmitter, IExecutor.CancelFunction, Promise<IExecutor.IExecuteStreamResult>]> {
+    if (typeof command === 'object') {
+      command = command.command;
+    }
+    return this.client.executeStream(command);
   }
 }
