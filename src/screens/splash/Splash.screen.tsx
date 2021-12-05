@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useUnraid } from '../../contexts/Unraid.context';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { MainStack } from '../../navigation/MainStack';
 import { LoginScreen } from '../login/Login.screen';
 import { DashboardScreen } from '../dashboard/Dashboard.screen';
 import { Button } from 'react-native';
 import { ConnectingScreen } from '../connecting/Connecting.screen';
+import { DebugScreen } from '../debug/Debug.screen';
+import { DEBUG } from '../../constants';
 
 /**
  * Defines the stated we can have while connecting.
@@ -60,13 +62,27 @@ export function SplashScreen() {
             {loadingState === LoadingStates.LOADED_LOGGED_IN && (
               <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
             )}
-            {loadingState === LoadingStates.CONNECTED_LOGGED_IN && (
+            {loadingState === LoadingStates.CONNECTED_LOGGED_IN && !DEBUG && (
               <>
                 <MainStack.Screen
                   name={'Dashboard'}
                   component={DashboardScreen}
                   options={{
                     title: unraid.deviceName || 'Dashboard',
+                    headerLeft: () => {
+                      return <Button title={'Logout'} onPress={logout} />;
+                    },
+                  }}
+                />
+              </>
+            )}
+            {loadingState === LoadingStates.CONNECTED_LOGGED_IN && DEBUG && (
+              <>
+                <MainStack.Screen
+                  name={'Debug'}
+                  component={DebugScreen}
+                  options={{
+                    title: unraid.deviceName || 'Debug',
                     headerLeft: () => {
                       return <Button title={'Logout'} onPress={logout} />;
                     },
