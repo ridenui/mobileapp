@@ -58,7 +58,7 @@ export function SplashScreen() {
               <MainStack.Screen name={'Login'} component={LoginScreen} options={{ headerShown: false }} />
             )}
             {loadingState === LoadingStates.LOADED_LOGGED_IN && (
-              <MainStack.Screen name={'Connecting'} component={ConnectingScreen} />
+              <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
             )}
             {loadingState === LoadingStates.CONNECTED_LOGGED_IN && (
               <>
