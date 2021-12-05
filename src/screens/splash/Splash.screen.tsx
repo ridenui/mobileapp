@@ -6,6 +6,7 @@ import { LoginScreen } from '../login/Login.screen';
 import { DashboardScreen } from '../dashboard/Dashboard.screen';
 import { Button } from 'react-native';
 import { ConnectingScreen } from '../connecting/Connecting.screen';
+import { useTheme } from 'styled-components/native';
 import { DebugScreen } from '../debug/Debug.screen';
 import { DEBUG } from '../../constants';
 
@@ -32,6 +33,7 @@ enum LoadingStates {
 export function SplashScreen() {
   const [loadingState, setLoadingState] = useState<LoadingStates>(LoadingStates.LOADING);
   const unraid = useUnraid();
+  const theme = useTheme();
 
   useEffect(() => {
     // More logic will be added to this later (checking for valid creds and so on)
@@ -55,7 +57,16 @@ export function SplashScreen() {
     <>
       <NavigationContainer>
         {loadingState !== LoadingStates.LOADING && (
-          <MainStack.Navigator>
+          <MainStack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: theme['700'],
+                shadowColor: theme['500'],
+              },
+              headerTitleStyle: {
+                color: theme.text,
+              },
+            }}>
             {loadingState === LoadingStates.LOADED_LOGGED_OUT && (
               <MainStack.Screen name={'Login'} component={LoginScreen} options={{ headerShown: false }} />
             )}
@@ -68,7 +79,7 @@ export function SplashScreen() {
                   name={'Dashboard'}
                   component={DashboardScreen}
                   options={{
-                    title: unraid.deviceName || 'Dashboard',
+                    title: 'Dashboard',
                     headerLeft: () => {
                       return <Button title={'Logout'} onPress={logout} />;
                     },
@@ -82,7 +93,7 @@ export function SplashScreen() {
                   name={'Debug'}
                   component={DebugScreen}
                   options={{
-                    title: unraid.deviceName || 'Debug',
+                    title: 'Debug',
                     headerLeft: () => {
                       return <Button title={'Logout'} onPress={logout} />;
                     },

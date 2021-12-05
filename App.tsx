@@ -4,6 +4,7 @@ import { dark, light } from '@styles/Themes';
 import { ThemeProvider } from 'styled-components/native';
 import { UnraidProvider } from './src/contexts/Unraid.context';
 import { SplashScreen } from './src/screens/splash/Splash.screen';
+import { ServerProvider } from './src/contexts/Server.context';
 
 export function App() {
   const colorScheme = useColorScheme();
@@ -20,8 +21,10 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <UnraidProvider>
-        <StatusBar barStyle={'dark-content'} />
-        <SplashScreen />
+        <ServerProvider>
+          <StatusBar barStyle={theme === dark ? 'light-content' : 'dark-content'} />
+          <SplashScreen />
+        </ServerProvider>
       </UnraidProvider>
     </ThemeProvider>
   );

@@ -6,6 +6,7 @@ import { StyledProps } from 'styled-components';
 export enum TypographyVariants {
   H1 = 'H1',
   H3 = 'H3',
+  H4 = 'H4',
   Paragraph = 'Paragraph',
   Overline = 'Overline',
 }

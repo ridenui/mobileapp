@@ -22,8 +22,6 @@ export type UnraidProviderValue = {
   hasCredentials: boolean;
   /** True if the SSH Connection is established */
   isConnected: boolean;
-  /** Device's Hostname */
-  deviceName: string | null;
   /** Clear all credentials and all data stored by the app */
   clearCredentials: () => Promise<void>;
   /** Server Credentials */
@@ -35,7 +33,6 @@ const initialUnraidState: UnraidProviderValue = {
   setCredentials: async () => {},
   hasCredentials: false,
   isConnected: false,
-  deviceName: null,
   clearCredentials: async () => {},
   credentials: null,
 };
@@ -47,7 +44,6 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
   const [credentials, setCredentialsState] = useState<Credentials | null>(null);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [deviceName, setDeviceName] = useState<string | null>(null);
 
   const setCredentials = async (creds: Credentials) => {
     await writeToStorage('credentials', JSON.stringify(creds));
@@ -74,7 +70,9 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
       console.log('Initializing after Credential Change');
       const unraid = new Unraid({
         executor: ReactNativeExecutor,
-        executorConfig: credentials,
+        executorConfig: {
+          ...credentials,
+        },
       });
       setInstance(unraid);
       setHasCredentials(true);
@@ -82,10 +80,6 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
       unraid.executor.connect().then(connected => {
         console.log('Connected...');
         setIsConnected(connected);
-        unraid.system.getHostname().then(hostname => {
-          console.log('got hostname!');
-          setDeviceName(hostname);
-        });
       });
     });
   }, [credentials]);
@@ -113,7 +107,6 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         setCredentials,
         hasCredentials,
         isConnected,
-        deviceName,
         clearCredentials,
         credentials,
       }}>
