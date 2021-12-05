@@ -1,0 +1,4 @@
+icon: true
+typescript: true
+native: true
+filenameCase: camel

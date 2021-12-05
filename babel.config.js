@@ -2,12 +2,7 @@ module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   env: {
     test: {
-      plugins: [
-        [
-          'babel-plugin-styled-components',
-          { ssr: true, displayName: false, namespace: 'sc' },
-        ],
-      ],
+      plugins: [['babel-plugin-styled-components', { ssr: true, displayName: false, namespace: 'sc' }]],
     },
   },
   plugins: [
@@ -22,6 +17,7 @@ module.exports = {
           '@helpers/(.*)$': './src/helpers/\\1',
           '@styles/(.*)$': './src/styles/\\1',
           '@type/(.*)$': './src/type/\\1',
+          '@assets/(.*)$': './src/assets/\\1',
         },
       },
     ],
