@@ -281,7 +281,7 @@ PODS:
   - React-jsinspector (0.66.3)
   - React-logger (0.66.3):
     - glog
-  - react-native-riden-ssh (1.6.0):
+  - react-native-riden-ssh (1.6.1):
     - NMSSH-riden (~> 2.6.4)
     - React
   - react-native-safe-area-context (3.3.2):
@@ -575,7 +575,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 433a691aee158533a6a6ee9c86cb4a1684fa2853
   React-jsinspector: d9c8eb0b53f0da206fed56612b289fec84991157
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
-  react-native-riden-ssh: af97ccde957aa3f00c07fb93ee358d0e15f4a566
+  react-native-riden-ssh: f2581ef1bfb0b9c61b3f5b1fb21883eaf34bf22f
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-zeroconf: 8c7f309c76f95264d20e95270eb8366c57272894
   React-perflogger: 73732888d37d4f5065198727b167846743232882
