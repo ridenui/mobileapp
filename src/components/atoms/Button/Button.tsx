@@ -1,7 +1,8 @@
 import React from 'react';
 import * as S from './Button.styled';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import { TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps, ViewStyle } from 'react-native';
+import { StyledProps } from 'styled-components';
 
 export interface ButtonProps {
   /** Text Content of the Button. */
@@ -10,14 +11,16 @@ export interface ButtonProps {
   onPress?: TouchableOpacityProps['onPress'];
   /** Set button disabled state */
   disabled?: TouchableOpacityProps['disabled'];
+  /** custom styles */
+  style?: StyledProps<ViewStyle>;
 }
 
 /**
  * It's a Button.
  */
-export function Button({ children, onPress, disabled }: ButtonProps): JSX.Element {
+export function Button({ children, onPress, disabled, style }: ButtonProps): JSX.Element {
   return (
-    <S.Button onPress={onPress} disabled={disabled}>
+    <S.Button onPress={onPress} disabled={disabled} style={style}>
       <Typography variant={TypographyVariants.Paragraph}>{children}</Typography>
     </S.Button>
   );
