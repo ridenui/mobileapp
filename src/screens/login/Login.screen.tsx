@@ -4,7 +4,7 @@ import { GradientHeader } from '@atoms/GradientHeader/GradientHeader';
 import { Input } from '@atoms/Input/Input';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { Button } from '@atoms/Button/Button';
-import { beginAutoDiscover, stopDiscovering, ValidValidatedInstance } from './AutoDiscover';
+import { validateInstance, ValidValidatedInstance } from './AutoDiscover';
 import { openLink } from '@helpers/Linker';
 import { AutoDiscoverCard } from '@molecules/AutoDiscoverCard/AutoDiscoverCard';
 import { MoreDevicesHint } from './Login.styled';
@@ -14,6 +14,7 @@ import { useUnraid } from '../../contexts/Unraid.context';
 import { useFormik } from 'formik';
 import { Keyboard } from 'react-native';
 import { CredentialsSchema } from '../../validators/Credentials.validation';
+import Zeroconf from 'react-native-zeroconf';
 
 export function LoginScreen() {
   const [devices, setDiscoveredDevices] = useState<ValidValidatedInstance[]>([]);
@@ -45,11 +46,20 @@ export function LoginScreen() {
   }, [errors]);
 
   useEffect(() => {
-    beginAutoDiscover(service => {
-      setDiscoveredDevices(oldDevices => [...oldDevices, service]);
+    const zeroconf = new Zeroconf();
+    zeroconf.scan('ssh', 'tcp');
+    zeroconf.on('resolved', async service => {
+      console.log('Found new Service ' + service.name);
+      const validatedInstance = await validateInstance(service);
+      if (validatedInstance.isValid) {
+        setDiscoveredDevices(oldDevices => [...oldDevices, validatedInstance]);
+      }
     });
 
-    return () => stopDiscovering();
+    return () => {
+      setDiscoveredDevices([]);
+      zeroconf.removeDeviceListeners();
+    };
   }, []);
 
   return (
@@ -98,7 +108,7 @@ export function LoginScreen() {
               onChangeText={handleChange('password')}>
               Password
             </Input>
-            <Button disabled={isInvalidForm} onPress={handleSubmit}>
+            <Button disabled={isInvalidForm} onPress={() => handleSubmit()}>
               {isInvalidForm ? 'Please fill out the red fields' : 'Connect'}
             </Button>
           </S.Form>

@@ -1,8 +1,6 @@
-import Zeroconf, { Service } from 'react-native-zeroconf';
+import type { Service } from 'react-native-zeroconf';
 import axios from 'axios';
 import cheerio from 'cheerio';
-
-const zeroconf = new Zeroconf();
 
 export type ValidValidatedInstance = {
   isValid: true;
@@ -44,19 +42,4 @@ export async function validateInstance(service: Service): Promise<ValidatedInsta
       isValid: false,
     };
   }
-}
-
-export function beginAutoDiscover(onResolved: (service: ValidValidatedInstance) => void) {
-  zeroconf.scan('ssh', 'tcp');
-  zeroconf.on('resolved', async service => {
-    const validatedInstance = await validateInstance(service);
-    if (validatedInstance.isValid) {
-      onResolved(validatedInstance);
-    }
-  });
-}
-
-export function stopDiscovering() {
-  zeroconf.stop();
-  zeroconf.removeDeviceListeners();
 }
