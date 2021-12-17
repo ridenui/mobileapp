@@ -66,7 +66,8 @@ export function SplashScreen() {
               headerTitleStyle: {
                 color: theme.text,
               },
-            }}>
+            }}
+          >
             {loadingState === LoadingStates.LOADED_LOGGED_OUT && (
               <MainStack.Screen name={'Login'} component={LoginScreen} options={{ headerShown: false }} />
             )}

@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useUnraid } from './Unraid.context';
 import { IdentConfig } from '@ridenui/unraid/dist/modules/unraid/extensions';
 import { IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
+import { parse } from 'date-fns';
 
 type ServerProviderProps = {
   children: ReactNode;
@@ -13,6 +14,7 @@ export type ServerProviderValue = {
   identConfig: IdentConfig | null;
   systemInfo: IInfoResult | null;
   caseModel: string | null;
+  uptime: Date | null;
   reloadProperties: () => void;
   isReloading: boolean;
 };
@@ -22,6 +24,7 @@ const initialServerState: ServerProviderValue = {
   identConfig: null,
   systemInfo: null,
   caseModel: null,
+  uptime: null,
   reloadProperties: () => {},
   isReloading: false,
 };
@@ -34,6 +37,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const [identConfig, setIdentConfig] = useState<IdentConfig | null>(null);
   const [systemInfo, setSystemInfo] = useState<IInfoResult | null>(null);
   const [caseModel, setCaseModel] = useState<string | null>(null);
+  const [uptime, setUptime] = useState<Date | null>(null);
   const { instance } = useUnraid();
 
   const reloadProperties = useCallback(async () => {
@@ -44,6 +48,11 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
       setIdentConfig(await instance.unraid.getIdentConfig());
       setSystemInfo(await instance.system.info());
       setCaseModel(await instance.unraid.getCaseModel());
+      const { raw } = await instance.system.uptime();
+      const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
+      console.log(parsedUptime);
+      console.log(raw);
+      setUptime(parsedUptime);
       setIsReloading(false);
     }
   }, [instance]);
@@ -61,9 +70,11 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
         identConfig,
         systemInfo,
         caseModel,
+        uptime,
         reloadProperties,
         isReloading,
-      }}>
+      }}
+    >
       {children}
     </ServerContext.Provider>
   );

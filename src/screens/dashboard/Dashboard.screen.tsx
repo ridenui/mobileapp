@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import * as S from './Dashboard.styled';
-import { Box } from '@atoms/Box/Box';
 import { useServer } from '../../contexts/Server.context';
 import formatRelative from 'date-fns/formatRelative';
 import { caseModelToIconName } from '@helpers/formatters';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 import { IconProps } from '@atoms/Icon/Icon';
-
-const demoDate = new Date('2021-10-01');
+import { getDateFnsLocale } from '@helpers/Locales';
+import { useLocalization } from '../../contexts/Localization.context';
 
 export function DashboardScreen() {
-  const { hostname, systemInfo, caseModel, reloadProperties, isReloading } = useServer();
+  const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig } = useServer();
   const [caseModelIconName, setCaseModelIconName] = useState<IconProps['type']>('vm');
+  const { country } = useLocalization();
 
   useEffect(() => {
     setCaseModelIconName(caseModelToIconName(caseModel || 'vm'));
@@ -22,17 +22,22 @@ export function DashboardScreen() {
     <S.Container>
       <ScrollView refreshControl={<RefreshControl refreshing={isReloading} onRefresh={reloadProperties} />}>
         <S.ServerInfoBox>
-          <View>
+          <S.ServerInfoText>
             <Typography variant={TypographyVariants.H3}>{hostname}</Typography>
-            <Typography variant={TypographyVariants.Paragraph}>{'its on the web'}</Typography>
-            <Typography variant={TypographyVariants.Paragraph}>
-              Up since {formatRelative(demoDate, new Date())}
-            </Typography>
+            <Typography variant={TypographyVariants.Paragraph}>{identConfig?.comment}</Typography>
+            {uptime && (
+              <Typography variant={TypographyVariants.Paragraph}>
+                Up since{' '}
+                {formatRelative(uptime, new Date(), {
+                  locale: getDateFnsLocale(country),
+                })}
+              </Typography>
+            )}
             <Typography variant={TypographyVariants.Paragraph}>
               {systemInfo?.manufacturer} {systemInfo?.productName}
             </Typography>
-          </View>
-          <S.ServerCaseIcon iconProps={{ height: 80, width: 200 }} type={caseModelIconName} />
+          </S.ServerInfoText>
+          <S.ServerCaseIcon iconProps={{ height: 80, width: 100 }} type={caseModelIconName} />
         </S.ServerInfoBox>
       </ScrollView>
     </S.Container>

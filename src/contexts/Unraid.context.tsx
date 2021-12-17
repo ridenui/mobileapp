@@ -109,7 +109,8 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         isConnected,
         clearCredentials,
         credentials,
-      }}>
+      }}
+    >
       {children}
     </UnraidContext.Provider>
   );
