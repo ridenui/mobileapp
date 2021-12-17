@@ -7,7 +7,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "pod": "cd ios && pod install && cd ..",
-    "icons": "yarn svgr --out-dir src/assets/cases --index-template svgr.indextemplate.js src/assets/cases/svgs"
+    "icons": "yarn svgr --out-dir src/assets/cases --index-template svgr.indextemplate.js src/assets/cases/svgs",
+    "ios:beta": "fastlane ios beta"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.4",
