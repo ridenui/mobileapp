@@ -270,7 +270,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\nexport BUNDLE_COMMAND=webpack-bundle\n";
+			shellScript = "set -e\n\nexport NODE_BINARY=node\nexport BUNDLE_COMMAND=webpack-bundle\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		077E01280D4B4AD18B2E1770 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
