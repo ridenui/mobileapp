@@ -77,7 +77,8 @@ export function LoginScreen() {
                 isInvalid={!!errors.host}
                 autoCapitalize={'none'}
                 value={values.host}
-                onChangeText={handleChange('host')}>
+                onChangeText={handleChange('host')}
+              >
                 Hostname
               </S.HostnameInput>
               <S.PortInput
@@ -87,7 +88,8 @@ export function LoginScreen() {
                 autoCapitalize={'none'}
                 onChangeText={handleChange('port')}
                 maxLength={5}
-                keyboardType={'numeric'}>
+                keyboardType={'numeric'}
+              >
                 Port
               </S.PortInput>
             </S.HostnamePortContainer>
@@ -96,7 +98,8 @@ export function LoginScreen() {
               isInvalid={!!errors.username}
               value={values.username}
               autoCapitalize={'none'}
-              onChangeText={handleChange('username')}>
+              onChangeText={handleChange('username')}
+            >
               Username
             </Input>
             <Input
@@ -105,7 +108,8 @@ export function LoginScreen() {
               value={values.password}
               autoCapitalize={'none'}
               isSecure={true}
-              onChangeText={handleChange('password')}>
+              onChangeText={handleChange('password')}
+            >
               Password
             </Input>
             <Button disabled={isInvalidForm} onPress={() => handleSubmit()}>

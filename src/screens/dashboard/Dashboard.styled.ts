@@ -11,6 +11,11 @@ export const Container = styled.SafeAreaView`
 export const ServerInfoBox = styled(Box)`
   display: flex;
   flex-direction: row;
+  justify-items: space-between;
+`;
+
+export const ServerInfoText = styled.View`
+  flex: 2;
 `;
 
 export const ServerCaseIcon = styled(Icon)`

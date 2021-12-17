@@ -1,13 +1,4 @@
-export type ThemeColors =
-  | '100'
-  | '200'
-  | '300'
-  | '400'
-  | '500'
-  | '600'
-  | '700'
-  | 'text'
-  | 'textInvert';
+export type ThemeColors = '100' | '200' | '300' | '400' | '500' | '600' | '700' | 'text' | 'textInvert';
 
 export type Theme = {
   [key in ThemeColors]: string;
