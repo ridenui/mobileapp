@@ -17,11 +17,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: Setting up Ruby and bundler cache
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          ruby-version: 2.7.5
       - name: CocoaPods Cache
         uses: actions/cache@v2
         with:
@@ -43,7 +38,6 @@ jobs:
         run: |
             yarn install --frozen-lockfile
             bundle install
-            yarn pod
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Setting up Certificates
