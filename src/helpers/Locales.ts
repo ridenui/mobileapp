@@ -7,7 +7,7 @@ export function getDateFnsLocale(tag: string): Locale {
   // @ts-ignore
   const locale = Locales[processedTag.substring(0, 2).toLowerCase()];
   if (!locale) {
-    console.error('Locale "' + processedTag + '" does not exists. Using fallback.');
+    console.log('Locale "' + processedTag + '" does not exists. Using fallback.');
     return Locales.enUS;
   }
 

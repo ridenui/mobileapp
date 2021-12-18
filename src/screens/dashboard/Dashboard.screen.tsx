@@ -8,9 +8,11 @@ import { RefreshControl, ScrollView } from 'react-native';
 import { IconProps } from '@atoms/Icon/Icon';
 import { getDateFnsLocale } from '@helpers/Locales';
 import { useLocalization } from '../../contexts/Localization.context';
+import { DiskUsageWidget } from '@molecules/DiskUsageWidget/DiskUsageWidget';
 
 export function DashboardScreen() {
-  const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig } = useServer();
+  const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig, diskUsage } =
+    useServer();
   const [caseModelIconName, setCaseModelIconName] = useState<IconProps['type']>('vm');
   const { country } = useLocalization();
 
@@ -39,6 +41,7 @@ export function DashboardScreen() {
           </S.ServerInfoText>
           <S.ServerCaseIcon iconProps={{ height: 80, width: 100 }} type={caseModelIconName} />
         </S.ServerInfoBox>
+        {diskUsage && <DiskUsageWidget />}
       </ScrollView>
     </S.Container>
   );
