@@ -41,7 +41,7 @@ jobs:
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Setting up Certificates
-        run: fastlane match appstore --readonly
+        run: bundle exec fastlane match appstore --readonly
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BOT_BASIC_AUTH }}
       - name: Building ipa
