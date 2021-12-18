@@ -41,7 +41,7 @@ jobs:
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Starting Metro in Background
-        run: yarn start
+        run: yarn start &
       - name: Building ipa
         run: yarn ios:build
         env:
