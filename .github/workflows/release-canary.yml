@@ -38,6 +38,7 @@ jobs:
         run: |
             yarn install --frozen-lockfile
             bundle install
+            yarn pod
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Setting up Certificates
