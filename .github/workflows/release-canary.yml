@@ -18,7 +18,9 @@ jobs:
         with:
           node-version: '16'
       - name: Installing Dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+            yarn install --frozen-lockfile
+            bundle update
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Building ipa
