@@ -20,7 +20,8 @@ jobs:
       - name: Installing Dependencies
         run: |
             yarn install --frozen-lockfile
-            bundle update
+            bundle install
+            yarn pod
       - name: Running Type Check
         run: yarn tsc --noEmit
       - name: Building ipa
