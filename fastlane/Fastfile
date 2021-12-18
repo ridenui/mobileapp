@@ -13,7 +13,7 @@ platform :ios do
        path: "ios/RIDEN.xcodeproj")
       build_app(scheme: "RIDEN",
         workspace: 'ios/RIDEN.xcworkspace',
-        xcargs: "-allowProvisioningUpdates"
+        xcargs: "-allowProvisioningUpdates",
         include_bitcode: true)
    end
 
