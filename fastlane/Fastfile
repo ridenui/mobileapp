@@ -8,6 +8,7 @@ end
 platform :ios do
    desc 'Build the iOS application.'
    lane :build do
+      setup_ci if ENV['CI']
       update_code_signing_settings(
        use_automatic_signing: true,
        path: "ios/RIDEN.xcodeproj")
