@@ -17,6 +17,28 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - name: Setting up Ruby and bundler cache
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 2.7.5
+      - name: CocoaPods Cache
+        uses: actions/cache@v2
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: Prepare yarn cache
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: yarn Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Installing Dependencies
         run: |
             yarn install --frozen-lockfile
@@ -26,6 +48,8 @@ jobs:
         run: yarn tsc --noEmit
       - name: Setting up Certificates
         run: fastlane match appstore --readonly
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BOT_BASIC_AUTH }}
       - name: Building ipa
         run: yarn ios:build
         env:
