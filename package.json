@@ -8,8 +8,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "pod": "cd ios && pod install && cd ..",
     "icons": "yarn svgr --out-dir src/assets/cases --index-template svgr.indextemplate.js src/assets/cases/svgs",
-    "ios:beta": "fastlane ios beta",
-    "ios:build": "fastlane ios build"
+    "ios:beta": "bundle exec fastlane ios beta",
+    "ios:build": "bundle exec fastlane ios build"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.4",

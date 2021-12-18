@@ -8,7 +8,10 @@ end
 platform :ios do
    desc 'Build the iOS application.'
    lane :build do
-      build_app(scheme: "RELEASE",
+      update_code_signing_settings(
+       use_automatic_signing: true,
+       path: "ios/RIDEN.xcworkspace")
+      build_app(scheme: "RIDEN PROD",
         workspace: 'ios/RIDEN.xcworkspace',
         include_bitcode: true)
    end
