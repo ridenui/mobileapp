@@ -43,11 +43,11 @@ jobs:
       - name: Setting up Certificates
         run: bundle exec fastlane match appstore --readonly
         env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BOT_BASIC_AUTH }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BASIC_AUTH }}
       - name: Building ipa
         run: yarn ios:build
         env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BOT_BASIC_AUTH }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BASIC_AUTH }}
       - name: Archiving built ipa
         uses: actions/upload-artifact@v2
         with:
