@@ -42,6 +42,8 @@ jobs:
         run: yarn tsc --noEmit
       - name: Starting Metro in Background
         run: yarn start &
+      - name: Check if Metro is running
+        run: curl localhost:8081
       - name: Building ipa
         run: yarn ios:build
         env:
