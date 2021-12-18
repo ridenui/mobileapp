@@ -1,0 +1,17 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/gym/#gymfile
+
+# In general, you can use the options available
+# fastlane gym --help
+
+# Remove the # in front of the line to enable the option
+
+scheme("RIDEN")
+
+output_directory("./")
+output_name("RIDEN")
+workspace('ios/RIDEN.xcworkspace')
+xcargs('-allowProvisioningUpdates')
+include_bitcode(true)
+clean(true)
+silent(true)

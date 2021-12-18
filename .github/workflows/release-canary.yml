@@ -38,9 +38,10 @@ jobs:
         run: |
             yarn install --frozen-lockfile
             bundle install
-            yarn pod
       - name: Running Type Check
         run: yarn tsc --noEmit
+      - name: Starting Metro in Background
+        run: yarn start
       - name: Building ipa
         run: yarn ios:build
         env:
@@ -55,3 +56,5 @@ jobs:
         run: echo ${{ secrets.APPSTORE_CONNECT_KEY }} | base64 -d > APPSTORE_KEY.p8
       - name: Pushing ipa to AppStore Connect
         run: yarn ios:beta
+      - name: Killing Metro
+        run: killall -9 node

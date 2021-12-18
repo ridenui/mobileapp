@@ -9,11 +9,9 @@ platform :ios do
    desc 'Build the iOS application.'
    lane :build do
       setup_ci if ENV['CI']
+      cocoapods(podfile: "./ios/Podfile")
       match(type: 'appstore')
-      build_app(scheme: "RIDEN",
-        workspace: 'ios/RIDEN.xcworkspace',
-        xcargs: "-allowProvisioningUpdates",
-        include_bitcode: true)
+      gym
    end
 
    desc 'Ship to Testflight.'
