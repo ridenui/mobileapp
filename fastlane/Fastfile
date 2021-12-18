@@ -10,9 +10,6 @@ platform :ios do
    lane :build do
       setup_ci if ENV['CI']
       match(type: 'appstore')
-      update_code_signing_settings(
-       use_automatic_signing: true,
-       path: "ios/RIDEN.xcodeproj")
       build_app(scheme: "RIDEN",
         workspace: 'ios/RIDEN.xcworkspace',
         xcargs: "-allowProvisioningUpdates",
