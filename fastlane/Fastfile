@@ -11,8 +11,9 @@ platform :ios do
       update_code_signing_settings(
        use_automatic_signing: true,
        path: "ios/RIDEN.xcodeproj")
-      build_app(scheme: "RIDEN PROD",
+      build_app(scheme: "RIDEN",
         workspace: 'ios/RIDEN.xcworkspace',
+        xcargs: "-allowProvisioningUpdates"
         include_bitcode: true)
    end
 
