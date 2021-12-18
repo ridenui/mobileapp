@@ -24,8 +24,12 @@ jobs:
             yarn pod
       - name: Running Type Check
         run: yarn tsc --noEmit
+      - name: Setting up Certificates
+        run: fastlane match appstore --readonly
       - name: Building ipa
         run: yarn ios:build
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.HIGH5_BOT_BASIC_AUTH }}
       - name: Archiving built ipa
         uses: actions/upload-artifact@v2
         with:

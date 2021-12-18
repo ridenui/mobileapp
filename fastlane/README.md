@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios build
 ```
 Build the iOS application.
+### ios certificates
+```
+fastlane ios certificates
+```
+
 ### ios beta
 ```
 fastlane ios beta
