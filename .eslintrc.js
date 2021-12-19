@@ -65,6 +65,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-duplicate-imports': 'off',
     'no-console': 'off',
+    'no-await-in-loop': 'off',
     'no-plusplus': 'off',
     '@typescript-eslint/no-duplicate-imports': ['error', { includeExports: true }],
     'no-shadow': 'off',

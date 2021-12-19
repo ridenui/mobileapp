@@ -17,7 +17,6 @@ export function CpuUsageWidget(): JSX.Element {
   const [cpuUsage, setCpuUsage] = useState<CPUUsage | null>(null);
 
   useEffect(() => {
-    console.log(`Reloading Effect - ${dashboard.cpuRefresh}`);
     if (!instance) {
       return undefined;
     }

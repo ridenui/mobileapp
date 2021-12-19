@@ -9,8 +9,5 @@ export const CredentialsSchema = Yup.object().shape({
 });
 
 export async function areValidCredentials(credentials: Credentials): Promise<boolean> {
-  console.log(credentials);
-  console.log('checking validity.');
-
   return CredentialsSchema.isValid(credentials);
 }

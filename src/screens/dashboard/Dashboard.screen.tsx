@@ -3,7 +3,6 @@ import { RefreshControl, ScrollView } from 'react-native';
 import type { IconProps } from '@atoms/Icon/Icon';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { caseModelToIconName } from '@helpers/formatters';
-import { getDateFnsLocale } from '@helpers/Locales';
 import { CpuUsageWidget } from '@molecules/CpuUsageWidget/CpuUsageWidget';
 import { DiskUsageWidget } from '@molecules/DiskUsageWidget/DiskUsageWidget';
 import formatRelative from 'date-fns/formatRelative';
@@ -15,7 +14,7 @@ export function DashboardScreen() {
   const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig, diskUsage } =
     useServer();
   const [caseModelIconName, setCaseModelIconName] = useState<IconProps['type']>('vm');
-  const { country } = useLocalization();
+  const { dateFnsLocale } = useLocalization();
 
   useEffect(() => {
     setCaseModelIconName(caseModelToIconName(caseModel || 'vm'));
@@ -32,7 +31,7 @@ export function DashboardScreen() {
               <Typography variant={TypographyVariants.Paragraph}>
                 Up since{' '}
                 {formatRelative(uptime, new Date(), {
-                  locale: getDateFnsLocale(country),
+                  locale: dateFnsLocale,
                 })}
               </Typography>
             )}

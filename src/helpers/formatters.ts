@@ -1,4 +1,5 @@
 import type { IconProps } from '@atoms/Icon/Icon';
+import { log } from '@helpers/Logger';
 
 export function caseModelToIconName(caseModel: string): IconProps['type'] {
   const parts = caseModel.split('-');
@@ -14,7 +15,7 @@ export function caseModelToIconName(caseModel: string): IconProps['type'] {
   if (!Number.isNaN(Number.parseInt(joined.charAt(0), 10))) {
     correctName = `Svg${correctName.charAt(0)}${correctName.charAt(1).toUpperCase()}${correctName.slice(2)}`;
   }
-  console.log(`Converting caseModel: ${caseModel} => ${correctName}`);
+  log.debug(`Converting caseModel: ${caseModel} => ${correctName}`);
 
   return correctName as IconProps['type'];
 }
