@@ -6,6 +6,7 @@ import { UnraidProvider } from './src/contexts/Unraid.context';
 import { SplashScreen } from './src/screens/splash/Splash.screen';
 import { ServerProvider } from './src/contexts/Server.context';
 import { LocalizationProvider } from './src/contexts/Localization.context';
+import { SettingsProvider } from './src/contexts/Settings.context';
 
 export function App() {
   const colorScheme = useColorScheme();
@@ -21,14 +22,16 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LocalizationProvider>
-        <UnraidProvider>
-          <ServerProvider>
-            <StatusBar barStyle={theme === dark ? 'light-content' : 'dark-content'} />
-            <SplashScreen />
-          </ServerProvider>
-        </UnraidProvider>
-      </LocalizationProvider>
+      <SettingsProvider>
+        <LocalizationProvider>
+          <UnraidProvider>
+            <ServerProvider>
+              <StatusBar barStyle={theme === dark ? 'light-content' : 'dark-content'} />
+              <SplashScreen />
+            </ServerProvider>
+          </UnraidProvider>
+        </LocalizationProvider>
+      </SettingsProvider>
     </ThemeProvider>
   );
 }
