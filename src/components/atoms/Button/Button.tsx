@@ -1,8 +1,8 @@
 import React from 'react';
-import * as S from './Button.styled';
+import type { TouchableOpacityProps, ViewStyle } from 'react-native';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import { TouchableOpacityProps, ViewStyle } from 'react-native';
-import { StyledProps } from 'styled-components';
+import type { StyledProps } from 'styled-components';
+import * as S from './Button.styled';
 
 export enum ButtonVariants {
   PRIMARY = 'primary',

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, useWindowDimensions } from 'react-native';
-import { CoreUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
 import { AdvancedUsageIndicator } from '@atoms/AdvancedUsageIndicator/AdvancedUsageIndicator';
-import { Colors } from '@styles/Colors';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import type { CoreUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
+import { Colors } from '@styles/Colors';
 import * as S from './CpuCoreUsage.styled';
 
 export interface CpuCoreUsageProps {
@@ -41,6 +41,7 @@ export function CpuCoreUsage({ core }: CpuCoreUsageProps): JSX.Element {
 
   const getInterpolation = (current: React.MutableRefObject<Animated.Value>) => {
     const effectiveWidth = width * 0.95 - 16; // the surrounding box has a width of 95% and a padding of 8px per side
+
     return current.current.interpolate({
       inputRange: [0, 100],
       outputRange: [0, effectiveWidth],
@@ -85,7 +86,7 @@ export function CpuCoreUsage({ core }: CpuCoreUsageProps): JSX.Element {
     ];
 
     // Find first metric which is not zero (to give it round corners)
-    for (let usage of usages) {
+    for (const usage of usages) {
       if (core[usage.key] !== 0) {
         usage.isFirst = true;
         break;

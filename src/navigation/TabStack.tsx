@@ -1,11 +1,11 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DashboardScreen } from '../screens/dashboard/Dashboard.screen';
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components/native';
 import { DEBUG } from '../constants';
+import { DashboardScreen } from '../screens/dashboard/Dashboard.screen';
 import { DebugScreen } from '../screens/debug/Debug.screen';
-import { getTabBarIcon } from './TabStack.helpers';
 import { SettingsScreen } from '../screens/settings/Settings.screen';
+import { getTabBarIcon } from './TabStack.helpers';
 
 export const TabStack = createBottomTabNavigator();
 

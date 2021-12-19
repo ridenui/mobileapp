@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useUnraid } from '../../contexts/Unraid.context';
 import { NavigationContainer } from '@react-navigation/native';
-import { MainStack } from '../../navigation/MainStack';
-import { TabNavigation } from '../../navigation/TabStack';
-import { LoginScreen } from '../login/Login.screen';
-import { ConnectingScreen } from '../connecting/Connecting.screen';
 import { useTheme } from 'styled-components/native';
 import { DEBUG } from '../../constants';
+import { useUnraid } from '../../contexts/Unraid.context';
+import { MainStack } from '../../navigation/MainStack';
+import { TabNavigation } from '../../navigation/TabStack';
+import { ConnectingScreen } from '../connecting/Connecting.screen';
+import { LoginScreen } from '../login/Login.screen';
 
 /**
  * Defines the stated we can have while connecting.

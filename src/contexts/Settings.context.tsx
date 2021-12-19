@@ -27,12 +27,12 @@ export function SettingsProvider({ children }: SettingsProviderProps): JSX.Eleme
   const [cpuRefresh, setCpuRefresh] = useState<number>(5000);
 
   const reloadSettings = () => {
-    readFromStorage(ConfigValues.cpuRefresh).then(value => {
+    readFromStorage(ConfigValues.cpuRefresh).then((value) => {
       if (!value) {
         return;
       }
       const asNumber = Number.parseInt(value, 10);
-      if (!isNaN(asNumber)) {
+      if (!Number.isNaN(asNumber)) {
         setCpuRefresh(asNumber);
       }
     });
@@ -61,5 +61,6 @@ export function useSettings(): SettingsProviderValue {
   if (context === undefined) {
     throw new Error('useSettings must be used within a SettingsProvider');
   }
+
   return context;
 }

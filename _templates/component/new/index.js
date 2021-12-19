@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const inflection = require('inflection');
 
 module.exports = {
@@ -23,6 +24,7 @@ module.exports = {
     const types = inflection.pluralize(type.toLowerCase());
     const fileName = `${types}/${name}/${name}`;
     const nameInCamelCase = name[0].toLowerCase() + name.substr(1);
+
     return {
       type,
       types,

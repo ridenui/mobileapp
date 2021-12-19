@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import LottieView from 'lottie-react-native';
 import { Button } from '@atoms/Button/Button';
+import LottieView from 'lottie-react-native';
+import styled from 'styled-components/native';
 
 export const Background = styled(LinearGradient)`
   height: 100%;

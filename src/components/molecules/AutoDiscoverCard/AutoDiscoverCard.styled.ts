@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Typography } from '@atoms/Typography/Typography';
+import styled from 'styled-components/native';
 
 type AutoDiscoverCardStyled = {
   width: number;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
@@ -12,11 +13,10 @@ export function DebugScreen() {
     if (instance) {
       instance.unraid
         .getIdentConfig()
-        .then(output => {
-          setDebugOutput(Object.keys(output).map(v => `${v}: ${output[v]}`));
+        .then((output) => {
+          setDebugOutput(Object.keys(output).map((v) => `${v}: ${output[v]}`));
         })
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .catch(e => {
+        .catch(() => {
           alert('there was an error.');
         });
     }

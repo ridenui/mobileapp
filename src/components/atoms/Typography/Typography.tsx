@@ -1,7 +1,7 @@
 import React from 'react';
+import type { TextProps } from 'react-native';
+import type { StyledProps } from 'styled-components';
 import * as S from './Typography.styled';
-import { TextProps } from 'react-native';
-import { StyledProps } from 'styled-components';
 
 export enum TypographyVariants {
   H1 = 'H1',
@@ -26,5 +26,6 @@ export interface TypographyProps {
  */
 export function Typography({ children, variant, style }: TypographyProps): JSX.Element {
   const Tag = S[variant];
+
   return <Tag style={style}>{children}</Tag>;
 }

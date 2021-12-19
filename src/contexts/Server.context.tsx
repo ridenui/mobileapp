@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import React, { useEffect, useState, useCallback } from 'react';
-import { useUnraid } from './Unraid.context';
-import { IdentConfig } from '@ridenui/unraid/dist/modules/unraid/extensions';
-import { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
+import React, { useCallback, useEffect, useState } from 'react';
+import type { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
+import type { IdentConfig } from '@ridenui/unraid/dist/modules/unraid/extensions';
 import { parse } from 'date-fns';
+import { useUnraid } from './Unraid.context';
 
 type ServerProviderProps = {
   children: ReactNode;
@@ -88,5 +88,6 @@ export function useServer(): ServerProviderValue {
   if (context === undefined) {
     throw new Error('useServer must be used within a ServerProvider');
   }
+
   return context;
 }

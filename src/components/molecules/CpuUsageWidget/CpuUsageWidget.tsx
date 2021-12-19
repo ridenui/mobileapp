@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import * as S from './CpuUsageWidget.styled';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import { useUnraid } from '../../../contexts/Unraid.context';
-import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
-import { CpuCoreUsage } from '@molecules/CpuCoreUsage/CpuCoreUsage';
 import { LegendItem } from '@atoms/LegendItem/LegendItem';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import { CpuCoreUsage } from '@molecules/CpuCoreUsage/CpuCoreUsage';
+import type { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
 import { Colors } from '@styles/Colors';
 import { useSettings } from '../../../contexts/Settings.context';
+import { useUnraid } from '../../../contexts/Unraid.context';
+import * as S from './CpuUsageWidget.styled';
 
 /**
  * CPU Usage with Live Updates. WOW!
@@ -17,27 +17,29 @@ export function CpuUsageWidget(): JSX.Element {
   const [cpuUsage, setCpuUsage] = useState<CPUUsage | null>(null);
 
   useEffect(() => {
-    console.log('Reloading Effect - ' + dashboard.cpuRefresh);
+    console.log(`Reloading Effect - ${dashboard.cpuRefresh}`);
     if (!instance) {
-      return;
+      return undefined;
     }
 
     const fetchUsage = () => {
-      instance.system.usage().then(usage => {
+      instance.system.usage().then((usage) => {
         setCpuUsage(usage);
       });
     };
 
     fetchUsage();
 
+    let interval: NodeJS.Timer;
+
     // 0 means no refresh
     if (dashboard.cpuRefresh !== 0) {
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         fetchUsage();
       }, dashboard.cpuRefresh);
-
-      return () => clearInterval(interval);
     }
+
+    return () => (interval ? clearInterval(interval) : undefined);
   }, [instance, dashboard.cpuRefresh]);
 
   if (!cpuUsage) {
@@ -58,7 +60,7 @@ export function CpuUsageWidget(): JSX.Element {
           {cores.length} {cores.length === 1 ? 'Core' : 'Cores'}
         </Typography>
       </S.WidgetHeader>
-      {cores.map(core => {
+      {cores.map((core) => {
         return <CpuCoreUsage key={core.core} core={core} />;
       })}
       <S.LegendGroup>

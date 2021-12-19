@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
-import { Colors } from '@styles/Colors';
 import { ButtonVariants } from '@atoms/Button/Button';
-import { Theme } from '@styles/Themes';
+import { Colors } from '@styles/Colors';
+import type { Theme } from '@styles/Themes';
+import styled from 'styled-components/native';
 
 export type ButtonStyled = {
   variant: ButtonVariants;
@@ -21,6 +21,7 @@ const getBackgroundColor = ({ variant, theme, disabled }: withTheme) => {
       background: disabled ? theme['400'] : Colors.orange,
     };
   }
+
   return {};
 };
 

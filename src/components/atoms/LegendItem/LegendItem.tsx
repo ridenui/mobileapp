@@ -1,6 +1,6 @@
 import React from 'react';
-import * as S from './LegendItem.styled';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import * as S from './LegendItem.styled';
 
 export interface LegendItemProps {
   children: string;

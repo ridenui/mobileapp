@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Colors } from '@styles/Colors';
+import styled from 'styled-components/native';
 
 export const UsageIndicatorBackground = styled.View`
   width: 100%;
@@ -18,15 +18,16 @@ const getUsageIndicatorColor = ({ usage }: UsageIndicatorStyled) => {
     return {
       background: Colors.green,
     };
-  } else if (usage <= 90) {
+  }
+  if (usage <= 90) {
     return {
       background: Colors.orange,
     };
-  } else {
-    return {
-      background: Colors.red,
-    };
   }
+
+  return {
+    background: Colors.red,
+  };
 };
 
 export const UsageIndicator = styled.View<UsageIndicatorStyled>`

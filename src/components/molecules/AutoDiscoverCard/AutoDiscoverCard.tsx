@@ -1,8 +1,8 @@
 import React from 'react';
-import * as S from './AutoDiscoverCard.styled';
-import { ValidValidatedInstance } from '../../../screens/login/AutoDiscover';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { useWindowDimensions, View } from 'react-native';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import type { ValidValidatedInstance } from '../../../screens/login/AutoDiscover';
+import * as S from './AutoDiscoverCard.styled';
 
 export interface AutoDiscoverCardProps {
   /** Description of children. */

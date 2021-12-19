@@ -1,2 +1,4 @@
 ios/**
 android/**
+src/assets/Letter.json
+fastlane/*

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import * as S from '../Settings.styled';
 import { Slider } from '@atoms/Slider/Slider';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { writeToStorage } from '@helpers/Storage';
-import { useSettings } from '../../../contexts/Settings.context';
-import { ConfigValues } from '../../../constants';
 import { settingsTextBuilder } from '@helpers/TextBuilder';
+import { ConfigValues } from '../../../constants';
+import { useSettings } from '../../../contexts/Settings.context';
+import * as S from '../Settings.styled';
 
 export function CPUDelay() {
   const { dashboard, reloadSettings } = useSettings();
@@ -21,6 +21,7 @@ export function CPUDelay() {
     if (typeof value === 'object') {
       return value[0];
     }
+
     return value;
   };
 
@@ -32,10 +33,10 @@ export function CPUDelay() {
         maximumValue={10000}
         minimumValue={0}
         animationType={'spring'}
-        onSlidingComplete={value => {
+        onSlidingComplete={(value) => {
           updateValue(getValue(value));
         }}
-        onValueChange={value => {
+        onValueChange={(value) => {
           setSlidedValue(getValue(value));
         }}
         value={slidedValue}

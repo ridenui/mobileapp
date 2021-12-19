@@ -5,6 +5,6 @@ module.exports = {
   arrowParens: 'always',
   printWidth: 120,
   tabWidth: 2,
-  endOfLine: "lf",
-  semi: true
+  endOfLine: 'lf',
+  semi: true,
 };

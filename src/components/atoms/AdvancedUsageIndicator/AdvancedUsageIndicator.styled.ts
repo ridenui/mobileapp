@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Animated } from 'react-native';
+import styled from 'styled-components/native';
 
 export const AdvancedUsageIndicator = styled.View`
   background: ${({ theme }) => theme['400']};
@@ -32,6 +32,8 @@ const getBorderRadius = ({ isFirst, isLast }: IndicatorStyled) => {
       borderBottomRightRadius: 20,
     };
   }
+
+  return {};
 };
 
 export const Indicator = styled(Animated.View)<IndicatorStyled>`

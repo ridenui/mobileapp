@@ -5,7 +5,7 @@ function indexTemplate(filePaths) {
   const exportEntries = [];
 
   exportEntries.push(
-    ...filePaths.map(filePath => {
+    ...filePaths.map((filePath) => {
       const basename = path.basename(filePath, path.extname(filePath));
       const exportName = /^\d/.test(basename) ? `Svg${basename}` : basename;
       iconNames.push(exportName);
@@ -26,7 +26,7 @@ function indexTemplate(filePaths) {
 };`);
   exportEntries.push('');
 
-  const iconTypesStringList = iconNames.map(iconName => `'${iconName}'`).join(',\n  ');
+  const iconTypesStringList = iconNames.map((iconName) => `'${iconName}'`).join(',\n  ');
   exportEntries.push(`export const IconTypes = [
   ${iconTypesStringList},
 ];`);

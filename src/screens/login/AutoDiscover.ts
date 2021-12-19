@@ -26,9 +26,10 @@ type ValidatedInstance = ValidValidatedInstance | InvalidValidatedInstance;
 
 export async function validateInstance(service: Service): Promise<ValidatedInstance> {
   try {
-    const { data } = await axios.get('http://' + service.addresses[0]);
+    const { data } = await axios.get(`http://${service.addresses[0]}`);
     const $ = cheerio.load(data);
     const serverDescription = $('.content > h2').text().trim();
+
     return {
       isValid: true,
       name: service.name,

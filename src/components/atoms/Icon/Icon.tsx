@@ -1,7 +1,7 @@
 import React from 'react';
-import Icons from '../../../assets/cases';
+import type { StyleProp, ViewProps } from 'react-native';
 import type { SvgProps } from 'react-native-svg';
-import { StyleProp, ViewProps } from 'react-native';
+import Icons from '../../../assets/cases';
 
 export interface IconProps {
   type: keyof typeof Icons;

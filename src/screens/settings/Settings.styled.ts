@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Box } from '@atoms/Box/Box';
+import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   background: ${({ theme }) => theme['600']};

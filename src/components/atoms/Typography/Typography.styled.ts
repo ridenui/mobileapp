@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { WithTheme } from '../../../types/Generic';
+import type { WithTheme } from '../../../types/Generic';
 
 const getColor = ({ theme }: WithTheme) => ({
   color: theme.text,

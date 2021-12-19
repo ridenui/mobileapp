@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Svg, { SvgProps, Path } from 'react-native-svg';
+import type { SvgProps } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 const SvgNorco4220 = (props: SvgProps) => (
   <Svg viewBox="-10 0 1044 1024" width={24} height={24} {...props}>

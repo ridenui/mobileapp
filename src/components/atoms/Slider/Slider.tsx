@@ -1,6 +1,6 @@
 import React from 'react';
 import { Slider as RNSlider } from '@miblanchard/react-native-slider';
-import { SliderProps as RNSliderProps } from '@miblanchard/react-native-slider/lib/types';
+import type { SliderProps as RNSliderProps } from '@miblanchard/react-native-slider/lib/types';
 import { useTheme } from 'styled-components/native';
 
 export interface SliderProps extends RNSliderProps {

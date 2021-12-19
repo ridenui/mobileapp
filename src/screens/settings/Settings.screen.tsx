@@ -1,11 +1,11 @@
 import React from 'react';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import * as S from './Settings.styled';
 import VersionInfo from 'react-native-version-info';
-import { HorizontalDivider } from '@atoms/HorizontalDivider/HorizontalDivider';
 import { Button, ButtonVariants } from '@atoms/Button/Button';
+import { HorizontalDivider } from '@atoms/HorizontalDivider/HorizontalDivider';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { CPUDelay } from './components/CPUDelay';
+import * as S from './Settings.styled';
 
 export function SettingsScreen() {
   const { clearCredentials } = useUnraid();

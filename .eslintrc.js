@@ -12,6 +12,20 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+  overrides: [
+    {
+      files: ['./src/contexts/**.context.tsx'],
+      rules: {
+        '@typescript-eslint/no-empty-function': 'off',
+      },
+    },
+    {
+      files: ['**.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
   plugins: ['@typescript-eslint/eslint-plugin', 'import', 'simple-import-sort'],
   settings: {
     'import/resolver': {
@@ -47,6 +61,7 @@ module.exports = {
     ],
     'import/no-default-export': ['off'],
     'import/order': 'off',
+    'no-restricted-syntax': 'off',
     'import/prefer-default-export': 'off',
     'no-duplicate-imports': 'off',
     'no-console': 'off',

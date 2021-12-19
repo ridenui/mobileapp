@@ -1,6 +1,6 @@
 import React from 'react';
+import type { AnimatedCpuUsage } from '@molecules/CpuCoreUsage/CpuCoreUsage';
 import * as S from './AdvancedUsageIndicator.styled';
-import { AnimatedCpuUsage } from '@molecules/CpuCoreUsage/CpuCoreUsage';
 
 export interface AdvancedUsageIndicatorProps {
   usages: AnimatedCpuUsage[];
@@ -10,7 +10,7 @@ export function AdvancedUsageIndicator({ usages }: AdvancedUsageIndicatorProps):
   return (
     <S.AdvancedUsageIndicator>
       <S.IndicatorWrapper>
-        {usages.map(usage => {
+        {usages.map((usage) => {
           return (
             <S.Indicator
               key={usage.name}
