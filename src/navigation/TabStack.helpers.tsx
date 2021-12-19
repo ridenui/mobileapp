@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 export function getTabBarIcon(route: string, focused: boolean, color: string, size: number) {
   let icon;
   switch (route) {
-    case 'Dashboard':
+    case 'DashboardStack':
       icon = 'monitor';
       break;
     case 'Settings':

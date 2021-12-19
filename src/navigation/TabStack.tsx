@@ -15,7 +15,7 @@ export function TabNavigation() {
 
   return (
     <TabStack.Navigator
-      initialRouteName={'Dashboard'}
+      initialRouteName={'DashboardStack'}
       screenOptions={({ route }) => ({
         lazy: true,
         tabBarIcon: ({ focused, color, size }) => {
@@ -25,7 +25,13 @@ export function TabNavigation() {
         ...getNavigationStyle(theme),
       })}
     >
-      <TabStack.Screen name={'Dashboard'} component={Dashboard} />
+      <TabStack.Screen
+        name={'DashboardStack'}
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Dashboard',
+        }}
+      />
       <TabStack.Screen name={'Settings'} component={SettingsScreen} />
       {DEBUG && <TabStack.Screen name={'Debug'} component={DebugScreen} />}
     </TabStack.Navigator>
