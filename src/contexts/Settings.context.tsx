@@ -21,7 +21,7 @@ const initialSettingsState: SettingsProviderValue = {
   reloadSettings: () => {},
 };
 
-const SettingsContext = React.createContext<SettingsProviderValue>(initialSettingsState as SettingsProviderValue);
+const SettingsContext = React.createContext<SettingsProviderValue>(initialSettingsState);
 
 export function SettingsProvider({ children }: SettingsProviderProps): JSX.Element {
   const [cpuRefresh, setCpuRefresh] = useState<number>(5000);

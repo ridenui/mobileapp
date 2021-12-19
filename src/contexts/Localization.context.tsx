@@ -14,9 +14,7 @@ const initialLocalizationState: LocalizationProviderValue = {
   country: '',
 };
 
-const LocalizationContext = React.createContext<LocalizationProviderValue>(
-  initialLocalizationState as LocalizationProviderValue,
-);
+const LocalizationContext = React.createContext<LocalizationProviderValue>(initialLocalizationState);
 
 export function LocalizationProvider({ children }: LocalizationProviderProps): JSX.Element {
   const [country, setCountry] = useState<string>('');

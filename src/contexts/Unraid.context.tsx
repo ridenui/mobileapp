@@ -37,7 +37,7 @@ const initialUnraidState: UnraidProviderValue = {
   credentials: null,
 };
 
-const UnraidContext = React.createContext<UnraidProviderValue>(initialUnraidState as UnraidProviderValue);
+const UnraidContext = React.createContext<UnraidProviderValue>(initialUnraidState);
 
 export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
   const [instance, setInstance] = useState<UnraidInstanceType | null>(null);

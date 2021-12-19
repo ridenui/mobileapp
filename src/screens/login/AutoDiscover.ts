@@ -2,21 +2,23 @@ import type { Service } from 'react-native-zeroconf';
 import axios from 'axios';
 import cheerio from 'cheerio';
 
+type InstanceSSH = {
+  hostname: string;
+  port: number;
+  username: 'root';
+};
+
 export type ValidValidatedInstance = {
   isValid: true;
-  ssh: {
-    hostname: string;
-    port: number;
-    username: 'root';
-  };
+  ssh: InstanceSSH;
   name: string;
   description?: string;
 };
 
 type InvalidValidatedInstance = {
   isValid: false;
-  ssh?: undefined;
-  name?: undefined;
+  ssh?: InstanceSSH;
+  name?: string;
   description?: undefined;
 };
 

@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { NavigationContainer } from '@react-navigation/native';
 import { MainStack } from '../../navigation/MainStack';
-import { TabNavigation, TabStack } from '../../navigation/TabStack';
+import { TabNavigation } from '../../navigation/TabStack';
 import { LoginScreen } from '../login/Login.screen';
-import { DashboardScreen } from '../dashboard/Dashboard.screen';
-import { Button } from 'react-native';
 import { ConnectingScreen } from '../connecting/Connecting.screen';
 import { useTheme } from 'styled-components/native';
-import { DebugScreen } from '../debug/Debug.screen';
 import { DEBUG } from '../../constants';
 
 /**
