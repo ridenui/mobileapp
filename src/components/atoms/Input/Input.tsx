@@ -1,7 +1,7 @@
 import React from 'react';
-import * as S from './Input.styled';
+import type { StyleProp, TextInputProps, TextStyle } from 'react-native';
 import { useTheme } from 'styled-components';
-import { StyleProp, TextInputProps, TextStyle } from 'react-native';
+import * as S from './Input.styled';
 
 export interface InputProps {
   /** Placeholder text */
@@ -41,6 +41,7 @@ export function Input({
   isInvalid,
 }: InputProps): JSX.Element {
   const theme = useTheme();
+
   return (
     <S.Input
       selectionColor={theme.text}

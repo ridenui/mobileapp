@@ -1,9 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { exec } from 'child_process';
 import gulp from 'gulp';
 import replace from 'gulp-replace';
 
-gulp.task('svgr', cb => {
-  exec('yarn icons', err => {
+gulp.task('svgr', (cb) => {
+  exec('yarn icons', (err) => {
     cb(err);
   });
 });

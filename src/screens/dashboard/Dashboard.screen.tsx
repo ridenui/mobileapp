@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import * as S from './Dashboard.styled';
-import { useServer } from '../../contexts/Server.context';
-import formatRelative from 'date-fns/formatRelative';
-import { caseModelToIconName } from '@helpers/formatters';
 import { RefreshControl, ScrollView } from 'react-native';
-import { IconProps } from '@atoms/Icon/Icon';
+import type { IconProps } from '@atoms/Icon/Icon';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import { caseModelToIconName } from '@helpers/formatters';
 import { getDateFnsLocale } from '@helpers/Locales';
+import { CpuUsageWidget } from '@molecules/CpuUsageWidget/CpuUsageWidget';
+import { DiskUsageWidget } from '@molecules/DiskUsageWidget/DiskUsageWidget';
+import formatRelative from 'date-fns/formatRelative';
 import { useLocalization } from '../../contexts/Localization.context';
+import { useServer } from '../../contexts/Server.context';
+import * as S from './Dashboard.styled';
 
 export function DashboardScreen() {
-  const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig } = useServer();
+  const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig, diskUsage } =
+    useServer();
   const [caseModelIconName, setCaseModelIconName] = useState<IconProps['type']>('vm');
   const { country } = useLocalization();
 
@@ -39,6 +42,8 @@ export function DashboardScreen() {
           </S.ServerInfoText>
           <S.ServerCaseIcon iconProps={{ height: 80, width: 100 }} type={caseModelIconName} />
         </S.ServerInfoBox>
+        {diskUsage && <DiskUsageWidget />}
+        <CpuUsageWidget />
       </ScrollView>
     </S.Container>
   );

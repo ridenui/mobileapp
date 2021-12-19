@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useUnraid } from '../../contexts/Unraid.context';
 import { NavigationContainer } from '@react-navigation/native';
-import { MainStack } from '../../navigation/MainStack';
-import { LoginScreen } from '../login/Login.screen';
-import { DashboardScreen } from '../dashboard/Dashboard.screen';
-import { Button } from 'react-native';
-import { ConnectingScreen } from '../connecting/Connecting.screen';
 import { useTheme } from 'styled-components/native';
-import { DebugScreen } from '../debug/Debug.screen';
 import { DEBUG } from '../../constants';
+import { useUnraid } from '../../contexts/Unraid.context';
+import { MainStack } from '../../navigation/MainStack';
+import { TabNavigation } from '../../navigation/TabStack';
+import { ConnectingScreen } from '../connecting/Connecting.screen';
+import { LoginScreen } from '../login/Login.screen';
 
 /**
  * Defines the stated we can have while connecting.
@@ -48,63 +46,29 @@ export function SplashScreen() {
     }
   }, [unraid.hasCredentials, unraid.isConnected]);
 
-  /** Temporary Logout Method for debugging */
-  const logout = () => {
-    unraid.clearCredentials();
-  };
-
   return (
-    <>
-      <NavigationContainer>
-        {loadingState !== LoadingStates.LOADING && (
-          <MainStack.Navigator
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: theme['700'],
-                shadowColor: theme['500'],
-              },
-              headerTitleStyle: {
-                color: theme.text,
-              },
-            }}
-          >
-            {loadingState === LoadingStates.LOADED_LOGGED_OUT && (
-              <MainStack.Screen name={'Login'} component={LoginScreen} options={{ headerShown: false }} />
-            )}
-            {loadingState === LoadingStates.LOADED_LOGGED_IN && (
-              <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
-            )}
-            {loadingState === LoadingStates.CONNECTED_LOGGED_IN && !DEBUG && (
-              <>
-                <MainStack.Screen
-                  name={'Dashboard'}
-                  component={DashboardScreen}
-                  options={{
-                    title: 'Dashboard',
-                    headerLeft: () => {
-                      return <Button title={'Logout'} onPress={logout} />;
-                    },
-                  }}
-                />
-              </>
-            )}
-            {loadingState === LoadingStates.CONNECTED_LOGGED_IN && DEBUG && (
-              <>
-                <MainStack.Screen
-                  name={'Debug'}
-                  component={DebugScreen}
-                  options={{
-                    title: 'Debug',
-                    headerLeft: () => {
-                      return <Button title={'Logout'} onPress={logout} />;
-                    },
-                  }}
-                />
-              </>
-            )}
-          </MainStack.Navigator>
-        )}
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      {loadingState !== LoadingStates.LOADING && (
+        <MainStack.Navigator
+          initialRouteName={'login'}
+          screenOptions={{
+            headerShown: false,
+            headerTitleStyle: {
+              color: theme.text,
+            },
+          }}
+        >
+          {loadingState === LoadingStates.LOADED_LOGGED_OUT && (
+            <MainStack.Screen name={'Login'} component={LoginScreen} options={{ headerShown: false }} />
+          )}
+          {loadingState === LoadingStates.LOADED_LOGGED_IN && (
+            <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
+          )}
+          {loadingState === LoadingStates.CONNECTED_LOGGED_IN && !DEBUG && (
+            <MainStack.Screen name={'Main'} component={TabNavigation} />
+          )}
+        </MainStack.Navigator>
+      )}
+    </NavigationContainer>
   );
 }

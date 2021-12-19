@@ -7,5 +7,6 @@ import * as S from './GradientHeader.styled';
  */
 export function GradientHeader(): JSX.Element {
   const { red, orange } = Colors;
+
   return <S.GradientHeader colors={[red, orange]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} />;
 }

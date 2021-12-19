@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Colors } from '@styles/Colors';
+import styled from 'styled-components/native';
 
 type InputStyledProps = {
   isInvalid?: boolean;

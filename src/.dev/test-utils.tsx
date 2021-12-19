@@ -5,12 +5,12 @@ import { ThemeProvider } from 'styled-components/native';
 import { light } from '@styles/Themes';
 
 const AllTheProviders: FC = ({ children }) => {
-    return <ThemeProvider theme={light}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={light}>{children}</ThemeProvider>;
 };
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>) => {
-    return render(ui, { wrapper: AllTheProviders, ...options });
-}
+  return render(ui, { wrapper: AllTheProviders, ...options });
+};
 
 export * from '@testing-library/react-native';
 export * from 'jest-styled-components';

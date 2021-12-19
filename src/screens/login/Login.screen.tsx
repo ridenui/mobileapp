@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import * as S from './Login.styled';
+import { Keyboard } from 'react-native';
+import { ChevronsRight } from 'react-native-feather';
+import Zeroconf from 'react-native-zeroconf';
+import { Button } from '@atoms/Button/Button';
 import { GradientHeader } from '@atoms/GradientHeader/GradientHeader';
 import { Input } from '@atoms/Input/Input';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import { Button } from '@atoms/Button/Button';
-import { validateInstance, ValidValidatedInstance } from './AutoDiscover';
 import { openLink } from '@helpers/Linker';
 import { AutoDiscoverCard } from '@molecules/AutoDiscoverCard/AutoDiscoverCard';
-import { MoreDevicesHint } from './Login.styled';
-import { ChevronsRight } from 'react-native-feather';
+import { useFormik } from 'formik';
 import { useTheme } from 'styled-components/native';
 import { useUnraid } from '../../contexts/Unraid.context';
-import { useFormik } from 'formik';
-import { Keyboard } from 'react-native';
 import { CredentialsSchema } from '../../validators/Credentials.validation';
-import Zeroconf from 'react-native-zeroconf';
+import type { ValidValidatedInstance } from './AutoDiscover';
+import { validateInstance } from './AutoDiscover';
+import * as S from './Login.styled';
+import { MoreDevicesHint } from './Login.styled';
 
 export function LoginScreen() {
   const [devices, setDiscoveredDevices] = useState<ValidValidatedInstance[]>([]);
@@ -31,7 +32,7 @@ export function LoginScreen() {
     validateOnBlur: true,
     validateOnMount: true,
     validationSchema: CredentialsSchema,
-    onSubmit: async v => {
+    onSubmit: async (v) => {
       Keyboard.dismiss();
       console.log('Submitting Login Form.');
       await setCredentials({
@@ -48,11 +49,11 @@ export function LoginScreen() {
   useEffect(() => {
     const zeroconf = new Zeroconf();
     zeroconf.scan('ssh', 'tcp');
-    zeroconf.on('resolved', async service => {
-      console.log('Found new Service ' + service.name);
+    zeroconf.on('resolved', async (service) => {
+      console.log(`Found new Service ${service.name}`);
       const validatedInstance = await validateInstance(service);
       if (validatedInstance.isValid) {
-        setDiscoveredDevices(oldDevices => [...oldDevices, validatedInstance]);
+        setDiscoveredDevices((oldDevices) => [...oldDevices, validatedInstance]);
       }
     });
 
@@ -127,7 +128,7 @@ export function LoginScreen() {
               renderItem={({ item }) => (
                 <AutoDiscoverCard
                   device={item as ValidValidatedInstance}
-                  onPress={device => {
+                  onPress={(device) => {
                     setFieldValue('host', device.ssh.hostname);
                     setFieldValue('port', device.ssh.port.toString());
                   }}

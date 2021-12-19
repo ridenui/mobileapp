@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useUnraid } from '../../contexts/Unraid.context';
-import * as S from './Connecting.styled';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { Colors } from '@styles/Colors';
 import * as LoadingLetter from '../../assets/Letter.json';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import { useUnraid } from '../../contexts/Unraid.context';
+import * as S from './Connecting.styled';
 
 const SHOW_RESET_DELAY = 5000;
 

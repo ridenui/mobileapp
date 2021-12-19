@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
+import styled from 'styled-components/native';
 
 export const GradientHeader = styled(LinearGradient)`
   position: absolute;

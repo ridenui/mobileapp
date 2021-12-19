@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { WithTheme } from '../../../types/Generic';
+import type { WithTheme } from '../../../types/Generic';
 
 const getColor = ({ theme }: WithTheme) => ({
   color: theme.text,
@@ -31,5 +31,16 @@ export const Overline = styled.Text`
   text-transform: uppercase;
   font-size: 24px;
   font-weight: 200;
+  ${getColor};
+`;
+
+export const Small = styled.Text`
+  font-size: 12px;
+  ${getColor};
+`;
+
+export const Mono = styled.Text`
+  font-size: 12px;
+  font-family: Menlo-Regular;
   ${getColor};
 `;

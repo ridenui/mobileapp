@@ -1,7 +1,7 @@
 import React from 'react';
-import * as S from './Box.styled';
+import type { StyleProp, ViewProps } from 'react-native';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
-import { StyleProp, ViewProps } from 'react-native';
+import * as S from './Box.styled';
 
 export interface BoxProps {
   /** The content */

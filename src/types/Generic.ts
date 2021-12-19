@@ -1,4 +1,4 @@
-import { Theme } from '@styles/Themes';
+import type { Theme } from '@styles/Themes';
 
 export type WithTheme = {
   theme: Theme;
