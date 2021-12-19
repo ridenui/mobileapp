@@ -29,13 +29,13 @@ export function DiskUsageWidget(): JSX.Element {
   return (
     <S.DiskUsageWidget header={'Disks'}>
       {filteredDiskUsage.map(disk => {
-        return <StorageUsageRow diskUsage={disk} />;
+        return <StorageUsageRow key={disk.mounted} diskUsage={disk} />;
       })}
       {externalDrivesUsage.length !== 0 && (
         <S.External>
           <Typography variant={TypographyVariants.H4}>External Drives</Typography>
           {externalDrivesUsage.map(drive => {
-            return <StorageUsageRow diskUsage={drive} />;
+            return <StorageUsageRow key={drive.mounted} diskUsage={drive} />;
           })}
         </S.External>
       )}

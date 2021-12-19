@@ -33,3 +33,14 @@ export const Overline = styled.Text`
   font-weight: 200;
   ${getColor};
 `;
+
+export const Small = styled.Text`
+  font-size: 12px;
+  ${getColor};
+`;
+
+export const Mono = styled.Text`
+  font-size: 12px;
+  font-family: Menlo-Regular;
+  ${getColor};
+`;
