@@ -9,6 +9,7 @@ import { IconProps } from '@atoms/Icon/Icon';
 import { getDateFnsLocale } from '@helpers/Locales';
 import { useLocalization } from '../../contexts/Localization.context';
 import { DiskUsageWidget } from '@molecules/DiskUsageWidget/DiskUsageWidget';
+import { CpuUsageWidget } from '@molecules/CpuUsageWidget/CpuUsageWidget';
 
 export function DashboardScreen() {
   const { hostname, systemInfo, caseModel, reloadProperties, isReloading, uptime, identConfig, diskUsage } =
@@ -42,6 +43,7 @@ export function DashboardScreen() {
           <S.ServerCaseIcon iconProps={{ height: 80, width: 100 }} type={caseModelIconName} />
         </S.ServerInfoBox>
         {diskUsage && <DiskUsageWidget />}
+        <CpuUsageWidget />
       </ScrollView>
     </S.Container>
   );
