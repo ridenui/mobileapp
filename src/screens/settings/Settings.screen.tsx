@@ -5,6 +5,7 @@ import { HorizontalDivider } from '@atoms/HorizontalDivider/HorizontalDivider';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { CPUDelay } from './components/CPUDelay';
+import { Log } from './components/Log';
 import * as S from './Settings.styled';
 
 export function SettingsScreen() {
@@ -13,6 +14,7 @@ export function SettingsScreen() {
   return (
     <S.Container>
       <CPUDelay />
+      <Log />
       <Button variant={ButtonVariants.FLAT} textStyle={TypographyVariants.Mono} onPress={clearCredentials}>
         Logout
       </Button>

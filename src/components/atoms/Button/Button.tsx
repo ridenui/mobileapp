@@ -8,6 +8,12 @@ export enum ButtonVariants {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   FLAT = 'flat',
+  GREEN = 'green',
+}
+
+export enum ButtonSizes {
+  SMALL = 'small',
+  LARGE = 'large',
 }
 
 export interface ButtonProps {
@@ -21,6 +27,7 @@ export interface ButtonProps {
   style?: StyledProps<ViewStyle>;
   variant?: ButtonVariants;
   textStyle?: TypographyVariants;
+  size?: ButtonSizes;
 }
 
 /**
@@ -33,9 +40,10 @@ export function Button({
   style,
   variant = ButtonVariants.PRIMARY,
   textStyle = TypographyVariants.Paragraph,
+  size = ButtonSizes.LARGE,
 }: ButtonProps): JSX.Element {
   return (
-    <S.Button onPress={onPress} disabled={!!disabled} style={style} variant={variant}>
+    <S.Button onPress={onPress} disabled={!!disabled} style={style} variant={variant} size={size}>
       <Typography variant={textStyle}>{children}</Typography>
     </S.Button>
   );

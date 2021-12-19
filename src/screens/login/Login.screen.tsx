@@ -7,6 +7,7 @@ import { GradientHeader } from '@atoms/GradientHeader/GradientHeader';
 import { Input } from '@atoms/Input/Input';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { openLink } from '@helpers/Linker';
+import { log } from '@helpers/Logger';
 import { AutoDiscoverCard } from '@molecules/AutoDiscoverCard/AutoDiscoverCard';
 import { useFormik } from 'formik';
 import { useTheme } from 'styled-components/native';
@@ -34,7 +35,7 @@ export function LoginScreen() {
     validationSchema: CredentialsSchema,
     onSubmit: async (v) => {
       Keyboard.dismiss();
-      console.log('Submitting Login Form.');
+      log.info('Submitting Login Form.');
       await setCredentials({
         ...v,
         port: parseInt(v.port, 10),
@@ -50,7 +51,7 @@ export function LoginScreen() {
     const zeroconf = new Zeroconf();
     zeroconf.scan('ssh', 'tcp');
     zeroconf.on('resolved', async (service) => {
-      console.log(`Found new Service ${service.name}`);
+      log.debug(`Found new Service ${service.name}`);
       const validatedInstance = await validateInstance(service);
       if (validatedInstance.isValid) {
         setDiscoveredDevices((oldDevices) => [...oldDevices, validatedInstance]);

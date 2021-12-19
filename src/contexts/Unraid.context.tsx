@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
+import { log } from '@helpers/Logger';
 import { clear, readFromStorage, writeToStorage } from '@helpers/Storage';
 import type { SSHConfig } from '@ridenui/react-native-riden-ssh';
 import { Unraid } from '@ridenui/unraid';
@@ -47,14 +48,14 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
 
   const setCredentials = async (creds: Credentials) => {
     await writeToStorage('credentials', JSON.stringify(creds));
-    console.log('Setting credentials...');
+    log.debug('Setting credentials...');
     setCredentialsState(creds);
   };
 
   const clearCredentials = async () => {
     setInstance(null);
     await clear();
-    console.log('Clearing credentials...');
+    log.debug('Clearing credentials...');
     setCredentialsState(null);
     setHasCredentials(false);
   };
@@ -67,7 +68,7 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
       if (!isValid) {
         await clearCredentials();
       }
-      console.log('Initializing after Credential Change');
+      log.debug('Initializing after Credential Change');
       const unraid = new Unraid({
         executor: ReactNativeExecutor,
         executorConfig: {
@@ -76,16 +77,15 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
       });
       setInstance(unraid);
       setHasCredentials(true);
-      console.log('Connecting after Cred Change');
+      log.debug('Connecting after Cred Change');
       unraid.executor.connect().then((connected) => {
-        console.log('Connected...');
+        log.info(`Connect returned ${connected}`);
         setIsConnected(connected);
       });
     });
   }, [credentials]);
 
   useEffect(() => {
-    console.log('Running onLoad useEffect!');
     readFromStorage('credentials').then(async (creds) => {
       if (creds) {
         const parsedCredentials = JSON.parse(creds);

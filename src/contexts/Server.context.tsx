@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
+import { log } from '@helpers/Logger';
 import type { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
 import type { IdentConfig } from '@ridenui/unraid/dist/modules/unraid/extensions';
 import { parse } from 'date-fns';
@@ -46,7 +47,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const reloadProperties = useCallback(async () => {
     setIsReloading(true);
     if (instance) {
-      console.log('reloading properties');
+      log.debug('reloading server properties');
       setHostname(await instance.system.getHostname());
       setIdentConfig(await instance.unraid.getIdentConfig());
       setSystemInfo(await instance.system.info());
@@ -61,7 +62,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
 
   useEffect(() => {
     reloadProperties().then(() => {
-      console.log('Reloaded Properties');
+      log.debug('Reloaded Server Properties');
     });
   }, [reloadProperties]);
 

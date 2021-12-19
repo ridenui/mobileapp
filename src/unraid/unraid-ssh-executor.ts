@@ -1,3 +1,4 @@
+import { log } from '@helpers/Logger';
 import type { SSHConfig } from '@ridenui/react-native-riden-ssh';
 import { SSHClient } from '@ridenui/react-native-riden-ssh';
 import type { IExecutor } from '@ridenui/unraid';
@@ -32,7 +33,7 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
 
     return this.client.execute(command, false).then((result) => {
       if (DEBUG) {
-        console.log({ result });
+        log.debug({ result });
       }
 
       return Promise.resolve(result);
