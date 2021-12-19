@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as S from './DiskUsageWidget.styled';
 import { useServer } from '../../../contexts/Server.context';
 import { IDiskFreeReturn } from '@ridenui/unraid/dist/modules/system/extensions';
-import { UsageIndicator } from '@atoms/UsageIndicator/UsageIndicator';
-import { calculateUsageInPercentage, StorageUsageRow } from '@molecules/DiskUsageWidget/DiskUsageWidget.helpers';
+import { StorageUsageRow } from '@molecules/DiskUsageWidget/DiskUsageWidget.helpers';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 
 /**

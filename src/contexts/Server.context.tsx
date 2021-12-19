@@ -31,7 +31,7 @@ const initialServerState: ServerProviderValue = {
   diskUsage: null,
 };
 
-const ServerContext = React.createContext<ServerProviderValue>(initialServerState as ServerProviderValue);
+const ServerContext = React.createContext<ServerProviderValue>(initialServerState);
 
 export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const [hostname, setHostname] = useState<string>('');

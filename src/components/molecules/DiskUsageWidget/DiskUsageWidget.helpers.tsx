@@ -8,11 +8,11 @@ export function calculateUsageInPercentage(used: number, available: number) {
   return used / (used + available);
 }
 
-export type StorageUsageRow = {
+export type IStorageUsageRow = {
   diskUsage: IDiskFreeReturn;
 };
 
-export function StorageUsageRow({ diskUsage }: StorageUsageRow) {
+export function StorageUsageRow({ diskUsage }: IStorageUsageRow) {
   const { used, available, mounted } = diskUsage;
   const usage = calculateUsageInPercentage(used, available);
   return (
