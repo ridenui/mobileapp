@@ -1,19 +1,27 @@
 import React from 'react';
-import type { StyleProp, ViewProps } from 'react-native';
-import type { SvgProps } from 'react-native-svg';
-import Icons from '../../../assets/cases';
+import { View } from 'react-native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import * as S from './Icon.styled';
 
 export interface IconProps {
-  type: keyof typeof Icons;
-  iconProps?: SvgProps;
-  style?: StyleProp<ViewProps>;
+  name: string;
+  badge?: number;
+  size?: number;
+  color?: string;
 }
 
-export function Icon({ type, iconProps, style }: IconProps): JSX.Element | null {
-  const IconSvg = Icons[type];
-  if (!IconSvg) {
-    return null;
+export function Icon({ badge, name, color, size }: IconProps): JSX.Element {
+  if (!badge) {
+    return <FeatherIcon name={name} color={color} size={size} />;
   }
 
-  return <IconSvg {...iconProps} style={style} />;
+  return (
+    <View>
+      <S.Badge>
+        <Typography variant={TypographyVariants.Small}>{badge}</Typography>
+      </S.Badge>
+      <FeatherIcon name={name} color={color} size={size} />
+    </View>
+  );
 }

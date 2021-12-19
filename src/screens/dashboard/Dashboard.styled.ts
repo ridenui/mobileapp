@@ -1,5 +1,5 @@
 import { Box } from '@atoms/Box/Box';
-import { Icon } from '@atoms/Icon/Icon';
+import { CaseIcon } from '@atoms/CaseIcon/CaseIcon';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
@@ -18,6 +18,6 @@ export const ServerInfoText = styled.View`
   flex: 2;
 `;
 
-export const ServerCaseIcon = styled(Icon)`
+export const ServerCaseIcon = styled(CaseIcon)`
   color: ${({ theme }) => theme.text};
 `;

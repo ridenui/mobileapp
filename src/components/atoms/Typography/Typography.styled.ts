@@ -23,6 +23,12 @@ export const H4 = styled.Text`
   ${getColor};
 `;
 
+export const H5 = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  ${getColor};
+`;
+
 export const Paragraph = styled.Text`
   ${getColor};
 `;

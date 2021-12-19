@@ -29,7 +29,9 @@ const getBackgroundColor = ({ variant, theme, disabled }: withTheme) => {
     };
   }
 
-  return {};
+  return {
+    border: `1px solid ${Colors.grey}`,
+  };
 };
 
 const getSize = ({ size }: ButtonStyled) => {

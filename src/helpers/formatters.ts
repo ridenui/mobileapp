@@ -1,4 +1,4 @@
-import type { IconProps } from '@atoms/Icon/Icon';
+import type { IconProps } from '@atoms/CaseIcon/CaseIcon';
 import { log } from '@helpers/Logger';
 
 export function caseModelToIconName(caseModel: string): IconProps['type'] {

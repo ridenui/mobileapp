@@ -7,6 +7,7 @@ export enum TypographyVariants {
   H1 = 'H1',
   H3 = 'H3',
   H4 = 'H4',
+  H5 = 'H5',
   Paragraph = 'Paragraph',
   Small = 'Small',
   Mono = 'Mono',
