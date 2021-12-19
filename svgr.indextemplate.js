@@ -7,10 +7,11 @@ function indexTemplate(filePaths) {
   exportEntries.push(
     ...filePaths.map((filePath) => {
       const basename = path.basename(filePath, path.extname(filePath));
+      console.log(basename);
       const exportName = /^\d/.test(basename) ? `Svg${basename}` : basename;
       iconNames.push(exportName);
 
-      return `import ${exportName} from './${basename}';`;
+      return `import ${exportName} from './${basename.charAt(0).toUpperCase() + basename.slice(1)}';`;
     }),
   );
 
