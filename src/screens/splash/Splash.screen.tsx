@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
-import { DEBUG } from '../../constants';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { MainStack } from '../../navigation/MainStack';
 import { TabNavigation } from '../../navigation/TabStack';
@@ -64,8 +63,10 @@ export function SplashScreen() {
           {loadingState === LoadingStates.LOADED_LOGGED_IN && (
             <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
           )}
-          {loadingState === LoadingStates.CONNECTED_LOGGED_IN && !DEBUG && (
-            <MainStack.Screen name={'Main'} component={TabNavigation} />
+          {loadingState === LoadingStates.CONNECTED_LOGGED_IN && (
+            <>
+              <MainStack.Screen name={'Main'} component={TabNavigation} />
+            </>
           )}
         </MainStack.Navigator>
       )}

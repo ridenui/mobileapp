@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
-import type { IconProps } from '@atoms/Icon/Icon';
+import type { IconProps } from '@atoms/CaseIcon/CaseIcon';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { caseModelToIconName } from '@helpers/formatters';
 import { CpuUsageWidget } from '@molecules/CpuUsageWidget/CpuUsageWidget';

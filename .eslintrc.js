@@ -97,10 +97,10 @@ module.exports = {
       {
         groups: [
           [
-            // Packages. `react` related packages come first.
-            '^react',
             // Side effect imports.
             '^\\u0000',
+            // Packages. `react` related packages come first.
+            '^react',
             '^@?\\w',
             // Internal packages.
             '^(components|modules|utils)(/.*|$)',
