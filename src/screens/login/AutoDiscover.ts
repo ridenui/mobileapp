@@ -19,7 +19,7 @@ type InvalidValidatedInstance = {
   isValid: false;
   ssh?: InstanceSSH;
   name?: string;
-  description?: undefined;
+  description?: string;
 };
 
 type ValidatedInstance = ValidValidatedInstance | InvalidValidatedInstance;
