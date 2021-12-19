@@ -6,27 +6,39 @@ import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
 import { CpuCoreUsage } from '@molecules/CpuCoreUsage/CpuCoreUsage';
 import { LegendItem } from '@atoms/LegendItem/LegendItem';
 import { Colors } from '@styles/Colors';
+import { useSettings } from '../../../contexts/Settings.context';
 
 /**
  * CPU Usage with Live Updates. WOW!
  */
 export function CpuUsageWidget(): JSX.Element {
   const { instance } = useUnraid();
+  const { dashboard } = useSettings();
   const [cpuUsage, setCpuUsage] = useState<CPUUsage | null>(null);
 
   useEffect(() => {
+    console.log('Reloading Effect - ' + dashboard.cpuRefresh);
     if (!instance) {
       return;
     }
 
-    const interval = setInterval(() => {
+    const fetchUsage = () => {
       instance.system.usage().then(usage => {
         setCpuUsage(usage);
       });
-    }, 2000);
+    };
 
-    return () => clearInterval(interval);
-  }, [instance]);
+    fetchUsage();
+
+    // 0 means no refresh
+    if (dashboard.cpuRefresh !== 0) {
+      const interval = setInterval(() => {
+        fetchUsage();
+      }, dashboard.cpuRefresh);
+
+      return () => clearInterval(interval);
+    }
+  }, [instance, dashboard.cpuRefresh]);
 
   if (!cpuUsage) {
     return (

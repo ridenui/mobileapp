@@ -284,6 +284,8 @@ PODS:
     - React
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-version-info (1.1.1):
+    - React-Core
   - react-native-zeroconf (0.13.6):
     - React-Core
   - React-perflogger (0.66.3)
@@ -364,6 +366,8 @@ PODS:
     - React-RCTImage
   - RNSVG (12.1.1):
     - React
+  - RNVectorIcons (9.0.0):
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -414,6 +418,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-riden-ssh (from `../node_modules/@ridenui/react-native-riden-ssh`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-version-info (from `../node_modules/react-native-version-info`)
   - react-native-zeroconf (from `../node_modules/react-native-zeroconf`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -433,6 +438,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -498,6 +504,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@ridenui/react-native-riden-ssh"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-version-info:
+    :path: "../node_modules/react-native-version-info"
   react-native-zeroconf:
     :path: "../node_modules/react-native-zeroconf"
   React-perflogger:
@@ -536,6 +544,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -576,6 +586,7 @@ SPEC CHECKSUMS:
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-riden-ssh: f2581ef1bfb0b9c61b3f5b1fb21883eaf34bf22f
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-version-info: a106f23009ac0db4ee00de39574eb546682579b9
   react-native-zeroconf: 8c7f309c76f95264d20e95270eb8366c57272894
   React-perflogger: 73732888d37d4f5065198727b167846743232882
   React-RCTActionSheet: 96c6d774fa89b1f7c59fc460adc3245ba2d7fd79
@@ -595,9 +606,10 @@ SPEC CHECKSUMS:
   RNLocalize: f10d91c76a5692d4cf6f218c70f6e4d7dcb42d1c
   RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 182137523662aaa204c035d20ac1249b927ede3d
+PODFILE CHECKSUM: 496ca16d3d59fca270b98a85903c6016ee27bbef
 
 COCOAPODS: 1.11.2
