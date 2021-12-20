@@ -12,8 +12,9 @@ export function getNavigationStyle(theme: Theme) {
     tabBarStyle: {
       backgroundColor: theme['700'],
       shadowColor: theme['500'],
+      borderTopColor: theme['500'],
     },
     tabBarActiveTintColor: theme['100'],
-    tabBarInactiveTintColor: theme['400'],
+    tabBarInactiveTintColor: theme['600'],
   };
 }

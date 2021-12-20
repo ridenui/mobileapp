@@ -22,6 +22,7 @@ export type ServerProviderValue = {
   notifications: RichNotification[];
   reloadProperties: () => void;
   reloadProperty: (property: ReloadableProperties) => void;
+  resetProperties: () => void;
   isReloading: boolean;
 };
 
@@ -34,6 +35,7 @@ const initialServerState: ServerProviderValue = {
   notifications: [],
   reloadProperties: () => {},
   reloadProperty: () => {},
+  resetProperties: () => {},
   isReloading: false,
   diskUsage: null,
 };
@@ -67,6 +69,17 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
       setIsReloading(false);
     }
   }, [instance]);
+
+  const resetProperties = useCallback(async () => {
+    setHostname('');
+    setIsReloading(false);
+    setIdentConfig(null);
+    setSystemInfo(null);
+    setCaseModel(null);
+    setUptime(null);
+    setDiskUsage(null);
+    setNotifications([]);
+  }, []);
 
   const reloadProperty = useCallback(
     async (property: ReloadableProperties) => {
@@ -103,6 +116,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
         notifications,
         reloadProperties,
         reloadProperty,
+        resetProperties,
         isReloading,
         diskUsage,
       }}
