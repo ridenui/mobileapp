@@ -32,7 +32,7 @@ export function TabNavigation() {
           tabBarLabel: 'Dashboard',
         }}
       />
-      <TabStack.Screen name={'Settings'} component={SettingsScreen} />
+      <TabStack.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: true }} />
       {DEBUG && <TabStack.Screen name={'Debug'} component={DebugScreen} />}
     </TabStack.Navigator>
   );

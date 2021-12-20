@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { ChevronsRight } from 'react-native-feather';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Zeroconf from 'react-native-zeroconf';
 import { Button } from '@atoms/Button/Button';
 import { GradientHeader } from '@atoms/GradientHeader/GradientHeader';
@@ -21,9 +22,10 @@ import { MoreDevicesHint } from './Login.styled';
 export function LoginScreen() {
   const [devices, setDiscoveredDevices] = useState<ValidValidatedInstance[]>([]);
   const [isInvalidForm, setIsInvalidForm] = useState(true);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const theme = useTheme();
-  const { setCredentials } = useUnraid();
-  const { handleSubmit, handleChange, errors, setFieldValue, values } = useFormik({
+  const { setCredentials, checkCredentials } = useUnraid();
+  const { handleSubmit, handleChange, errors, setFieldValue, values, isSubmitting } = useFormik({
     initialValues: {
       host: '',
       port: '',
@@ -32,14 +34,37 @@ export function LoginScreen() {
     },
     validateOnBlur: true,
     validateOnMount: true,
+    validateOnChange: true,
     validationSchema: CredentialsSchema,
-    onSubmit: async (v) => {
+    onSubmit: async (v, { setErrors }) => {
       Keyboard.dismiss();
-      log.info('Submitting Login Form.');
-      await setCredentials({
+      log.info('Validating credentials');
+
+      const creds = {
         ...v,
-        port: parseInt(v.port, 10),
-      });
+        port: Number.parseInt(v.port, 10),
+      };
+
+      try {
+        await checkCredentials(creds);
+        await setCredentials({
+          ...v,
+          port: parseInt(v.port, 10),
+        });
+        setConnectionError(null);
+        ReactNativeHapticFeedback.trigger('notificationSuccess');
+      } catch (error) {
+        const { message = 'Unknown error' } = error as { message: string };
+        log.error(`Unable to login ${message}`);
+        ReactNativeHapticFeedback.trigger('notificationError');
+        setConnectionError(message);
+        setErrors({
+          host: 'Login failed',
+          port: 'Login failed',
+          password: 'Login failed',
+          username: 'Login failed',
+        });
+      }
     },
   });
 
@@ -64,10 +89,20 @@ export function LoginScreen() {
     };
   }, []);
 
+  const getButtonText = () => {
+    if (isSubmitting) {
+      return 'Connecting...';
+    }
+    if (isInvalidForm) {
+      return 'Please check the red fields.';
+    }
+
+    return 'Connect';
+  };
+
   return (
     <S.Container>
       <GradientHeader />
-
       <S.SafeAreaContainer>
         <S.Box>
           <Typography variant={TypographyVariants.H1}>Hey!</Typography>
@@ -114,9 +149,10 @@ export function LoginScreen() {
             >
               Password
             </Input>
-            <Button disabled={isInvalidForm} onPress={() => handleSubmit()}>
-              {isInvalidForm ? 'Please fill out the red fields' : 'Connect'}
+            <Button disabled={isInvalidForm || isSubmitting} onPress={() => handleSubmit()}>
+              {getButtonText()}
             </Button>
+            {connectionError && <S.ErrorMessage variant={TypographyVariants.Small}>{connectionError}</S.ErrorMessage>}
           </S.Form>
         </S.Box>
         {devices.length !== 0 && (

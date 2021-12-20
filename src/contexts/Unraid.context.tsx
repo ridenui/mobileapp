@@ -27,6 +27,8 @@ export type UnraidProviderValue = {
   clearCredentials: () => Promise<void>;
   /** Server Credentials */
   credentials: Credentials | null;
+  /** Checks if credentials are valid without storing them */
+  checkCredentials: (creds: Credentials) => Promise<boolean>;
 };
 
 const initialUnraidState: UnraidProviderValue = {
@@ -35,6 +37,7 @@ const initialUnraidState: UnraidProviderValue = {
   hasCredentials: false,
   isConnected: false,
   clearCredentials: async () => {},
+  checkCredentials: async () => false,
   credentials: null,
 };
 
@@ -58,6 +61,15 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
     log.debug('Clearing credentials...');
     setCredentialsState(null);
     setHasCredentials(false);
+  };
+
+  const checkCredentials = async (creds: Credentials) => {
+    const tempInstance = new Unraid({
+      executor: ReactNativeExecutor,
+      executorConfig: creds,
+    });
+
+    return tempInstance.executor.connect();
   };
 
   useEffect(() => {
@@ -108,6 +120,7 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         hasCredentials,
         isConnected,
         clearCredentials,
+        checkCredentials,
         credentials,
       }}
     >

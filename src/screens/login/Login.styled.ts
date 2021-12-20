@@ -1,4 +1,6 @@
 import { Input } from '@atoms/Input/Input';
+import { Typography } from '@atoms/Typography/Typography';
+import { Colors } from '@styles/Colors';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -60,4 +62,11 @@ export const MoreDevicesHint = styled.View`
   align-items: center;
   margin-right: 16px;
   margin-top: 8px;
+`;
+
+export const ErrorMessage = styled(Typography)`
+  color: ${Colors.red};
+  text-align: center;
+  padding: 0;
+  margin: 0;
 `;

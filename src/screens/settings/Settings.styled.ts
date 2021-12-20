@@ -10,14 +10,11 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const VersionInfo = styled.View`
-  display: flex;
   width: 100%;
   align-items: center;
 `;
 
-export const SettingsBox = styled(Box)`
-  display: flex;
-`;
+export const SettingsBox = styled(Box)``;
 
 export const BoxHeader = styled(Typography)`
   margin-bottom: 8px;
@@ -32,4 +29,9 @@ export const Actions = styled.View`
 export const ActionButton = styled(Button)`
   flex: 1;
   margin: 0 4px;
+`;
+
+export const LogoutButton = styled(Button)`
+  width: 95%;
+  margin: 8px 2.5%;
 `;
