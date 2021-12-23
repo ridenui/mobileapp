@@ -56,6 +56,7 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
   };
 
   const clearCredentials = async () => {
+    await instance?.executor?.disconnect?.();
     setInstance(null);
     await clear();
     log.debug('Clearing credentials...');

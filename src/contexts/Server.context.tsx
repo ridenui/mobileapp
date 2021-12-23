@@ -1,10 +1,20 @@
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
+import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
 import { log } from '@helpers/Logger';
 import type { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
 import type { IdentConfig, RichNotification } from '@ridenui/unraid/dist/modules/unraid/extensions';
 import { parse } from 'date-fns';
+import { DEBUG } from '../constants';
 import { useUnraid } from './Unraid.context';
+
+if (DEBUG) {
+  MessageQueue.spy((spyData: SpyData) => {
+    if (spyData.module === 'RCTDeviceEventEmitter' || spyData.module === 'SSH') {
+      console.log({ spyData });
+    }
+  });
+}
 
 type ServerProviderProps = {
   children: ReactNode;
@@ -56,17 +66,44 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const reloadProperties = useCallback(async () => {
     setIsReloading(true);
     if (instance) {
-      log.debug('reloading server properties');
+      if (DEBUG) {
+        log.debug('reloading server properties');
+      }
       setHostname(await instance.system.getHostname());
+      if (DEBUG) {
+        log.debug('got hostname');
+      }
       setIdentConfig(await instance.unraid.getIdentConfig());
+      if (DEBUG) {
+        log.debug('got ident');
+      }
       setSystemInfo(await instance.system.info());
+      if (DEBUG) {
+        log.debug('got info');
+      }
+
       setCaseModel(await instance.unraid.getCaseModel());
+      if (DEBUG) {
+        log.debug('got case');
+      }
       setDiskUsage(await instance.system.diskfree());
+      if (DEBUG) {
+        log.debug('got diskfree');
+      }
       setNotifications(await instance.unraid.getNotifications());
+      if (DEBUG) {
+        log.debug('got notification');
+      }
       const { raw } = await instance.system.uptime();
+      if (DEBUG) {
+        log.debug('got uptime');
+      }
       const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
       setUptime(parsedUptime);
       setIsReloading(false);
+      if (DEBUG) {
+        log.debug('finished reloading');
+      }
     }
   }, [instance]);
 
