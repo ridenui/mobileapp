@@ -22,7 +22,7 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
   async connect() {
     await this.client.connect();
 
-    return this.client.isConnected();
+    return true;
   }
 
   async execute(command: IExecutor.IExecuteSimple | IExecutor.IExecute): Promise<IExecutor.IExecuteResult> {
@@ -31,9 +31,13 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
       command = command.command;
     }
 
+    if (DEBUG) {
+      log.debug({ command, execute: true });
+    }
+
     return this.client.execute(command, false).then((result) => {
       if (DEBUG) {
-        log.debug({ result });
+        log.debug({ result, execute: true });
       }
 
       return Promise.resolve(result);
