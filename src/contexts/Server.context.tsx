@@ -66,40 +66,40 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const reloadProperties = useCallback(async () => {
     setIsReloading(true);
     if (instance) {
+      const tasks: [() => Promise<unknown>, string][] = [
+        [async () => setHostname(await instance.system.getHostname()), 'hostname'],
+        [async () => setIdentConfig(await instance.unraid.getIdentConfig()), 'ident'],
+        [async () => setSystemInfo(await instance.system.info()), 'info'],
+        [async () => setCaseModel(await instance.unraid.getCaseModel()), 'case'],
+        [async () => setDiskUsage(await instance.system.diskfree()), 'diskfree'],
+        [async () => setNotifications(await instance.unraid.getNotifications()), 'notifications'],
+        [
+          async () => {
+            const { raw } = await instance.system.uptime();
+            if (DEBUG) {
+              log.debug('got uptime');
+            }
+            const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
+            setUptime(parsedUptime);
+          },
+          'uptime',
+        ],
+      ];
+
       if (DEBUG) {
         log.debug('reloading server properties');
       }
-      setHostname(await instance.system.getHostname());
-      if (DEBUG) {
-        log.debug('got hostname');
-      }
-      setIdentConfig(await instance.unraid.getIdentConfig());
-      if (DEBUG) {
-        log.debug('got ident');
-      }
-      setSystemInfo(await instance.system.info());
-      if (DEBUG) {
-        log.debug('got info');
-      }
 
-      setCaseModel(await instance.unraid.getCaseModel());
-      if (DEBUG) {
-        log.debug('got case');
-      }
-      setDiskUsage(await instance.system.diskfree());
-      if (DEBUG) {
-        log.debug('got diskfree');
-      }
-      setNotifications(await instance.unraid.getNotifications());
-      if (DEBUG) {
-        log.debug('got notification');
-      }
-      const { raw } = await instance.system.uptime();
-      if (DEBUG) {
-        log.debug('got uptime');
-      }
-      const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
-      setUptime(parsedUptime);
+      await Promise.all(
+        tasks.map(([task, name]) => {
+          return (async () => {
+            log.debug(`+ reloading ${name}`);
+            await task();
+            log.debug(`- reloading ${name}`);
+          })();
+        }),
+      );
+
       setIsReloading(false);
       if (DEBUG) {
         log.debug('finished reloading');
