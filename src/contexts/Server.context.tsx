@@ -65,41 +65,45 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
 
   const reloadProperties = useCallback(async () => {
     setIsReloading(true);
-    if (instance) {
-      const tasks: [() => Promise<unknown>, string][] = [
-        [async () => setHostname(await instance.system.getHostname()), 'hostname'],
-        [async () => setIdentConfig(await instance.unraid.getIdentConfig()), 'ident'],
-        [async () => setSystemInfo(await instance.system.info()), 'info'],
-        [async () => setCaseModel(await instance.unraid.getCaseModel()), 'case'],
-        [async () => setDiskUsage(await instance.system.diskfree()), 'diskfree'],
-        [async () => setNotifications(await instance.unraid.getNotifications()), 'notifications'],
-        [
-          async () => {
-            const { raw } = await instance.system.uptime();
-            if (DEBUG) {
-              log.debug('got uptime');
-            }
-            const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
-            setUptime(parsedUptime);
-          },
-          'uptime',
-        ],
-      ];
+    try {
+      if (instance) {
+        const tasks: [() => Promise<unknown>, string][] = [
+          [async () => setHostname(await instance.system.getHostname()), 'hostname'],
+          [async () => setIdentConfig(await instance.unraid.getIdentConfig()), 'ident'],
+          [async () => setSystemInfo(await instance.system.info()), 'info'],
+          [async () => setCaseModel(await instance.unraid.getCaseModel()), 'case'],
+          [async () => setDiskUsage(await instance.system.diskfree()), 'diskfree'],
+          [async () => setNotifications(await instance.unraid.getNotifications()), 'notifications'],
+          [
+            async () => {
+              const { raw } = await instance.system.uptime();
+              if (DEBUG) {
+                log.debug('got uptime');
+              }
+              const parsedUptime = parse(raw, 'yyyy-MM-dd HH:mm:ss', new Date());
+              setUptime(parsedUptime);
+            },
+            'uptime',
+          ],
+        ];
 
-      if (DEBUG) {
-        log.debug('reloading server properties');
+        if (DEBUG) {
+          log.debug('reloading server properties');
+        }
+
+        await Promise.all(
+          tasks.map(([task, name]) => {
+            return (async () => {
+              log.debug(`+ reloading ${name}`);
+              await task();
+              log.debug(`- reloading ${name}`);
+            })();
+          }),
+        );
       }
-
-      await Promise.all(
-        tasks.map(([task, name]) => {
-          return (async () => {
-            log.debug(`+ reloading ${name}`);
-            await task();
-            log.debug(`- reloading ${name}`);
-          })();
-        }),
-      );
-
+    } catch (e) {
+      log.error(`Error while reloading data: ${e}`);
+    } finally {
       setIsReloading(false);
       if (DEBUG) {
         log.debug('finished reloading');
@@ -127,11 +131,16 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
       }
       log.debug(`Attempting to reload "${property}"`);
       setIsReloading(true);
-      if (property === 'notifications') {
-        setNotifications(await instance.unraid.getNotifications());
-        log.info('Reloaded Property Notifications');
+      try {
+        if (property === 'notifications') {
+          setNotifications(await instance.unraid.getNotifications());
+          log.info('Reloaded Property Notifications');
+        }
+      } catch (e) {
+        log.error(`Error while reloading "${property}"`);
+      } finally {
+        setIsReloading(false);
       }
-      setIsReloading(false);
     },
     [instance],
   );
