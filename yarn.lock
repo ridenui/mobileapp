@@ -1591,20 +1591,21 @@
     color "^3.1.3"
     warn-once "^0.1.0"
 
-"@ridenui/react-native-riden-ssh@^1.8.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@ridenui/react-native-riden-ssh/-/react-native-riden-ssh-1.8.3.tgz#71caea50dc2bcdc73c4cbbd8b95e2c68ec8ec218"
-  integrity sha512-tE4YXzFKb4lQY9+Q0r0H3FAIDtm516MtWwQZDk1JNviHzouLPnVariVCDuZAz4fH4M+lW9VzUfH3iZHdbdsHuw==
+"@ridenui/react-native-riden-ssh@^1.8.5":
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/@ridenui/react-native-riden-ssh/-/react-native-riden-ssh-1.8.5.tgz#196da5b5b642c8147b18507df20429e9cb127a07"
+  integrity sha512-I7lNJckQzRGnExXw/1OCUnxH7EIes0c/a23H5mE8Y1//84bU7bj+Rf3PagNYvybKjNSQ6naCFjb6xR37x+RqRw==
   dependencies:
     events "^3.3.0"
 
-"@ridenui/unraid@^0.12.3":
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/@ridenui/unraid/-/unraid-0.12.3.tgz#375e76e06f371565d45dc40802d54e39143ed061"
-  integrity sha512-1TNuDglcVOZbFB8ZDPHfoNOET1mUBovXCROETNAH+lR24bLbuToE2/BV8G5yGjNTyOevKSUIL0R066YWIQnA1A==
+"@ridenui/unraid@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@ridenui/unraid/-/unraid-0.13.0.tgz#04db6984878195000e17b72dfaa7d87195f4029c"
+  integrity sha512-y/waMz3QwMn4K6OJwxy2T9IMsFx5i1fEplywu5xth2edkZAI4Ov5VOeYjDeNYo2RxPL6ulMwbAOfxLRknUzwSw==
   dependencies:
     ssh2 "^1.5.0"
     ts-mixer "^6.0.0"
+    ts-toolbelt "^9.6.0"
 
 "@sideway/address@^4.1.0":
   version "4.1.2"
@@ -9175,6 +9176,11 @@ ts-mixer@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-6.0.0.tgz#4e631d3a36e3fa9521b973b132e8353bc7267f9f"
   integrity sha512-nXIb1fvdY5CBSrDIblLn73NW0qRDk5yJ0Sk1qPBF560OdJfQp9jhl+0tzcY09OZ9U+6GpeoI9RjwoIKFIoB9MQ==
+
+ts-toolbelt@^9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz#50a25426cfed500d4a09bd1b3afb6f28879edfd5"
+  integrity sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==
 
 tsconfig-paths@^3.11.0:
   version "3.12.0"
