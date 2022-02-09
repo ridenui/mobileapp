@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { DrawerToggle } from '@atoms/DrawerToggle/DrawerToggle';
 import { Icon } from '@atoms/Icon/Icon';
 import { createStackNavigator } from '@react-navigation/stack';
-import { getNavigationStyle } from '@styles/NavigationStyle';
 import { useTheme } from 'styled-components/native';
 import { useServer } from '../contexts/Server.context';
 import { DashboardScreen } from '../screens/dashboard/Dashboard.screen';
@@ -24,17 +24,24 @@ export function Dashboard() {
     <DashboardStack.Navigator
       initialRouteName={'Dashboard'}
       screenOptions={{
-        ...getNavigationStyle(theme),
+        headerStyle: {
+          backgroundColor: theme['700'],
+          shadowColor: theme['500'],
+        },
+        headerTitleStyle: {
+          color: theme.text,
+        },
       }}
     >
       <DashboardStack.Screen
         name={'Dashboard'}
         component={DashboardScreen}
         options={({ navigation }) => ({
+          headerLeft: () => <DrawerToggle />,
           headerRight: () => {
             return (
               <TouchableOpacity style={{ marginRight: 16 }} onPress={() => navigation.navigate('Notifications')}>
-                <Icon badge={notificationCount} name={'bell'} color={'white'} size={24} />
+                <Icon badge={notificationCount} name={'bell'} size={24} />
               </TouchableOpacity>
             );
           },
