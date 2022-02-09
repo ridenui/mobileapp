@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import { ListEmptyComponent } from '@molecules/ListEmptyComponent/ListEmptyComponent';
 import { Notification } from '@molecules/Notification/Notification';
 import { useServer } from '../../contexts/Server.context';
 import * as S from './Notifications.styled';
@@ -15,6 +16,7 @@ export function NotificationsScreen(): JSX.Element {
         refreshControl={<RefreshControl refreshing={isReloading} onRefresh={() => reloadProperty('notifications')} />}
         data={notifications}
         renderItem={(item) => <Notification notification={item.item} />}
+        ListEmptyComponent={<ListEmptyComponent />}
       />
     </S.Container>
   );
