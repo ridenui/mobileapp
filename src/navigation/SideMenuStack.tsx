@@ -1,5 +1,6 @@
 import React from 'react';
 import { DrawerToggle } from '@atoms/DrawerToggle/DrawerToggle';
+import { SideDrawer } from '@organisms/SideDrawer/SideDrawer';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { getNavigationStyle } from '@styles/NavigationStyle';
@@ -26,6 +27,7 @@ export function SideMenuNavigation() {
   return (
     <SideMenuStack.Navigator
       initialRouteName={'DashboardStack'}
+      drawerContent={(props) => <SideDrawer props={props} />}
       screenOptions={({ route }) => ({
         lazy: true,
         drawerIcon: ({ focused, color, size }) => {

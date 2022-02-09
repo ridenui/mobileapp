@@ -10,6 +10,9 @@ export function getDrawerIcon(route: string, focused: boolean, color: string, si
     case 'Settings':
       icon = 'settings';
       break;
+    case 'Logout':
+      icon = 'log-out';
+      break;
     default:
       icon = 'help-circle';
   }
