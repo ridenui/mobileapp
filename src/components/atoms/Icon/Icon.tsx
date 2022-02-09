@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
+import { useTheme } from 'styled-components/native';
 import * as S from './Icon.styled';
 
 export interface IconProps {
@@ -12,8 +13,10 @@ export interface IconProps {
 }
 
 export function Icon({ badge, name, color, size }: IconProps): JSX.Element {
+  const theme = useTheme();
+
   if (!badge) {
-    return <FeatherIcon name={name} color={color} size={size} />;
+    return <FeatherIcon name={name} color={color || theme[200]} size={size} />;
   }
 
   return (

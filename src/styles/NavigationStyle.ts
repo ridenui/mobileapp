@@ -1,6 +1,7 @@
+import type { DrawerNavigationOptions } from '@react-navigation/drawer';
 import type { Theme } from '@styles/Themes';
 
-export function getNavigationStyle(theme: Theme) {
+export function getNavigationStyle(theme: Theme): Partial<DrawerNavigationOptions> {
   return {
     headerStyle: {
       backgroundColor: theme['700'],
@@ -9,12 +10,12 @@ export function getNavigationStyle(theme: Theme) {
     headerTitleStyle: {
       color: theme.text,
     },
-    tabBarStyle: {
+    drawerStyle: {
       backgroundColor: theme['700'],
       shadowColor: theme['500'],
       borderTopColor: theme['500'],
     },
-    tabBarActiveTintColor: theme['100'],
-    tabBarInactiveTintColor: theme['600'],
+    drawerActiveTintColor: theme['100'],
+    drawerInactiveTintColor: theme['400'],
   };
 }

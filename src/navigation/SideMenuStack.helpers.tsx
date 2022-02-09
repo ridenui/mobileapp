@@ -1,11 +1,11 @@
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 
-export function getTabBarIcon(route: string, focused: boolean, color: string, size: number) {
+export function getDrawerIcon(route: string, focused: boolean, color: string, size: number) {
   let icon;
   switch (route) {
     case 'DashboardStack':
-      icon = 'monitor';
+      icon = 'grid';
       break;
     case 'Settings':
       icon = 'settings';

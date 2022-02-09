@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { MainStack } from '../../navigation/MainStack';
-import { TabNavigation } from '../../navigation/TabStack';
+import { SideMenuNavigation } from '../../navigation/SideMenuStack';
 import { ConnectingScreen } from '../connecting/Connecting.screen';
 import { LoginScreen } from '../login/Login.screen';
 
 /**
- * Defines the stated we can have while connecting.
+ * Defines the states we can have while connecting.
  * If everything goes well, the order would be LOADING => LOADED_LOGGED_IN => CONNECTED_LOGGED_IN
  * If there are no credentials (eg. first app start) it'd be LOADING => LOADED_LOGGED_OUT
  * If there are credentials, but we cannot connect it'd be LOADING => LOADED_LOGGED_IN
@@ -64,9 +64,7 @@ export function SplashScreen() {
             <MainStack.Screen name={'Connecting'} component={ConnectingScreen} options={{ headerShown: false }} />
           )}
           {loadingState === LoadingStates.CONNECTED_LOGGED_IN && (
-            <>
-              <MainStack.Screen name={'Main'} component={TabNavigation} />
-            </>
+            <MainStack.Screen name={'Main'} component={SideMenuNavigation} />
           )}
         </MainStack.Navigator>
       )}
