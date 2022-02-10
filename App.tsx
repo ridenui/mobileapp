@@ -1,42 +1,47 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
-import { log } from '@helpers/Logger';
+import { StatusBar } from 'react-native';
 import { dark, light } from '@styles/Themes';
 import { ThemeProvider } from 'styled-components/native';
 import { LocalizationProvider } from './src/contexts/Localization.context';
 import { ServerProvider } from './src/contexts/Server.context';
-import { SettingsProvider } from './src/contexts/Settings.context';
+import { SettingsProvider, useSettings } from './src/contexts/Settings.context';
 import { UnraidProvider } from './src/contexts/Unraid.context';
 import { SplashScreen } from './src/screens/splash/Splash.screen';
+import { Themes } from './src/types/Generic';
 
-export function App() {
-  const colorScheme = useColorScheme();
-  const [theme, setTheme] = useState(light);
+function App() {
+  const {
+    generic: { themeName },
+  } = useSettings();
+  const [theme, setTheme] = useState(dark);
 
   useEffect(() => {
-    if (colorScheme === 'dark') {
-      log.debug('theme = dark');
-      setTheme(dark);
-    } else {
-      log.debug('theme = light');
+    if (themeName === Themes.LIGHT) {
       setTheme(light);
+    } else {
+      setTheme(dark);
     }
-  }, [colorScheme]);
+  }, [themeName]);
 
   return (
     <ThemeProvider theme={theme}>
-      <SettingsProvider>
-        <LocalizationProvider>
-          <UnraidProvider>
-            <ServerProvider>
-              <StatusBar barStyle={theme === dark ? 'light-content' : 'dark-content'} />
-              <SplashScreen />
-            </ServerProvider>
-          </UnraidProvider>
-        </LocalizationProvider>
-      </SettingsProvider>
+      <LocalizationProvider>
+        <UnraidProvider>
+          <ServerProvider>
+            <StatusBar barStyle={theme === dark ? 'light-content' : 'dark-content'} />
+            <SplashScreen />
+          </ServerProvider>
+        </UnraidProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
-export default App;
+
+export function WithSettingsProvider() {
+  return (
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>
+  );
+}
