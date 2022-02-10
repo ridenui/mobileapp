@@ -18,7 +18,7 @@ export enum ButtonSizes {
 
 export interface ButtonProps {
   /** Text Content of the Button. */
-  children: string;
+  children: string | string[];
   /** onPress Handler */
   onPress?: TouchableOpacityProps['onPress'];
   /** Set button disabled state */

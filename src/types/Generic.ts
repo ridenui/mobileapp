@@ -10,3 +10,8 @@ export type Credentials = {
   username: string;
   password: string;
 };
+
+export enum Themes {
+  DARK = 'dark',
+  LIGHT = 'light',
+}

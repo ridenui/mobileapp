@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
-import { readFromStorage } from '@helpers/Storage';
+import { log } from '@helpers/Logger';
+import { readMultipleFromStorage } from '@helpers/Storage';
 import { ConfigValues } from '../constants';
+import { Themes } from '../types/Generic';
 
 type SettingsProviderProps = {
   children: ReactNode;
@@ -11,12 +13,18 @@ export type SettingsProviderValue = {
   dashboard: {
     cpuRefresh: number;
   };
+  generic: {
+    themeName: Themes;
+  };
   reloadSettings: () => void;
 };
 
 const initialSettingsState: SettingsProviderValue = {
   dashboard: {
     cpuRefresh: 5000,
+  },
+  generic: {
+    themeName: Themes.DARK,
   },
   reloadSettings: () => {},
 };
@@ -25,16 +33,15 @@ const SettingsContext = React.createContext<SettingsProviderValue>(initialSettin
 
 export function SettingsProvider({ children }: SettingsProviderProps): JSX.Element {
   const [cpuRefresh, setCpuRefresh] = useState<number>(5000);
+  const [themeName, setThemeName] = useState<Themes>(Themes.DARK);
 
   const reloadSettings = () => {
-    readFromStorage(ConfigValues.cpuRefresh).then((value) => {
-      if (!value) {
-        return;
-      }
-      const asNumber = Number.parseInt(value, 10);
-      if (!Number.isNaN(asNumber)) {
-        setCpuRefresh(asNumber);
-      }
+    log.debug('Reloading Settings');
+    readMultipleFromStorage([ConfigValues.cpuRefresh, ConfigValues.theme]).then((result) => {
+      const loadedCpuRefresh = Number.parseInt(result[ConfigValues.cpuRefresh] || '5000', 10);
+      const loadedTheme = result[ConfigValues.theme] === 'light' ? Themes.LIGHT : Themes.DARK;
+      setCpuRefresh(loadedCpuRefresh);
+      setThemeName(loadedTheme);
     });
   };
 
@@ -48,6 +55,9 @@ export function SettingsProvider({ children }: SettingsProviderProps): JSX.Eleme
         reloadSettings,
         dashboard: {
           cpuRefresh,
+        },
+        generic: {
+          themeName,
         },
       }}
     >
