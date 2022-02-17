@@ -1,29 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { ContainerCard } from '@molecules/ContainerCard/ContainerCard';
 import { ListEmptyComponent } from '@molecules/ListEmptyComponent/ListEmptyComponent';
-import { Notification } from '@molecules/Notification/Notification';
-import type { Container } from '@ridenui/unraid/dist/modules/docker/docker.types';
+import { SearchBar } from '@molecules/SearchBar/SearchBar';
+import Fuse from 'fuse.js';
 import { useServer } from '../../contexts/Server.context';
 import * as S from './DockerContainerList.styled';
 
 export function DockerContainerListScreen(): JSX.Element {
+  const [search, setSearch] = useState('');
   const {
     docker: { containers },
     isReloading,
     reloadProperty,
   } = useServer();
+  const [filteredContainers, setFilteredContainers] = useState(containers);
+
+  useEffect(() => {
+    console.log(search);
+    if (!search) {
+      return setFilteredContainers(containers);
+    }
+    const fuse = new Fuse(containers, {
+      keys: ['name'],
+    });
+    console.log(containers[0].name);
+    const results = fuse.search(search);
+    const items = results.map((result) => result.item);
+
+    return setFilteredContainers(items);
+  }, [search, containers]);
 
   return (
     <S.Container>
+      <SearchBar placeholder={'Search containers'} onChangeText={setSearch} value={search} />
       <FlatList
         refreshing={isReloading}
         onRefresh={() => reloadProperty('docker:containers')}
         refreshControl={
           <RefreshControl refreshing={isReloading} onRefresh={() => reloadProperty('docker:containers')} />
         }
-        data={containers}
+        data={filteredContainers}
         renderItem={(item) => <ContainerCard container={item.item} />}
         ListEmptyComponent={<ListEmptyComponent />}
       />
