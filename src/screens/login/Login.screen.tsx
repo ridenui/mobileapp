@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { ChevronsRight } from 'react-native-feather';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Zeroconf from 'react-native-zeroconf';
@@ -104,57 +104,59 @@ export function LoginScreen() {
     <S.Container>
       <GradientHeader />
       <S.SafeAreaContainer>
-        <S.Box>
-          <Typography variant={TypographyVariants.H1}>Hey!</Typography>
-          <Typography variant={TypographyVariants.Paragraph}>Please set up your server below</Typography>
-          <S.Form>
-            <S.HostnamePortContainer>
-              <S.HostnameInput
+        <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={75}>
+          <S.Box>
+            <Typography variant={TypographyVariants.H1}>Hey!</Typography>
+            <Typography variant={TypographyVariants.Paragraph}>Please set up your server below</Typography>
+            <S.Form>
+              <S.HostnamePortContainer>
+                <S.HostnameInput
+                  autoCorrect={false}
+                  isInvalid={!!errors.host}
+                  autoCapitalize={'none'}
+                  value={values.host}
+                  onChangeText={handleChange('host')}
+                >
+                  Hostname
+                </S.HostnameInput>
+                <S.PortInput
+                  autoCorrect={false}
+                  isInvalid={!!errors.port}
+                  value={values.port.toString()}
+                  autoCapitalize={'none'}
+                  onChangeText={handleChange('port')}
+                  maxLength={5}
+                  keyboardType={'numeric'}
+                >
+                  Port
+                </S.PortInput>
+              </S.HostnamePortContainer>
+              <Input
                 autoCorrect={false}
-                isInvalid={!!errors.host}
+                isInvalid={!!errors.username}
+                value={values.username}
                 autoCapitalize={'none'}
-                value={values.host}
-                onChangeText={handleChange('host')}
+                onChangeText={handleChange('username')}
               >
-                Hostname
-              </S.HostnameInput>
-              <S.PortInput
+                Username
+              </Input>
+              <Input
                 autoCorrect={false}
-                isInvalid={!!errors.port}
-                value={values.port.toString()}
+                isInvalid={!!errors.password}
+                value={values.password}
                 autoCapitalize={'none'}
-                onChangeText={handleChange('port')}
-                maxLength={5}
-                keyboardType={'numeric'}
+                isSecure={true}
+                onChangeText={handleChange('password')}
               >
-                Port
-              </S.PortInput>
-            </S.HostnamePortContainer>
-            <Input
-              autoCorrect={false}
-              isInvalid={!!errors.username}
-              value={values.username}
-              autoCapitalize={'none'}
-              onChangeText={handleChange('username')}
-            >
-              Username
-            </Input>
-            <Input
-              autoCorrect={false}
-              isInvalid={!!errors.password}
-              value={values.password}
-              autoCapitalize={'none'}
-              isSecure={true}
-              onChangeText={handleChange('password')}
-            >
-              Password
-            </Input>
-            <Button disabled={isInvalidForm || isSubmitting} onPress={() => handleSubmit()}>
-              {getButtonText()}
-            </Button>
-            {connectionError && <S.ErrorMessage variant={TypographyVariants.Small}>{connectionError}</S.ErrorMessage>}
-          </S.Form>
-        </S.Box>
+                Password
+              </Input>
+              <Button disabled={isInvalidForm || isSubmitting} onPress={() => handleSubmit()}>
+                {getButtonText()}
+              </Button>
+              {connectionError && <S.ErrorMessage variant={TypographyVariants.Small}>{connectionError}</S.ErrorMessage>}
+            </S.Form>
+          </S.Box>
+        </KeyboardAvoidingView>
         {devices.length !== 0 && (
           <>
             <S.AutoDiscoverResults
