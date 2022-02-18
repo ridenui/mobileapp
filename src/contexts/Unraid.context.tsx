@@ -19,8 +19,10 @@ export type UnraidProviderValue = {
   instance: UnraidInstanceType | null;
   /** A function to set credentials */
   setCredentials: (credentials: Credentials) => Promise<void>;
-  /** True if there are crendentials present */
+  /** True if there are credentials present */
   hasCredentials: boolean;
+  /** True if the app checked if there are credentials present in the AsyncStorage */
+  hasCheckedForCredentials: boolean;
   /** True if the SSH Connection is established */
   isConnected: boolean;
   /** Clear all credentials and all data stored by the app */
@@ -35,6 +37,7 @@ const initialUnraidState: UnraidProviderValue = {
   instance: null,
   setCredentials: async () => {},
   hasCredentials: false,
+  hasCheckedForCredentials: false,
   isConnected: false,
   clearCredentials: async () => {},
   checkCredentials: async () => false,
@@ -47,6 +50,7 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
   const [instance, setInstance] = useState<UnraidInstanceType | null>(null);
   const [credentials, setCredentialsState] = useState<Credentials | null>(null);
   const [hasCredentials, setHasCredentials] = useState(false);
+  const [hasCheckedForCredentials, setHasCheckedForCredentials] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
 
   const setCredentials = async (creds: Credentials) => {
@@ -91,10 +95,17 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
       setInstance(unraid);
       setHasCredentials(true);
       log.debug('Connecting after Cred Change');
-      unraid.executor.connect().then((connected) => {
-        log.info(`Connect returned ${connected}`);
-        setIsConnected(connected);
-      });
+      unraid.executor
+        .connect()
+        .then((connected) => {
+          log.info(`Connect returned ${connected}`);
+          setIsConnected(connected);
+          setHasCheckedForCredentials(true);
+        })
+        .catch(() => {
+          log.error('Unable to connect to server.');
+          setHasCheckedForCredentials(true);
+        });
     });
   }, [credentials]);
 
@@ -109,6 +120,8 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         }
         setHasCredentials(true);
         setCredentialsState(parsedCredentials);
+      } else {
+        setHasCheckedForCredentials(true);
       }
     });
   }, []);
@@ -119,6 +132,7 @@ export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
         instance,
         setCredentials,
         hasCredentials,
+        hasCheckedForCredentials,
         isConnected,
         clearCredentials,
         checkCredentials,

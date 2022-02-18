@@ -1,8 +1,9 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { Text } from 'react-native';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { useUnraid } from '../../contexts/Unraid.context';
+import * as S from './Debug.styled';
 
 export function DebugScreen() {
   const [debugOutput, setDebugOutput] = useState<string[]>([]);
@@ -23,7 +24,7 @@ export function DebugScreen() {
   }, [instance]);
 
   return (
-    <SafeAreaView>
+    <S.Container>
       <Text>Debug</Text>
       <Typography variant={TypographyVariants.Paragraph}>Diskfree</Typography>
       {debugOutput.length === 0 && <Typography variant={TypographyVariants.Paragraph}>Fetching Data...</Typography>}
@@ -34,6 +35,6 @@ export function DebugScreen() {
           </Typography>
         );
       })}
-    </SafeAreaView>
+    </S.Container>
   );
 }
