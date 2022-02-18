@@ -15,7 +15,7 @@ export async function readMultipleFromStorage(keys: string[]): Promise<Record<st
     return STORAGE_PREFIX + key;
   });
 
-  const read = await AsyncStorage.multiGet(keysWithPrefix);
+  const read = (await AsyncStorage.multiGet(keysWithPrefix)) || [];
   const result: Record<string, string | null> = {};
 
   read.forEach(([key, value]) => {
@@ -32,8 +32,8 @@ export async function writeToStorage(key: string, value: string): Promise<void> 
   return AsyncStorage.setItem(STORAGE_PREFIX + key, value);
 }
 
-export async function writeMultipleToStorage(keys: string[][]): Promise<void> {
-  const keysWithPrefix = keys.map((key) => {
+export async function writeMultipleToStorage(keys: [string, string][]): Promise<void> {
+  const keysWithPrefix: [string, string][] = keys.map((key) => {
     return [STORAGE_PREFIX + key[0], key[1]];
   });
 

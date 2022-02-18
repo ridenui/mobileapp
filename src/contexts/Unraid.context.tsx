@@ -12,7 +12,7 @@ type UnraidProviderProps = {
   children: ReactNode;
 };
 
-type UnraidInstanceType = Unraid<SSHConfig, ReactNativeExecutor>;
+type UnraidInstanceType = Unraid<ReactNativeExecutor, SSHConfig>;
 
 export type UnraidProviderValue = {
   /** An instance of UNRAID API Client */
@@ -47,7 +47,7 @@ const initialUnraidState: UnraidProviderValue = {
 const UnraidContext = React.createContext<UnraidProviderValue>(initialUnraidState);
 
 export function UnraidProvider({ children }: UnraidProviderProps): JSX.Element {
-  const [instance, setInstance] = useState<UnraidInstanceType | null>(null);
+  const [instance, setInstance] = useState<UnraidProviderValue['instance']>(null);
   const [credentials, setCredentialsState] = useState<Credentials | null>(null);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [hasCheckedForCredentials, setHasCheckedForCredentials] = useState(false);
