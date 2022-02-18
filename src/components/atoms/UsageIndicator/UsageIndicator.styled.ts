@@ -1,11 +1,12 @@
 import { Colors } from '@styles/Colors';
+import * as chroma from 'chroma-js';
 import styled from 'styled-components/native';
 
 export const UsageIndicatorBackground = styled.View`
   width: 100%;
   height: 10px;
   background: ${({ theme }) => theme['400']};
-  margin: 2px 0px;
+  margin: 2px 0;
   border-radius: 4px;
 `;
 
@@ -13,20 +14,10 @@ export type UsageIndicatorStyled = {
   usage: number;
 };
 
+const scale = chroma.scale([Colors.green, Colors.orange, Colors.red]);
 const getUsageIndicatorColor = ({ usage }: UsageIndicatorStyled) => {
-  if (usage <= 80) {
-    return {
-      background: Colors.green,
-    };
-  }
-  if (usage <= 90) {
-    return {
-      background: Colors.orange,
-    };
-  }
-
   return {
-    background: Colors.red,
+    background: scale(usage / 100).hex(),
   };
 };
 
