@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import { writeMultipleToStorage } from '@helpers/Storage';
 import { ContainerCard } from '@molecules/ContainerCard/ContainerCard';
 import { ListEmptyComponent } from '@molecules/ListEmptyComponent/ListEmptyComponent';
 import { SearchBar } from '@molecules/SearchBar/SearchBar';
@@ -28,6 +29,13 @@ export function DockerContainerListScreen(): JSX.Element {
 
     return setFilteredContainers(items);
   }, [search, containers]);
+
+  useEffect(() => {
+    writeMultipleToStorage([
+      ['a', 'a'],
+      ['b', 'b'],
+    ]);
+  });
 
   return (
     <S.Container>

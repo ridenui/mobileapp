@@ -20,7 +20,7 @@ export function StorageCache() {
     clearStorageCache()
       .then(() => {
         setHasCachedData(false);
-        setHasCachedData(0);
+        setCachedKeyCount(0);
         ReactNativeHapticFeedback.trigger('notificationSuccess');
       })
       .catch(() => {

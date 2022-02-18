@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { useUnraid } from '../../contexts/Unraid.context';
 import * as S from './Debug.styled';
+import {writeMultipleToStorage} from "@helpers/Storage";
 
 export function DebugScreen() {
   const [debugOutput, setDebugOutput] = useState<string[]>([]);
