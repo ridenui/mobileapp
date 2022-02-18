@@ -14,17 +14,15 @@ export function DockerContainerListScreen(): JSX.Element {
     isReloading,
     reloadProperty,
   } = useServer();
-  const [filteredContainers, setFilteredContainers] = useState(containers);
+  const [filteredContainers, setFilteredContainers] = useState([containers[0]]);
 
   useEffect(() => {
-    console.log(search);
     if (!search) {
       return setFilteredContainers(containers);
     }
     const fuse = new Fuse(containers, {
       keys: ['name'],
     });
-    console.log(containers[0].name);
     const results = fuse.search(search);
     const items = results.map((result) => result.item);
 
