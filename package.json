@@ -13,7 +13,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.16.4",
     "@miblanchard/react-native-slider": "^2.1.0",
-    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-async-storage/async-storage": "1.15.17",
     "@react-native-clipboard/clipboard": "^1.9.0",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^6.0.9",
