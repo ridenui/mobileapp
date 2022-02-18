@@ -2,15 +2,15 @@ import { log } from '@helpers/Logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_PREFIX = '@riden:v1:';
-const ignoredLogKeys = ['credentials', 'docker:image'];
+const ignoredLogKeys = ['credentials', 'cache:docker:image:'];
 
 export async function readFromStorage(key: string): Promise<string | null> {
   const item = await AsyncStorage.getItem(STORAGE_PREFIX + key);
   const isIgnoredKey = ignoredLogKeys.map((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
-  if (!isIgnoredKey) {
-    log.debug(`Read ${key} - ${item}`);
-  } else {
+  if (isIgnoredKey) {
     log.debug(`Read ${key}`);
+  } else {
+    log.debug(`Read ${key} - ${item}`);
   }
 
   return item;
@@ -34,10 +34,10 @@ export async function readMultipleFromStorage(keys: string[]): Promise<Record<st
 
 export async function writeToStorage(key: string, value: string): Promise<void> {
   const isIgnoredKey = ignoredLogKeys.filter((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
-  if (!isIgnoredKey) {
-    log.debug(`Writing ${key} - ${key === 'credentials' ? 'REDACTED' : value}`);
-  } else {
+  if (isIgnoredKey) {
     log.debug(`Writing ${key}`);
+  } else {
+    log.debug(`Writing ${key} - ${value}`);
   }
 
   return AsyncStorage.setItem(STORAGE_PREFIX + key, value);
