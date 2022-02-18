@@ -33,7 +33,7 @@ export async function readMultipleFromStorage(keys: string[]): Promise<Record<st
 }
 
 export async function writeToStorage(key: string, value: string): Promise<void> {
-  const isIgnoredKey = ignoredLogKeys.map((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
+  const isIgnoredKey = ignoredLogKeys.filter((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
   if (!isIgnoredKey) {
     log.debug(`Writing ${key} - ${key === 'credentials' ? 'REDACTED' : value}`);
   } else {
@@ -53,4 +53,18 @@ export async function writeMultipleToStorage(keys: string[][]): Promise<void> {
 
 export async function clear(): Promise<void> {
   return AsyncStorage.clear();
+}
+
+export async function getCacheKeys(): Promise<string[]> {
+  const keys = await AsyncStorage.getAllKeys();
+  const cacheKeys = keys.filter((key) => key.startsWith(`${STORAGE_PREFIX}cache:`));
+  log.debug(`Found ${cacheKeys.length} cache key(s)`);
+
+  return cacheKeys;
+}
+
+export async function clearStorageCache(): Promise<void> {
+  const keys = await getCacheKeys();
+
+  return AsyncStorage.multiRemove(keys);
 }

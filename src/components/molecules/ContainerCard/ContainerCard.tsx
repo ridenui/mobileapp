@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Icon } from '@atoms/Icon/Icon';
 import { Typography, TypographyVariants } from '@atoms/Typography/Typography';
 import { log } from '@helpers/Logger';
-import { readFromStorage } from '@helpers/Storage';
+import { readFromStorage, writeToStorage } from '@helpers/Storage';
 import { DefaultIcon } from '@molecules/ContainerCard/DefaultIcon';
 import type { Container } from '@ridenui/unraid/dist/modules/docker/container';
 import * as S from './ContainerCard.styled';
@@ -23,7 +23,8 @@ export function ContainerCard({ container }: ContainerCardProps): JSX.Element {
   useEffect(() => {
     const loadImage = async () => {
       log.debug(`Loading image for container ${container.name}`);
-      const cachedImage = await readFromStorage(`docker:image:${container.name}`);
+      const imageCacheKey = `cache:docker:image:${container.name}`;
+      const cachedImage = await readFromStorage(imageCacheKey);
       if (cachedImage) {
         log.debug(`Image-Cache-Hit for ${container.name}.`);
         const [checksum, encoded] = cachedImage.split(':');
@@ -33,6 +34,7 @@ export function ContainerCard({ container }: ContainerCardProps): JSX.Element {
           log.debug(`Image for ${container.name} has checksum mismatch.`);
           const freshImage = await container.getImage(true);
           setImage(imagePrefix + freshImage.encoded);
+          await writeToStorage(imageCacheKey, `${freshImage.checksum}:${freshImage.encoded}`);
         } else {
           log.debug(`Image for ${container.name} is up-to-date.`);
         }
@@ -40,8 +42,8 @@ export function ContainerCard({ container }: ContainerCardProps): JSX.Element {
         log.debug(`Image-Cache-Miss for ${container.name}.`);
         const freshImage = await container.getImage();
         setImage(imagePrefix + freshImage.encoded);
+        await writeToStorage(imageCacheKey, `${freshImage.checksum}:${freshImage.encoded}`);
       }
-      log.debug(`loadImage: my job here is done for ${container.name}`);
     };
     loadImage()
       .then(() => log.info(`Loaded image for container ${container.name}`))
