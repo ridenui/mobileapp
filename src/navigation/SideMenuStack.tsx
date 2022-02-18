@@ -40,19 +40,12 @@ export function SideMenuNavigation() {
       })}
     >
       <SideMenuStack.Screen
-        name={'DashboardStack'}
-        component={Dashboard}
-        options={{
-          headerShown: false,
-          title: 'Dashboard',
-        }}
-      />
-      <SideMenuStack.Screen
         name={'DockerContainerList'}
         component={DockerContainerListScreen}
         options={{ title: 'Docker' }}
       />
-      <SideMenuStack.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: true }} />
+      <SideMenuStack.Screen name={'DashboardStack'} component={Dashboard} options={{ headerShown: false }} />
+      <SideMenuStack.Screen name={'Settings'} component={SettingsScreen} />
       {DEBUG && <SideMenuStack.Screen name={'Debug'} component={DebugScreen} />}
     </SideMenuStack.Navigator>
   );

@@ -1,3 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-export const MainStack = createStackNavigator();
+export type MainStackParamList = {
+  Login: undefined;
+  Main: undefined;
+  Connecting: undefined;
+  Notifications: undefined;
+};
+
+export const MainStack = createStackNavigator<MainStackParamList>();

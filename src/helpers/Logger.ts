@@ -7,7 +7,7 @@ export function getTodaysLogName() {
   const month = today.getMonth() + 1;
   const year = today.getFullYear();
 
-  return `riden_${date}_${month}_${year}`;
+  return `riden_${date}_${month}_${year}.log`;
 }
 
 const multiLogger = logger.createLogger({

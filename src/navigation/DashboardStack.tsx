@@ -8,7 +8,12 @@ import { useServer } from '../contexts/Server.context';
 import { DashboardScreen } from '../screens/dashboard/Dashboard.screen';
 import { NotificationsScreen } from '../screens/notifications/Notifications';
 
-export const DashboardStack = createStackNavigator();
+type DashboardStackParamList = {
+  Dashboard: undefined;
+  Notifications: undefined;
+};
+
+export const DashboardStack = createStackNavigator<DashboardStackParamList>();
 
 export function Dashboard() {
   const theme = useTheme();
