@@ -1,26 +1,36 @@
 fastlane_version '2.197.0'
 
 before_all do
-  ensure_git_branch(branch: 'main')
-  ensure_git_status_clean
+    #ensure_git_branch(branch: 'main')
+    #ensure_git_status_clean
 end
 
 platform :ios do
-   desc 'Build the iOS application.'
-   lane :build do
-      build_app(scheme: "RELEASE",
-        workspace: 'ios/RIDEN.xcworkspace',
-        include_bitcode: true)
-   end
+    desc 'Build the iOS application.'
+    lane :build do
+        build_app(
+            scheme: "RIDEN",
+            workspace: 'ios/RIDEN.xcworkspace',
+            include_bitcode: true,
+            output_directory: 'build',
+            codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
+            export_method: 'ad-hoc',
+            export_options: {
+                provisioningProfiles: {
+                    'org.ridenui.RIDEN': 'Riden_Ad_Hoc'
+                }
+            }
+        )
+    end
 
-   desc 'Ship to Testflight.'
-     lane :beta do
-       api_key = app_store_connect_api_key(
-         key_id: "AVKPS4JC36",
-         issuer_id: "aeca5e70-59b6-416f-b244-c433e3fad717",
-         key_filepath: "./APPSTORE_KEY.p8",
-         duration: 1200
-       )
-       pilot
-     end
+    desc 'Ship to Testflight.'
+    lane :beta do
+        api_key = app_store_connect_api_key(
+            key_id: "AVKPS4JC36",
+            issuer_id: "aeca5e70-59b6-416f-b244-c433e3fad717",
+            key_filepath: "./APPSTORE_KEY.p8",
+            duration: 1200
+        )
+        pilot
+    end
 end
