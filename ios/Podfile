@@ -19,7 +19,9 @@ target 'RIDEN' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
+  # For local development
+	
+  # pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
 
   target 'RIDENTests' do
     inherit! :complete

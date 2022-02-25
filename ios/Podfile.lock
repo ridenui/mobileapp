@@ -278,9 +278,9 @@ PODS:
   - React-jsinspector (0.67.3)
   - React-logger (0.67.3):
     - glog
-  - react-native-riden-ssh (1.8.14):
+  - react-native-riden-ssh (1.8.15):
     - React
-    - SwifterSwiftSSH (~> 1.2.1)
+    - SwifterSwiftSSH (~> 1.2.2)
   - react-native-safe-area-context (3.4.0):
     - React-Core
   - react-native-version-info (1.1.1):
@@ -401,7 +401,7 @@ PODS:
     - React
   - RNVectorIcons (9.1.0):
     - React-Core
-  - SwifterSwiftSSH (1.2.1)
+  - SwifterSwiftSSH (1.2.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -478,7 +478,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - SwifterSwiftSSH (from `../../swifter-swift-ssh`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -496,6 +495,7 @@ SPEC REPOS:
     - fmt
     - libevent
     - OpenSSL-Universal
+    - SwifterSwiftSSH
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -593,8 +593,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  SwifterSwiftSSH:
-    :path: "../../swifter-swift-ssh"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -632,7 +630,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 15ea57ead631a11fad57634ff69f78e797113a39
   React-jsinspector: 1e1e03345cf6d47779e2061d679d0a87d9ae73d8
   React-logger: 1e10789cb84f99288479ba5f20822ce43ced6ffe
-  react-native-riden-ssh: 4ead5d915992d2665f6f2b227984d503d7e3042b
+  react-native-riden-ssh: bd1e4e2e645ea66239465d7c80153700bb9eeed5
   react-native-safe-area-context: f4f7cc09d81ae2d39dfd13e764d718969af07080
   react-native-version-info: a106f23009ac0db4ee00de39574eb546682579b9
   react-native-zeroconf: 8c7f309c76f95264d20e95270eb8366c57272894
@@ -659,10 +657,10 @@ SPEC CHECKSUMS:
   RNScreens: 2559f98b0835103cbef3b26ba77fa61d4bb37ae7
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
-  SwifterSwiftSSH: 053d14204184460013dcadab3770f2f6b9063093
+  SwifterSwiftSSH: 5ec7043060a38150d93edc4e7bee337a4b608666
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: c48dd72c4eaa26098446e5d76b94b94dec127f3c
+PODFILE CHECKSUM: ac1e441b03d9fa1556698ea39c097e812c82b454
 
 COCOAPODS: 1.11.2
