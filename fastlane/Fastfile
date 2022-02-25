@@ -14,12 +14,9 @@ platform :ios do
             include_bitcode: true,
             output_directory: 'build',
             codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
+            clean: false,
             export_method: 'ad-hoc',
-            export_options: {
-                provisioningProfiles: {
-                    'org.ridenui.RIDEN': 'Riden_Ad_Hoc'
-                }
-            }
+            export_options: 'export-options.plist'
         )
     end
 
