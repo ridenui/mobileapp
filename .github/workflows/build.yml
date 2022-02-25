@@ -12,6 +12,10 @@ jobs:
 
     if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
 
+    env:
+      KEYCHAIN_PASSWORD: pw
+      KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
+
     steps:
       - name: Configuring Git
         run: |
@@ -74,28 +78,8 @@ jobs:
       - name: Install pods
         run: (cd ios && bundle exec pod install)
 
-      - name: Install certificate and provisioning profile
-        run: |
-          CERTIFICATE_PATH="./certificates/Certificates/Distribution_Certificate.p12"
-          PP_PATH="./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision"
-          KEYCHAIN_PASSWORD=pw
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          
-          # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-
       - name: Build app
-        run: fastlane ios ci
+        run: bundle exec fastlane ios ci
 
   cleanup:
     runs-on: self-hosted
@@ -105,5 +89,5 @@ jobs:
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db || true
+          bundle exec fastlane ios ci_cleanup || true
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision || true

@@ -17,7 +17,26 @@ platform :ios do
 
     desc 'Build the iOS application (CI Edition).'
     lane :ci do
+        create_keychain(
+            name: "RIDEN",
+            default_keychain: false,
+            unlock: true,
+            timeout: 3600,
+            add_to_search_list: true,
+            lock_when_sleeps: true,
+            require_create: true,
+        )
+        import_certificate(
+            certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
+            keychain_name: "RIDEN"
+        )
+        install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
         build()
+    end
+
+    desc 'Build the iOS application (CI Edition).'
+    lane :ci_cleanup do
+        delete_keychain(name: "RIDEN")
     end
 
     desc 'Ship to Testflight.'
