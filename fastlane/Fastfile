@@ -23,8 +23,7 @@ platform :ios do
             unlock: true,
             timeout: 3600,
             add_to_search_list: true,
-            lock_when_sleeps: true,
-            require_create: true,
+            lock_when_sleeps: true
         )
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
