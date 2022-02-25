@@ -1,0 +1,64 @@
+# This is a basic workflow to help you get started with Actions
+
+name: publish-to-cocoapods
+
+# Controls when the workflow will run
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    # Our self hosted runner
+    runs-on: self-hosted
+
+    if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
+
+    steps:
+      - name: Configuring Git
+        run: |
+          git config --global user.name "high5-bot"
+          git config --global user.email "me+high5@dunklestoast.de"
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.HIGH5_BOT_TOKEN }}
+
+      # Checkout certificates
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.HIGH5_BOT_TOKEN }}
+          repository: 'ridenui/certificates'
+          path: 'certificates'
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '^13.2.1'
+
+      - name: Install Cocoapods and fastlane
+        run: gem install cocoapods fastlane
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install yarn
+        run: npm i yarn --global
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Installing dependencies
+        run: yarn
+
+      - name: Build app
+        run: fastlane ios ci
