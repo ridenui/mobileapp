@@ -60,16 +60,25 @@ jobs:
       - name: Installing dependencies
         run: yarn
 
-      - name: Install ruby tools
-        run: bundle install
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/cache@v2
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
       - name: Install pods
         run: (cd ios && bundle exec pod install)
 
       - name: Install certificate and provisioning profile
         run: |
-          CERTIFICATE_PATH=certificates/Certificates/Distribution Certificate.p12
-          PP_PATH=certificates/Provisioning Profiles/Riden_Ad_Hoc.mobileprovision
+          CERTIFICATE_PATH=certificates/Certificates/Distribution\ Certificate.p12
+          PP_PATH=certificates/Provisioning\ Profiles/Riden_Ad_Hoc.mobileprovision
           KEYCHAIN_PASSWORD=pw
           
           # create temporary keychain
