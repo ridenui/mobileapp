@@ -58,6 +58,8 @@ jobs:
         run: yarn
 
       - uses: ruby/setup-ruby@v1
+        env:
+          ImageOS: macos11
         with:
           ruby-version: 2.7.2
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
