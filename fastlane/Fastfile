@@ -28,7 +28,8 @@ platform :ios do
         )
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
-            keychain_name: "RIDEN"
+            keychain_name: "RIDEN",
+            keychain_path: lane_context[SharedValues::KEYCHAIN_PATH]
         )
         install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
         build()
