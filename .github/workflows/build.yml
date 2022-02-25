@@ -83,7 +83,7 @@ jobs:
           
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security set-keychain-settings $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           
           # import certificate to keychain
@@ -105,5 +105,5 @@ jobs:
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db || true
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision || true
