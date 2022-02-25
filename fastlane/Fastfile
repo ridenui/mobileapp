@@ -19,6 +19,7 @@ platform :ios do
     lane :ci do
         create_keychain(
             name: "RIDEN",
+            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db"
             default_keychain: false,
             unlock: true,
             timeout: 3600,
@@ -27,7 +28,7 @@ platform :ios do
         )
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
-            keychain_path: lane_context[SharedValues::KEYCHAIN_PATH],
+            keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             log_output: true
         )
         install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
