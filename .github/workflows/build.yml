@@ -79,6 +79,7 @@ jobs:
           CERTIFICATE_PATH=certificates/Certificates/Distribution\ Certificate.p12
           PP_PATH=certificates/Provisioning\ Profiles/Riden_Ad_Hoc.mobileprovision
           KEYCHAIN_PASSWORD=pw
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
