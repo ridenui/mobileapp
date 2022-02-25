@@ -35,9 +35,6 @@ jobs:
         with:
           xcode-version: '^13.2.1'
 
-      - name: Install bundler
-        run: gem install bundler
-
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
