@@ -17,8 +17,6 @@ platform :ios do
 
     desc 'Build the iOS application (CI Edition).'
     lane :ci do
-        import_certificate(certificate_path: "certificates/Certificates/Distribution Certificate.p12")
-        install_provisioning_profile(path: "certificates/Provisioning Profiles/Riden_Ad_Hoc.mobileprovision")
         build()
     end
 

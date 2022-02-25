@@ -76,8 +76,8 @@ jobs:
 
       - name: Install certificate and provisioning profile
         run: |
-          CERTIFICATE_PATH=./certificates/Certificates/Distribution\ Certificate.p12
-          PP_PATH=./certificates/Provisioning\ Profiles/Riden_Ad_Hoc.mobileprovision
+          CERTIFICATE_PATH="./certificates/Certificates/Distribution_Certificate.p12"
+          PP_PATH="./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision"
           KEYCHAIN_PASSWORD=pw
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           
