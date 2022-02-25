@@ -35,8 +35,8 @@ jobs:
         with:
           xcode-version: '^13.2.1'
 
-      - name: Install Cocoapods and fastlane
-        run: gem install cocoapods fastlane
+      - name: Install bundler
+        run: gem install bundler
 
       - uses: actions/setup-node@v2
         with:
@@ -59,6 +59,12 @@ jobs:
 
       - name: Installing dependencies
         run: yarn
+
+      - name: Install ruby tools
+        run: bundle install
+
+      - name: Install pods
+        run: (cd ios && bundle exec pod install)
 
       - name: Build app
         run: fastlane ios ci
