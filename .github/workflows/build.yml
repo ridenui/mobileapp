@@ -81,11 +81,6 @@ jobs:
       - name: Build app
         run: bundle exec fastlane ios ci
 
-  cleanup:
-    runs-on: self-hosted
-    needs: [build]
-    if: always()
-    steps:
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
