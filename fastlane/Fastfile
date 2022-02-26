@@ -34,11 +34,23 @@ platform :ios do
         )
         install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
         unlock_keychain(
-          path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
-          password: "keychain",
-          add_to_search_list: :replace
+            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            password: "keychain",
+            add_to_search_list: :replace
         )
-        build()
+        build_app(
+            scheme: "RIDEN",
+            workspace: 'ios/RIDEN.xcworkspace',
+            include_bitcode: true,
+            output_directory: 'build',
+            codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
+            clean: false,
+            export_method: 'ad-hoc',
+            export_options: 'export-options.plist',
+            export_xcargs: {
+                OTHER_CODE_SIGN_FLAGS: "--keychain=\"" + ENV["HOME"] + "/Library/Keychains/RIDEN-db" + "\""
+            }
+        )
     end
 
     desc 'Build the iOS application (CI Edition).'
