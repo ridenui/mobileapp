@@ -8,7 +8,7 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     # Our self hosted runner
-    runs-on: franz
+    runs-on: eden
 
     if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
 
