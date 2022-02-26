@@ -19,6 +19,8 @@ target 'RIDEN' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'LicensePlist'
+
   target 'RIDENTests' do
     inherit! :complete
     # Pods for testing
