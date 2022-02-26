@@ -95,3 +95,104 @@ jobs:
         run: |
           bundle exec fastlane ios ci_cleanup || true
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision || true
+
+
+  ota:
+    runs-on: ubuntu-latest
+
+    if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
+
+    steps:
+      - name: Configuring Git
+        run: |
+          git config --global user.name "high5-bot"
+          git config --global user.email "me+high5@dunklestoast.de"
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.HIGH5_BOT_TOKEN }}
+
+      - name: Branch name with dash
+        run: |
+          echo "CURRENT_BRANCH_SLASH_LESS=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')" >> $GITHUB_ENV
+          echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.HIGH5_BOT_TOKEN }}
+          repository: 'ridenui/mobileapp'
+          path: 'page'
+
+      - name: Create ota page
+        run: |
+          mkdir -p page/ota/$CURRENT_BRANCH
+          
+          MANIFEST_TEMPLATE="
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+          <key>items</key>
+          <array>
+          <dict>
+          <key>assets</key>
+          <array>
+          <dict>
+          <key>kind</key>
+          <string>software-package</string>
+          <key>url</key>
+          <string>https://ridenui.github.io/mobileapp/ota/$CURRENT_BRANCH/RIDEN.ipa</string>
+          </dict>
+          </array>
+          <key>metadata</key>
+          <dict>
+          <key>bundle-identifier</key>
+          <string>org.ridenui.RIDEN</string>
+          <key>bundle-version</key>
+          <string>1.0</string>
+          <key>kind</key>
+          <string>software</string>
+          <key>title</key>
+          <string>RIDEN</string>
+          </dict>
+          </dict>
+          </array>
+          </dict>
+          </plist>
+          "
+          
+          echo $MANIFEST_TEMPLATE > page/ota/$CURRENT_BRANCH/ota_manifest.plist
+
+          PAGE_TEMPLATE="
+          ---
+          tags: 
+          - ota
+          - $CURRENT_BRANCH
+          ---
+          # RIDEN: $CURRENT_BRANCH
+          
+          ### OTA
+          
+          [Install via OTA](itms-services://?action=download-manifest&url=https://ridenui.github.io/mobileapp/ota/$CURRENT_BRANCH/ota_manifest.plist)
+          
+          ### IPA
+          
+          [Download](https://ridenui.github.io/mobileapp/ota/$CURRENT_BRANCH/RIDEN.ipa)
+          "
+          
+          echo $PAGE_TEMPLATE > page/ota/$CURRENT_BRANCH/index.md
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: ipa-${{ env.CURRENT_BRANCH_SLASH_LESS }}
+          path: page/ota/${{ env.CURRENT_BRANCH }}
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: page
+          clean: false
+          token: ${{ secrets.ACCESS_TOKEN }}
