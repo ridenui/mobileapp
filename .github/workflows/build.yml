@@ -112,8 +112,8 @@ jobs:
 
       - name: Branch name with dash
         run: |
-          echo "CURRENT_BRANCH_SLASH_LESS=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')" >> $GITHUB_ENV
-          echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "CURRENT_BRANCH_SLASH_LESS=$(echo $GITHUB_REF_NAME | sed 's/\//-/g')" >> $GITHUB_ENV
+          echo "CURRENT_BRANCH=$(echo $GITHUB_REF_NAME)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         with:
@@ -153,7 +153,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ipa-${{ env.CURRENT_BRANCH_SLASH_LESS }}
-          path: page/ota/${{ env.CURRENT_BRANCH }}
+          path: page/ota/${{ env.GITHUB_REF_NAME }}
 
       - name: Debug
         run: tree
