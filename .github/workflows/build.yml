@@ -13,8 +13,6 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
 
     env:
-      KEYCHAIN_PASSWORD: pw
-      KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
       LANG: en_US.UTF-8
 
     steps:
