@@ -21,7 +21,7 @@ platform :ios do
             path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             default_keychain: false,
             unlock: true,
-            timeout: 1200,
+            timeout: 5000,
             add_to_search_list: true,
             lock_when_sleeps: true,
             password: "keychain"
