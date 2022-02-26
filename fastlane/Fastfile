@@ -24,7 +24,8 @@ platform :ios do
             timeout: 5000,
             add_to_search_list: true,
             lock_when_sleeps: true,
-            password: "keychain"
+            password: "keychain",
+            default_keychain: true
         )
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
@@ -36,7 +37,8 @@ platform :ios do
         unlock_keychain(
             path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             password: "keychain",
-            add_to_search_list: :replace
+            add_to_search_list: :replace,
+            set_default: true
         )
         build_app(
             scheme: "RIDEN",
