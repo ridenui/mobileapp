@@ -80,6 +80,12 @@ jobs:
       - name: Build app
         run: bundle exec fastlane ios ci
 
+      - name: Upload ipa as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipa-${{ github.ref_name }}
+          path: build
+
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
