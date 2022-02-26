@@ -80,10 +80,14 @@ jobs:
       - name: Build app
         run: bundle exec fastlane ios ci
 
+      - name: Branch name with dash
+        run: |
+          echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')" >> $GITHUB_ENV
+
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ipa-${{ github.ref_name }}
+          name: ipa-${{ env.CURRENT_BRANCH }}
           path: build
 
       - name: Clean up keychain and provisioning profile
