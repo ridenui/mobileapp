@@ -18,7 +18,6 @@ platform :ios do
     desc 'Build the iOS application (CI Edition).'
     lane :ci do
         create_keychain(
-            name: "RIDEN",
             path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             default_keychain: false,
             unlock: true,
