@@ -21,13 +21,15 @@ platform :ios do
             path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             default_keychain: false,
             unlock: true,
-            timeout: 3600,
+            timeout: 1200,
             add_to_search_list: true,
-            lock_when_sleeps: true
+            lock_when_sleeps: true,
+            password: "keychain"
         )
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
             keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            keychain_password: "keychain",
             log_output: true
         )
         install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
