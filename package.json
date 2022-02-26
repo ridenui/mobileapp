@@ -8,7 +8,10 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "pod": "cd ios && pod install && cd ..",
     "icons": "yarn svgr --out-dir src/assets/cases --index-template svgr.indextemplate.js src/assets/cases/svgs",
-    "ios:beta": "fastlane ios beta"
+    "ios:beta": "fastlane ios beta",
+    "ios:settings-bundle:update": "yarn ios:settings-bundle:cocoapods && yarn ios:settings-bundle:npm",
+    "ios:settings-bundle:cocoapods": "cd ios && ./Pods/LicensePlist/license-plist --output-path Settings.bundle --prefix org.ridenui.RIDEN.cocoa --suppress-opening-directory && cd ..",
+    "ios:settings-bundle:npm": "react-native-oss-license --format settings-bundle --bundle-id org.ridenui.RIDEN.npm --output-path ./ios/Settings.bundle"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.4",
@@ -91,6 +94,7 @@
     "jest-styled-components": "^7.0.8",
     "metro-react-native-babel-preset": "^0.68.0",
     "prettier": "^2.5.1",
+    "react-native-oss-license": "^0.5.1",
     "react-test-renderer": "17.0.2",
     "typescript": "4.5.5"
   },
