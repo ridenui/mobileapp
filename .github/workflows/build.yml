@@ -110,11 +110,6 @@ jobs:
           git config --global user.name "high5-bot"
           git config --global user.email "me+high5@dunklestoast.de"
 
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.HIGH5_BOT_TOKEN }}
-
       - name: Branch name with dash
         run: |
           echo "CURRENT_BRANCH_SLASH_LESS=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')" >> $GITHUB_ENV
@@ -126,6 +121,7 @@ jobs:
           token: ${{ secrets.HIGH5_BOT_TOKEN }}
           repository: 'ridenui/mobileapp'
           path: 'page'
+          ref: 'gh-pages'
 
       - name: Create ota page
         run: |
@@ -158,6 +154,9 @@ jobs:
         with:
           name: ipa-${{ env.CURRENT_BRANCH_SLASH_LESS }}
           path: page/ota/${{ env.CURRENT_BRANCH }}
+
+      - name: Debug
+        run: tree
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
