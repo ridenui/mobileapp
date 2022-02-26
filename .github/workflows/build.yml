@@ -165,4 +165,4 @@ jobs:
           branch: gh-pages
           folder: page
           clean: false
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.HIGH5_BOT_TOKEN }}
