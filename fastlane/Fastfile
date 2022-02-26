@@ -19,7 +19,7 @@ platform :ios do
     lane :ci do
         create_keychain(
             name: "RIDEN",
-            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db"
+            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
             default_keychain: false,
             unlock: true,
             timeout: 3600,
@@ -37,7 +37,7 @@ platform :ios do
 
     desc 'Build the iOS application (CI Edition).'
     lane :ci_cleanup do
-        delete_keychain(name: "RIDEN")
+        delete_keychain(keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db")
     end
 
     desc 'Ship to Testflight.'
