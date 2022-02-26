@@ -1,0 +1,14 @@
+import * as React from 'react';
+import type { SvgProps } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
+
+const Svg4UDisks = (props: SvgProps) => (
+  <Svg viewBox="-10 0 1044 1024" width={24} height={24} {...props}>
+    <Path
+      fill="currentColor"
+      d="M0 432h1024v496H0V432zm32 32v432h960V464H32zm464 80v336H96V480h400v64zm-16 0v-48H304v48h176zm-192 0v-48H112v48h176zm0 16H112v48h176v-48zm192 0H304v48h176v-48zm448-16v336H528V480h400v64zm-16 0v-48H736v48h176zm-192 0v-48H544v48h176zm0 16H544v48h176v-48zm192 0H736v48h176v-48zm-608 64v48h176v-48H304zm-192 0v48h176v-48H112zm624 0v48h176v-48H736zm-192 0v48h176v-48H544zm-256 64H112v48h176v-48zm192 0H304v48h176v-48zm240 0H544v48h176v-48zm192 0H736v48h176v-48zm-432 64H304v48h176v-48zm-192 0H112v48h176v-48zm624 0H736v48h176v-48zm-192 0H544v48h176v-48zm-240 64H304v48h176v-48zm-192 0H112v48h176v-48zm624 0H736v48h176v-48zm-368 0v48h176v-48H544zm368-384L768 128H272L112 432H80L256 96h528l160 336h-32zm48 64h16v368h-16V496zm-912 0h16v368H48V496z"
+    />
+  </Svg>
+);
+
+export default Svg4UDisks;
