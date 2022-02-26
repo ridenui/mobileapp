@@ -27,6 +27,14 @@ platform :ios do
             password: "keychain",
             default_keychain: true
         )
+        # Import Apple Root Cert
+        import_certificate(
+            certificate_path: "./certificates/AppleWWDRCAG3.cer",
+            keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            keychain_password: "keychain",
+            log_output: true
+        )
+        # Import sign cert
         import_certificate(
             certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
             keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
