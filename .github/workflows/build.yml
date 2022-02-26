@@ -166,3 +166,5 @@ jobs:
           folder: page
           clean: false
           token: ${{ secrets.HIGH5_BOT_TOKEN }}
+          git-config-name: high5-bot
+          git-config-email: me+high5@dunklestoast.de
