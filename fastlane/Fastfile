@@ -33,6 +33,11 @@ platform :ios do
             log_output: true
         )
         install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
+        unlock_keychain(
+          path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+          password: "keychain",
+          add_to_search_list: :replace
+        )
         build()
     end
 
