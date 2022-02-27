@@ -1,8 +1,7 @@
 #!/usr/bin/env zx
 import 'zx/globals';
 
-const manifest = `
-<?xml version="1.0" encoding="UTF-8"?>
+const manifest = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
    <dict>
@@ -32,25 +31,23 @@ const manifest = `
          </dict>
       </array>
    </dict>
-</plist>
-`
+</plist>`
 
-const index = `
----
+const index = `---
 tags: 
 - ota
 - ${process.env.CURRENT_BRANCH}
 ---
+
 # RIDEN: ${process.env.CURRENT_BRANCH}
 
-### OTA
+## OTA
 
 [Install via OTA](itms-services://?action=download-manifest&url=https://ridenui.github.io/mobileapp/ota/${process.env.CURRENT_BRANCH}/ota_manifest.plist)
 
-### IPA
+## IPA
 
-[Download](https://ridenui.github.io/mobileapp/ota/${process.env.CURRENT_BRANCH}/RIDEN.ipa)
-`
+[Download](https://ridenui.github.io/mobileapp/ota/${process.env.CURRENT_BRANCH}/RIDEN.ipa)`
 
 await fs.writeFile(`../page/ota/${process.env.CURRENT_BRANCH}/index.md`, index);
 await fs.writeFile(`../page/ota/${process.env.CURRENT_BRANCH}/ota_manifest.plist`, manifest);
