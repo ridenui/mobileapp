@@ -23,6 +23,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Build the iOS application.
 
+### ios ci
+
+```sh
+[bundle exec] fastlane ios ci
+```
+
+Build the iOS application (CI Edition).
+
+### ios ci_cleanup
+
+```sh
+[bundle exec] fastlane ios ci_cleanup
+```
+
+Build the iOS application (CI Edition).
+
 ### ios beta
 
 ```sh

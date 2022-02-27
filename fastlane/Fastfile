@@ -54,7 +54,7 @@ platform :ios do
             include_bitcode: true,
             output_directory: 'build',
             codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
-            clean: false,
+            clean: true,
             export_method: 'ad-hoc',
             export_options: 'export-options.plist',
             export_xcargs: {
