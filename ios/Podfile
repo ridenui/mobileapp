@@ -23,6 +23,8 @@ target 'RIDEN' do
 	
   # pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
 
+  pod 'LicensePlist'
+
   target 'RIDENTests' do
     inherit! :complete
     # Pods for testing

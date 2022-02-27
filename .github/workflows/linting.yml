@@ -1,0 +1,30 @@
+name: Code Linting
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [ready_for_review, synchronize, opened]
+
+jobs:
+  lint-test:
+    name: Linting
+    timeout-minutes: 10
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo timedatectl set-timezone Europe/Berlin
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Prepare dependencies
+        run: yarn
+      - name: ESLint
+        uses: reviewdog/action-eslint@v1.16.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: 'warning'
+          fail_on_error: true
+      - name: TypeScript Compile
+        run: yarn tsc
