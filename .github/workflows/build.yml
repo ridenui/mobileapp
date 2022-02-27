@@ -75,7 +75,7 @@ jobs:
             ${{ runner.os }}-pods-
 
       - name: Install pods
-        run: (cd ios && bundle exec pod install)
+        run: (cd ios && (bundle exec pod install || bundle exec pod install --repo-update))
 
       - name: Build app
         run: |
