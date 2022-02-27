@@ -78,7 +78,9 @@ jobs:
         run: (cd ios && bundle exec pod install)
 
       - name: Build app
-        run: bundle exec fastlane ios ci
+        run: |
+          yarn start & echo "METRO_PID=$!" >> $GITHUB_ENV
+          bundle exec fastlane ios ci
 
       - name: Branch name with dash
         run: |
@@ -92,7 +94,13 @@ jobs:
 
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
-        run: bundle exec fastlane ios ci_cleanup || true
+        env:
+          METRO_PID: ${{ env.METRO_PID }}
+        run: |
+          echo "Kill metro with pid $METRO_PID"
+          kill -9 $METRO_PID || true
+          echo "Fastlane ci_cleanup"
+          bundle exec fastlane ios ci_cleanup || true
 
   ota:
     runs-on: ubuntu-latest
