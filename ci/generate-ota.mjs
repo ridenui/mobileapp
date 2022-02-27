@@ -49,5 +49,6 @@ tags:
 
 [Download](https://ridenui.github.io/mobileapp/ota/${process.env.CURRENT_BRANCH}/RIDEN.ipa)`
 
+await fs.ensureDir(`../page/ota/${process.env.CURRENT_BRANCH}/`);
 await fs.writeFile(`../page/ota/${process.env.CURRENT_BRANCH}/index.md`, index);
 await fs.writeFile(`../page/ota/${process.env.CURRENT_BRANCH}/ota_manifest.plist`, manifest);
