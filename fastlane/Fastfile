@@ -2,14 +2,20 @@ fastlane_version '2.197.0'
 
 platform :ios do
     desc 'Build the iOS application.'
-    lane :build do
+    lane :build do |options|
+        clean = false
+        if options[:clean]
+            clean = true
+            clear_derived_data
+        end
+
         build_app(
             scheme: "RIDEN",
             workspace: 'ios/RIDEN.xcworkspace',
             include_bitcode: true,
             output_directory: 'build',
             codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
-            clean: false,
+            clean: clean,
             export_method: 'ad-hoc',
             export_options: 'export-options.plist'
         )
@@ -48,6 +54,7 @@ platform :ios do
             add_to_search_list: :replace,
             set_default: true
         )
+        clear_derived_data
         build_app(
             scheme: "RIDEN",
             workspace: 'ios/RIDEN.xcworkspace',
