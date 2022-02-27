@@ -66,6 +66,10 @@ platform :ios do
     desc 'Build the iOS application (CI Edition).'
     lane :ci_cleanup do
         delete_keychain(keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db")
+        types = ["development", "adhoc", "appstore"]
+        types.each do |type|
+            remove_provisioning_profile(app_identifier: "org.ridenui.RIDEN", type: type)
+        end
     end
 
     desc 'Ship to Testflight.'

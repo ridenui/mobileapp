@@ -92,10 +92,7 @@ jobs:
 
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
-        run: |
-          bundle exec fastlane ios ci_cleanup || true
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision || true
-
+        run: bundle exec fastlane ios ci_cleanup || true
 
   ota:
     runs-on: ubuntu-latest
