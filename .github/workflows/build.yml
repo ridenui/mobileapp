@@ -129,10 +129,7 @@ jobs:
           ref: 'gh-pages'
 
       - name: Create ota page
-        run: |
-          cd ci
-          yarn
-          node ./generate-ota.mjs
+        run: (cd ci && yarn && node ./generate-ota.mjs)
 
       - uses: actions/download-artifact@v2
         with:
