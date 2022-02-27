@@ -279,9 +279,9 @@ PODS:
   - React-jsinspector (0.67.3)
   - React-logger (0.67.3):
     - glog
-  - react-native-riden-ssh (1.8.15):
+  - react-native-riden-ssh (1.8.18):
     - React
-    - SwifterSwiftSSH (~> 1.2.2)
+    - SwifterSwiftSSH (~> 1.2.4)
   - react-native-safe-area-context (3.4.0):
     - React-Core
   - react-native-version-info (1.1.1):
@@ -402,7 +402,7 @@ PODS:
     - React
   - RNVectorIcons (9.1.0):
     - React-Core
-  - SwifterSwiftSSH (1.2.2)
+  - SwifterSwiftSSH (1.2.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -634,7 +634,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 15ea57ead631a11fad57634ff69f78e797113a39
   React-jsinspector: 1e1e03345cf6d47779e2061d679d0a87d9ae73d8
   React-logger: 1e10789cb84f99288479ba5f20822ce43ced6ffe
-  react-native-riden-ssh: bd1e4e2e645ea66239465d7c80153700bb9eeed5
+  react-native-riden-ssh: c9e32e5b5d55ded539318979783a8c651d7b6189
   react-native-safe-area-context: f4f7cc09d81ae2d39dfd13e764d718969af07080
   react-native-version-info: a106f23009ac0db4ee00de39574eb546682579b9
   react-native-zeroconf: 8c7f309c76f95264d20e95270eb8366c57272894
@@ -661,10 +661,10 @@ SPEC CHECKSUMS:
   RNScreens: 2559f98b0835103cbef3b26ba77fa61d4bb37ae7
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
-  SwifterSwiftSSH: 5ec7043060a38150d93edc4e7bee337a4b608666
+  SwifterSwiftSSH: 3e036222e39857e32cfb658c2ed38d390943b616
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 3afe7abe2b52d6f3e2360d078733cbbe3cdf41d2
+PODFILE CHECKSUM: 285940e8cac36e75db6f9d9494822d4f2031ef48
 
 COCOAPODS: 1.11.2

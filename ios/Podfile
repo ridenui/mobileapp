@@ -18,15 +18,16 @@ target 'RIDEN' do
   )
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-  pod 'react-native-riden-ssh', :path => '../node_modules/@ridenui/react-native-riden-ssh'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'LicensePlist'
+
+  pod 'react-native-riden-ssh', :path => '../node_modules/@ridenui/react-native-riden-ssh'
 
   # For local development
 
   # pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
-
-  pod 'LicensePlist'
 
   target 'RIDENTests' do
     inherit! :complete
