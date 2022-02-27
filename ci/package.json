@@ -1,0 +1,9 @@
+{
+  "name": "ci",
+  "version": "1.0.0",
+  "main": "generate-ota.mjs",
+  "license": "MIT",
+  "dependencies": {
+    "zx": "^5.1.0"
+  }
+}
