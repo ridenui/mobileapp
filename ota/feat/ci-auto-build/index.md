@@ -6,10 +6,10 @@ tags:
 
 # RIDEN: feat/ci-auto-build
 
-### OTA
+## OTA
 
 [Install via OTA](itms-services://?action=download-manifest&url=https://ridenui.github.io/mobileapp/ota/feat/ci-auto-build/ota_manifest.plist)
 
-### IPA
+## IPA
 
 [Download](https://ridenui.github.io/mobileapp/ota/feat/ci-auto-build/RIDEN.ipa)
