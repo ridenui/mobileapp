@@ -19,6 +19,10 @@ target 'RIDEN' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  # For local development
+	
+  # pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
+
   pod 'LicensePlist'
 
   target 'RIDENTests' do

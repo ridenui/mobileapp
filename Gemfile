@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
-gem "fastlane", "2.197.0"
+gem "fastlane", "2.204.3"
+
