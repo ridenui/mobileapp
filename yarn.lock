@@ -1625,10 +1625,10 @@
   dependencies:
     events "^3.3.0"
 
-"@ridenui/unraid@^0.16.5":
-  version "0.16.5"
-  resolved "https://registry.yarnpkg.com/@ridenui/unraid/-/unraid-0.16.5.tgz#0cb736fee3825fc113b7545d7de542b6de001ef7"
-  integrity sha512-NTux5ABkpe5YYHzsnUUFp7Zl0TnKBgtCjzgDD9zzIIp0MOFq4Exwz+EzGe+sQKK5Ki14565A/xeSA6iozsJE1w==
+"@ridenui/unraid@^0.16.7":
+  version "0.16.7"
+  resolved "https://registry.yarnpkg.com/@ridenui/unraid/-/unraid-0.16.7.tgz#7f31ea61c6d41dd4c1e37ea8a25a2d023f3c13c4"
+  integrity sha512-a0rriR6y0FT/UJ0vmllVCDDvrUafEWbu/zue+Ok56mOC8r/qLSvmmfURMOs/jzWLYr8QPeDrpCk5GUijdVYzxg==
   dependencies:
     ssh2 "^1.5.0"
     ts-mixer "^6.0.0"
