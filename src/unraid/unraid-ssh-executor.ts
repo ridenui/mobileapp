@@ -31,6 +31,8 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
       command = command.command;
     }
 
+    command = command.replace('\n', '');
+
     if (DEBUG) {
       log.debug({ command, execute: true });
     }

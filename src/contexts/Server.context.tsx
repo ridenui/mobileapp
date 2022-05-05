@@ -5,6 +5,7 @@ import { log } from '@helpers/Logger';
 import type { Container } from '@ridenui/unraid/dist/modules/docker/container';
 import type { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
 import type { IdentConfig, RichNotification } from '@ridenui/unraid/dist/modules/unraid/extensions';
+import type { UserScript } from '@ridenui/unraid/dist/modules/unraid/extensions/userscripts/user-script';
 import { parse } from 'date-fns';
 import { DEBUG } from '../constants';
 import { useUnraid } from './Unraid.context';
@@ -21,7 +22,7 @@ type ServerProviderProps = {
   children: ReactNode;
 };
 
-export type ReloadableProperties = 'notifications' | 'docker:containers';
+export type ReloadableProperties = 'notifications' | 'docker:containers' | 'userscripts:all';
 
 export type ServerProviderValue = {
   hostname: string;
@@ -38,6 +39,10 @@ export type ServerProviderValue = {
   reloadProperty: (property: ReloadableProperties) => void;
   resetProperties: () => void;
   isReloading: boolean;
+  userScripts: {
+    installed: boolean;
+    scripts: UserScript[];
+  };
 };
 
 const initialServerState: ServerProviderValue = {
@@ -49,6 +54,10 @@ const initialServerState: ServerProviderValue = {
   notifications: [],
   docker: {
     containers: [],
+  },
+  userScripts: {
+    installed: false,
+    scripts: [],
   },
   reloadProperties: () => {},
   reloadProperty: () => {},
@@ -69,6 +78,8 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const [diskUsage, setDiskUsage] = useState<IDiskFreeReturn[] | null>(null);
   const [notifications, setNotifications] = useState<RichNotification[]>([]);
   const [containers, setContainers] = useState<Container[]>([]);
+  const [hasUserScripts, setHasUserScripts] = useState(false);
+  const [userScriptList, setUserScriptList] = useState<UserScript[]>([]);
   const { instance } = useUnraid();
 
   const reloadProperties = useCallback(async () => {
@@ -83,6 +94,8 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
           [async () => setDiskUsage(await instance.system.diskfree()), 'diskfree'],
           [async () => setNotifications(await instance.unraid.getNotifications()), 'notifications'],
           [async () => setContainers(await instance.docker.list()), 'containers'],
+          [async () => setHasUserScripts(await instance.unraid.hasUserScriptsInstalled()), 'hasUserScripts'],
+          [async () => setUserScriptList(await instance.unraid.getUserScripts()), 'getUserScripts'],
           [
             async () => {
               const { raw } = await instance.system.uptime();
@@ -130,6 +143,8 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
     setDiskUsage(null);
     setNotifications([]);
     setContainers([]);
+    setHasUserScripts(false);
+    setUserScriptList([]);
   }, []);
 
   const reloadProperty = useCallback(
@@ -180,6 +195,10 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
         diskUsage,
         docker: {
           containers,
+        },
+        userScripts: {
+          installed: hasUserScripts,
+          scripts: userScriptList,
         },
       }}
     >

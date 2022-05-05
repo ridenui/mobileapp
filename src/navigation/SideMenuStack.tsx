@@ -6,15 +6,18 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { getNavigationStyle } from '@styles/NavigationStyle';
 import { useTheme } from 'styled-components/native';
 import { DEBUG } from '../constants';
+import { useServer } from '../contexts/Server.context';
 import { DebugScreen } from '../screens/debug/Debug.screen';
 import { DockerContainerListScreen } from '../screens/dockercontainerlist/DockerContainerList';
 import { SettingsScreen } from '../screens/settings/Settings.screen';
+import { UserScriptsScreen } from '../screens/userscripts/UserScripts';
 import { Dashboard } from './DashboardStack';
 import { getDrawerIcon } from './SideMenuStack.helpers';
 
 export type SideMenuStackParamList = {
   DashboardStack: undefined;
   DockerContainerList: undefined;
+  UserScripts: undefined;
   Settings: undefined;
   Debug: undefined;
 };
@@ -25,6 +28,7 @@ export const SideMenuStack = createDrawerNavigator<SideMenuStackParamList>();
 
 export function SideMenuNavigation() {
   const theme = useTheme();
+  const { userScripts } = useServer();
 
   return (
     <SideMenuStack.Navigator
@@ -49,6 +53,9 @@ export function SideMenuNavigation() {
         component={DockerContainerListScreen}
         options={{ title: 'Docker' }}
       />
+      {userScripts.installed && (
+        <SideMenuStack.Screen name={'UserScripts'} component={UserScriptsScreen} options={{ title: 'User Scripts' }} />
+      )}
       <SideMenuStack.Screen name={'Settings'} component={SettingsScreen} />
       {DEBUG && <SideMenuStack.Screen name={'Debug'} component={DebugScreen} />}
     </SideMenuStack.Navigator>
