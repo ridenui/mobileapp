@@ -8,6 +8,7 @@ import { useServer } from '../../contexts/Server.context';
 import { useUnraid } from '../../contexts/Unraid.context';
 import { CPUDelay } from './components/CPUDelay';
 import { Log } from './components/Log';
+import { StorageCache } from './components/StorageCache';
 import { Theme } from './components/Theme';
 import * as S from './Settings.styled';
 
@@ -21,6 +22,7 @@ export function SettingsScreen() {
         <CPUDelay />
         <Log />
         <Theme />
+        <StorageCache />
         <S.LogoutButton
           variant={ButtonVariants.FLAT}
           textStyle={TypographyVariants.Mono}

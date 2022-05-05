@@ -5,6 +5,9 @@ platform :ios, '13.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
+# hide all warnings
+inhibit_all_warnings!
+
 target 'RIDEN' do
   config = use_native_modules!
 
@@ -15,9 +18,16 @@ target 'RIDEN' do
   )
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-  pod 'react-native-riden-ssh', :path => '../node_modules/@ridenui/react-native-riden-ssh'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'LicensePlist'
+
+  pod 'react-native-riden-ssh', :path => '../node_modules/@ridenui/react-native-riden-ssh'
+
+  # For local development
+
+  # pod "SwifterSwiftSSH", :path => '../../swifter-swift-ssh'
 
   target 'RIDENTests' do
     inherit! :complete

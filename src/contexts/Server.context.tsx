@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
 import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
 import { log } from '@helpers/Logger';
+import type { Container } from '@ridenui/unraid/dist/modules/docker/container';
 import type { IDiskFreeReturn, IInfoResult } from '@ridenui/unraid/dist/modules/system/extensions';
 import type { IdentConfig, RichNotification } from '@ridenui/unraid/dist/modules/unraid/extensions';
 import { parse } from 'date-fns';
@@ -20,7 +21,7 @@ type ServerProviderProps = {
   children: ReactNode;
 };
 
-export type ReloadableProperties = 'notifications';
+export type ReloadableProperties = 'notifications' | 'docker:containers';
 
 export type ServerProviderValue = {
   hostname: string;
@@ -30,6 +31,9 @@ export type ServerProviderValue = {
   uptime: Date | null;
   diskUsage: IDiskFreeReturn[] | null;
   notifications: RichNotification[];
+  docker: {
+    containers: Container[];
+  };
   reloadProperties: () => void;
   reloadProperty: (property: ReloadableProperties) => void;
   resetProperties: () => void;
@@ -43,6 +47,9 @@ const initialServerState: ServerProviderValue = {
   caseModel: null,
   uptime: null,
   notifications: [],
+  docker: {
+    containers: [],
+  },
   reloadProperties: () => {},
   reloadProperty: () => {},
   resetProperties: () => {},
@@ -61,6 +68,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
   const [uptime, setUptime] = useState<Date | null>(null);
   const [diskUsage, setDiskUsage] = useState<IDiskFreeReturn[] | null>(null);
   const [notifications, setNotifications] = useState<RichNotification[]>([]);
+  const [containers, setContainers] = useState<Container[]>([]);
   const { instance } = useUnraid();
 
   const reloadProperties = useCallback(async () => {
@@ -74,6 +82,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
           [async () => setCaseModel(await instance.unraid.getCaseModel()), 'case'],
           [async () => setDiskUsage(await instance.system.diskfree()), 'diskfree'],
           [async () => setNotifications(await instance.unraid.getNotifications()), 'notifications'],
+          [async () => setContainers(await instance.docker.list()), 'containers'],
           [
             async () => {
               const { raw } = await instance.system.uptime();
@@ -120,6 +129,7 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
     setUptime(null);
     setDiskUsage(null);
     setNotifications([]);
+    setContainers([]);
   }, []);
 
   const reloadProperty = useCallback(
@@ -134,8 +144,11 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
       try {
         if (property === 'notifications') {
           setNotifications(await instance.unraid.getNotifications());
-          log.info('Reloaded Property Notifications');
         }
+        if (property === 'docker:containers') {
+          setContainers(await instance.docker.list());
+        }
+        log.debug(`Reloaded "${property}" property.`);
       } catch (e) {
         log.error(`Error while reloading "${property}"`);
       } finally {
@@ -165,6 +178,9 @@ export function ServerProvider({ children }: ServerProviderProps): JSX.Element {
         resetProperties,
         isReloading,
         diskUsage,
+        docker: {
+          containers,
+        },
       }}
     >
       {children}

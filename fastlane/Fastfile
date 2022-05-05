@@ -1,26 +1,92 @@
 fastlane_version '2.197.0'
 
-before_all do
-  ensure_git_branch(branch: 'main')
-  ensure_git_status_clean
-end
-
 platform :ios do
-   desc 'Build the iOS application.'
-   lane :build do
-      build_app(scheme: "RELEASE",
-        workspace: 'ios/RIDEN.xcworkspace',
-        include_bitcode: true)
-   end
+    desc 'Build the iOS application.'
+    lane :build do |options|
+        clean = false
+        if options[:clean]
+            clean = true
+            clear_derived_data
+        end
 
-   desc 'Ship to Testflight.'
-     lane :beta do
-       api_key = app_store_connect_api_key(
-         key_id: "AVKPS4JC36",
-         issuer_id: "aeca5e70-59b6-416f-b244-c433e3fad717",
-         key_filepath: "./APPSTORE_KEY.p8",
-         duration: 1200
-       )
-       pilot
-     end
+        build_app(
+            scheme: "RIDEN",
+            workspace: 'ios/RIDEN.xcworkspace',
+            include_bitcode: true,
+            output_directory: 'build',
+            codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
+            clean: clean,
+            export_method: 'ad-hoc',
+            export_options: 'export-options.plist'
+        )
+    end
+
+    desc 'Build the iOS application (CI Edition).'
+    lane :ci do
+        create_keychain(
+            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            default_keychain: false,
+            unlock: true,
+            timeout: 5000,
+            add_to_search_list: true,
+            lock_when_sleeps: true,
+            password: "keychain",
+            default_keychain: true
+        )
+        # Import Apple Root Cert
+        import_certificate(
+            certificate_path: "./certificates/AppleWWDRCAG3.cer",
+            keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            keychain_password: "keychain",
+            log_output: true
+        )
+        # Import sign cert
+        import_certificate(
+            certificate_path: "./certificates/Certificates/Distribution_Certificate.p12",
+            keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            keychain_password: "keychain",
+            log_output: true
+        )
+        install_provisioning_profile(path: "./certificates/Provisioning_Profiles/Riden_Ad_Hoc.mobileprovision")
+        unlock_keychain(
+            path: ENV["HOME"] + "/Library/Keychains/RIDEN-db",
+            password: "keychain",
+            add_to_search_list: :replace,
+            set_default: true
+        )
+        clear_derived_data
+        build_app(
+            scheme: "RIDEN",
+            workspace: 'ios/RIDEN.xcworkspace',
+            include_bitcode: true,
+            output_directory: 'build',
+            codesigning_identity: 'Apple Distribution: Tom Sacher (W4DRGXG6V5)',
+            clean: true,
+            export_method: 'ad-hoc',
+            export_options: 'export-options.plist',
+            export_xcargs: {
+                OTHER_CODE_SIGN_FLAGS: "--keychain=\"" + ENV["HOME"] + "/Library/Keychains/RIDEN-db" + "\""
+            }
+        )
+    end
+
+    desc 'Build the iOS application (CI Edition).'
+    lane :ci_cleanup do
+        delete_keychain(keychain_path: ENV["HOME"] + "/Library/Keychains/RIDEN-db")
+        types = ["development", "adhoc", "appstore"]
+        types.each do |type|
+            remove_provisioning_profile(app_identifier: "org.ridenui.RIDEN", type: type)
+        end
+    end
+
+    desc 'Ship to Testflight.'
+    lane :beta do
+        api_key = app_store_connect_api_key(
+            key_id: "AVKPS4JC36",
+            issuer_id: "aeca5e70-59b6-416f-b244-c433e3fad717",
+            key_filepath: "./APPSTORE_KEY.p8",
+            duration: 1200
+        )
+        pilot
+    end
 end

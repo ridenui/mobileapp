@@ -2,10 +2,16 @@ import { log } from '@helpers/Logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_PREFIX = '@riden:v1:';
+const ignoredLogKeys = ['credentials', 'cache:docker:image:'];
 
 export async function readFromStorage(key: string): Promise<string | null> {
   const item = await AsyncStorage.getItem(STORAGE_PREFIX + key);
-  log.debug(`Reading ${key} - ${key === 'credentials' ? 'REDACTED' : item}`);
+  const isIgnoredKey = ignoredLogKeys.map((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
+  if (isIgnoredKey) {
+    log.debug(`Read ${key}`);
+  } else {
+    log.debug(`Read ${key} - ${item}`);
+  }
 
   return item;
 }
@@ -27,7 +33,12 @@ export async function readMultipleFromStorage(keys: string[]): Promise<Record<st
 }
 
 export async function writeToStorage(key: string, value: string): Promise<void> {
-  log.debug(`Writing ${key} - ${key === 'credentials' ? 'REDACTED' : value}`);
+  const isIgnoredKey = ignoredLogKeys.filter((ignoredKey) => key.startsWith(ignoredKey)).length !== 0;
+  if (isIgnoredKey) {
+    log.debug(`Writing ${key}`);
+  } else {
+    log.debug(`Writing ${key} - ${value}`);
+  }
 
   return AsyncStorage.setItem(STORAGE_PREFIX + key, value);
 }
@@ -42,4 +53,18 @@ export async function writeMultipleToStorage(keys: [string, string][]): Promise<
 
 export async function clear(): Promise<void> {
   return AsyncStorage.clear();
+}
+
+export async function getCacheKeys(): Promise<string[]> {
+  const keys = await AsyncStorage.getAllKeys();
+  const cacheKeys = keys.filter((key) => key.startsWith(`${STORAGE_PREFIX}cache:`));
+  log.debug(`Found ${cacheKeys.length} cache key(s)`);
+
+  return cacheKeys;
+}
+
+export async function clearStorageCache(): Promise<void> {
+  const keys = await getCacheKeys();
+
+  return AsyncStorage.multiRemove(keys);
 }
