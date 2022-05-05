@@ -46,6 +46,7 @@ export function Input({
     <S.Input
       selectionColor={theme.text}
       placeholder={children}
+      placeholderTextColor={theme['300']}
       onChangeText={onChangeText}
       keyboardType={keyboardType}
       secureTextEntry={isSecure}

@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
+import { log } from '@helpers/Logger';
 import { dark, light } from '@styles/Themes';
 import { ThemeProvider } from 'styled-components/native';
 import { LocalizationProvider } from './src/contexts/Localization.context';
@@ -22,6 +23,7 @@ function App() {
     } else {
       setTheme(dark);
     }
+    log.debug(`Changing theme to ${themeName}`);
   }, [themeName]);
 
   return (
