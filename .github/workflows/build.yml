@@ -7,11 +7,8 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    # Our self hosted runner
-    runs-on: franz
-
     if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
-
+    runs-on: macos-12
     env:
       LANG: en_US.UTF-8
 
