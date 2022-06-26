@@ -1642,10 +1642,10 @@
     color "^3.1.3"
     warn-once "^0.1.0"
 
-"@ridenui/react-native-riden-ssh@^1.8.21":
-  version "1.8.21"
-  resolved "https://registry.yarnpkg.com/@ridenui/react-native-riden-ssh/-/react-native-riden-ssh-1.8.21.tgz#3cbccd4c5a238406dae7c81847af0c234b287604"
-  integrity sha512-senlGs6idSbOQOEIhkF6UbVAy7NezqJkCNzSy0yzRSsh7UK4+YsVxN68gxpx0yyS99lfi34aeFAQPMlufUtl9A==
+"@ridenui/react-native-riden-ssh@^1.8.22":
+  version "1.8.22"
+  resolved "https://registry.yarnpkg.com/@ridenui/react-native-riden-ssh/-/react-native-riden-ssh-1.8.22.tgz#c6674826286b2be61b56551e2c6c9160e8ffd4fd"
+  integrity sha512-fuxbvDim6oHaJsvRBHacf5cS7lFUFSW+ADu0DUxisKPk30WBcY58qi2wN7Cmvj0RWUS/bciIHpZjtkcPNl2UBA==
   dependencies:
     events "^3.3.0"
 
