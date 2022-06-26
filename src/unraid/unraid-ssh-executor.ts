@@ -3,6 +3,7 @@ import type { SSHConfig } from '@ridenui/react-native-riden-ssh';
 import { SSHClient } from '@ridenui/react-native-riden-ssh';
 import type { IExecutor } from '@ridenui/unraid';
 import { Executor } from '@ridenui/unraid';
+import { Buffer } from 'buffer';
 import type { EventEmitter } from 'events';
 import { DEBUG } from '../constants';
 
@@ -30,6 +31,9 @@ export class ReactNativeExecutor extends Executor<SSHConfig> {
       // eslint-disable-next-line no-param-reassign
       command = command.command;
     }
+
+    // eslint-disable-next-line no-param-reassign
+    command = `bash -c "eval \`echo \\"${Buffer.from(command, 'utf-8').toString('base64')}\\" | base64 --decode\`"`;
 
     if (DEBUG) {
       log.debug({ command, execute: true });

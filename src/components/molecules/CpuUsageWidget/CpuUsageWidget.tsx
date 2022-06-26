@@ -34,11 +34,17 @@ export function CpuUsageWidget(): JSX.Element {
     // 0 means no refresh
     if (dashboard.cpuRefresh !== 0) {
       interval = setInterval(() => {
+        console.log('refreshing...');
         fetchUsage();
       }, dashboard.cpuRefresh);
     }
 
-    return () => (interval ? clearInterval(interval) : undefined);
+    return () => {
+      if (interval) {
+        console.log('Clearing inv');
+        clearInterval(interval);
+      }
+    };
   }, [instance, dashboard.cpuRefresh]);
 
   if (!cpuUsage) {

@@ -13,6 +13,9 @@ export function getDrawerIcon(route: string, focused: boolean, color: string, si
     case 'Logout':
       icon = 'log-out';
       break;
+    case 'UserScripts':
+      icon = 'file-text';
+      break;
     default:
       icon = 'help-circle';
   }

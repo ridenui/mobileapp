@@ -21,7 +21,9 @@ export function AutoDiscoverCard({ device, onPress }: AutoDiscoverCardProps): JS
     <S.AutoDiscoverCard onPress={() => onPress(device)} width={width}>
       <View>
         <Typography variant={TypographyVariants.H3}>{device.name}</Typography>
-        {device.description && <Typography variant={TypographyVariants.Paragraph}>{device.description}</Typography>}
+        {device.description ? (
+          <Typography variant={TypographyVariants.Paragraph}>{device.description}</Typography>
+        ) : null}
         <S.HostnameText variant={TypographyVariants.Paragraph}>Found at {device.ssh.hostname}</S.HostnameText>
       </View>
       <View />

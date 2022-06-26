@@ -5,6 +5,7 @@ import { Icon } from '@atoms/Icon/Icon';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'styled-components/native';
 import { useServer } from '../contexts/Server.context';
+import { useUnraid } from '../contexts/Unraid.context';
 import { DashboardScreen } from '../screens/dashboard/Dashboard.screen';
 import { NotificationsScreen } from '../screens/notifications/Notifications';
 
